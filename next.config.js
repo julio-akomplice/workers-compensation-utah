@@ -27,6 +27,11 @@ const nextConfig = {
       '.mjs': ['.mts', '.mjs'],
     }
 
+    webpackConfig.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    })
+
     return webpackConfig
   },
   reactStrictMode: true,

@@ -1,9 +1,20 @@
 import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
+import localFont from 'next/font/local'
 import React from 'react'
+
+const GeistSans = localFont({
+  src: '../../fonts/Geist-VariableFont_wght.ttf',
+  variable: '--font-geist-sans',
+  display: 'swap',
+})
+
+const GeistMono = localFont({
+  src: '../../fonts/GeistMono-VariableFont_wght.ttf',
+  variable: '--font-geist-mono',
+  display: 'swap',
+})
 
 import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/Footer/Component'

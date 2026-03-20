@@ -4,36 +4,32 @@ import { type VariantProps, cva } from 'class-variance-authority'
 import * as React from 'react'
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 focus-visible:ring-4 focus-visible:outline-1 aria-invalid:focus-visible:ring-0",
+  "inline-flex items-center justify-center cursor-pointer gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-6 [&_svg]:shrink-0 ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 focus-visible:ring-4 focus-visible:outline-1 aria-invalid:focus-visible:ring-0",
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90',
-        destructive: 'bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90',
-        outline:
-          'border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
-        secondary: 'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+        gradient: [
+          'relative isolate overflow-hidden text-white rounded-[6px]',
+          // ::after = blue (bottom layer)
+          'after:absolute after:inset-0 after:bg-[#FA681C] after:z-[-2] after:pointer-events-none',
+          // ::before = red (top layer, fades out on hover)
+          'before:absolute before:inset-0 before:[background:linear-gradient(95deg,#FFB94A_0.83%,#F74A0B)] before:shadow-[inset_0_-3px_7px_0_#FFB94A] before:transition-opacity before:duration-300 before:z-[-1] before:pointer-events-none',
+          'hover:before:opacity-0',
+        ].join(' '),
       },
       size: {
-        clear: '',
-        default: 'h-10 px-4 py-2 has-[>svg]:px-3',
-        sm: 'h-9 rounded-md px-3 has-[>svg]:px-2.5',
-        lg: 'h-11 rounded-md px-8 has-[>svg]:px-4',
-        icon: 'size-10',
+        default: cn('h-12 px-6 py-3.5'),
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: 'gradient',
       size: 'default',
     },
   },
 )
 
 export interface ButtonProps
-  extends React.ComponentProps<'button'>,
-    VariantProps<typeof buttonVariants> {
+  extends React.ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
   asChild?: boolean
 }
 

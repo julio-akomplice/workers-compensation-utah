@@ -28,6 +28,13 @@ export default buildConfig({
       // Feel free to delete this at any time. Simply remove the line below.
       beforeDashboard: ['@/components/BeforeDashboard'],
     },
+    autoLogin:
+      process.env.NODE_ENV === 'development'
+        ? {
+            email: process.env.USER_EMAIL,
+            password: process.env.USER_PASSWORD,
+          }
+        : undefined,
     importMap: {
       baseDir: path.resolve(dirname),
     },

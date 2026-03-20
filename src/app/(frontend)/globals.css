@@ -87,80 +87,30 @@
 }
 
 :root {
-  --background: oklch(100% 0 0deg);
-  --foreground: oklch(14.5% 0 0deg);
-  --card: oklch(96.5% 0.005 265deg);
-  --card-foreground: oklch(14.5% 0 0deg);
-  --popover: oklch(100% 0 0deg);
-  --popover-foreground: oklch(14.5% 0 0deg);
-  --primary: oklch(20.5% 0 0deg);
-  --primary-foreground: oklch(98.5% 0 0deg);
-  --secondary: oklch(97% 0 0deg);
-  --secondary-foreground: oklch(20.5% 0 0deg);
-  --muted: oklch(97% 0 0deg);
-  --muted-foreground: oklch(55.6% 0 0deg);
-  --accent: oklch(97% 0 0deg);
-  --accent-foreground: oklch(20.5% 0 0deg);
-  --destructive: oklch(57.7% 0.245 27.325deg);
-  --destructive-foreground: oklch(57.7% 0.245 27.325deg);
-  --border: oklch(92.2% 0 0deg);
-  --input: oklch(92.2% 0 0deg);
-  --ring: oklch(70.8% 0 0deg);
-  --chart-1: oklch(64.6% 0.222 41.116deg);
-  --chart-2: oklch(60% 0.118 184.704deg);
-  --chart-3: oklch(39.8% 0.07 227.392deg);
-  --chart-4: oklch(82.8% 0.189 84.429deg);
-  --chart-5: oklch(76.9% 0.188 70.08deg);
-  --radius: 0.625rem;
-  --sidebar: oklch(98.5% 0 0deg);
-  --sidebar-foreground: oklch(14.5% 0 0deg);
-  --sidebar-primary: oklch(20.5% 0 0deg);
-  --sidebar-primary-foreground: oklch(98.5% 0 0deg);
-  --sidebar-accent: oklch(97% 0 0deg);
-  --sidebar-accent-foreground: oklch(20.5% 0 0deg);
-  --sidebar-border: oklch(92.2% 0 0deg);
-  --sidebar-ring: oklch(70.8% 0 0deg);
-  --success: oklch(78% 0.08 200deg);
-  --warning: oklch(89% 0.1 75deg);
-  --error: oklch(75% 0.15 25deg);
-}
-
-[data-theme='dark'] {
-  --background: oklch(14.5% 0 0deg);
-  --foreground: oklch(98.5% 0 0deg);
-  --card: oklch(17% 0 0deg);
-  --card-foreground: oklch(98.5% 0 0deg);
-  --popover: oklch(14.5% 0 0deg);
-  --popover-foreground: oklch(98.5% 0 0deg);
-  --primary: oklch(98.5% 0 0deg);
-  --primary-foreground: oklch(20.5% 0 0deg);
-  --secondary: oklch(26.9% 0 0deg);
-  --secondary-foreground: oklch(98.5% 0 0deg);
-  --muted: oklch(26.9% 0 0deg);
-  --muted-foreground: oklch(70.8% 0 0deg);
-  --accent: oklch(26.9% 0 0deg);
-  --accent-foreground: oklch(98.5% 0 0deg);
-  --destructive: oklch(39.6% 0.141 25.723deg);
-  --destructive-foreground: oklch(63.7% 0.237 25.331deg);
-  --border: oklch(26.9% 0 0deg);
-  --input: oklch(26.9% 0 0deg);
-  --ring: oklch(43.9% 0 0deg);
-  --chart-1: oklch(48.8% 0.243 264.376deg);
-  --chart-2: oklch(69.6% 0.17 162.48deg);
-  --chart-3: oklch(76.9% 0.188 70.08deg);
-  --chart-4: oklch(62.7% 0.265 303.9deg);
-  --chart-5: oklch(64.5% 0.246 16.439deg);
-  --sidebar: oklch(20.5% 0 0deg);
-  --sidebar-foreground: oklch(98.5% 0 0deg);
-  --sidebar-primary: oklch(48.8% 0.243 264.376deg);
-  --sidebar-primary-foreground: oklch(98.5% 0 0deg);
-  --sidebar-accent: oklch(26.9% 0 0deg);
-  --sidebar-accent-foreground: oklch(98.5% 0 0deg);
-  --sidebar-border: oklch(26.9% 0 0deg);
-  --sidebar-ring: oklch(43.9% 0 0deg);
-  --success: oklch(28% 0.1 200deg);
-  --warning: oklch(35% 0.08 70deg);
-  --error: oklch(45% 0.1 25deg);
+  --gold: #ffb94a;
+  --orange: #fa681c;
+  --tangerine: #f74a0b;
+  --dark-blue: #00152b;
+  --off-black: #00070f;
+  --off-white: #f7f7f7;
+  --white: #ffffff;
+  --light-gray: #ececec;
+  --navy-1000: #002e5d;
+  --navy-900: #00366d;
+  --navy-800: #1a436d;
+  --navy-700: #264d75;
+  --navy-600: #33587d;
+  --navy-500: #406285;
+  --navy-400: #4d6d8e;
+  --navy-300: #597796;
+  --navy-200: #99abbe;
+  --navy-100: #b2c0ce;
+  --navy-50: #ccd5df;
+  --navy-30: #e5eaef;
+  --navy-10: #f2f5f7;
+  --deep-blue-1000: #001f3e;
+  --deep-blue-900: #334455;
+  --deep-blue-800: #667380;
 }
 
 @theme inline {
@@ -203,6 +153,35 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
+
+  --color-gold: var(--gold);
+  --color-orange: var(--orange);
+  --color-tangerine: var(--tangerine);
+  --color-dark-blue: var(--dark-blue);
+  --color-off-black: var(--off-black);
+  --color-off-white: var(--off-white);
+  --color-light-gray: var(--light-gray);
+  --color-navy-1000: var(--navy-1000);
+  --color-navy-900: var(--navy-900);
+  --color-navy-800: var(--navy-800);
+  --color-navy-700: var(--navy-700);
+  --color-navy-600: var(--navy-600);
+  --color-navy-500: var(--navy-500);
+  --color-navy-400: var(--navy-400);
+  --color-navy-300: var(--navy-300);
+  --color-navy-200: var(--navy-200);
+  --color-navy-100: var(--navy-100);
+  --color-navy-50: var(--navy-50);
+  --color-navy-30: var(--navy-30);
+  --color-navy-10: var(--navy-10);
+  --color-deep-blue-1000: var(--deep-blue-1000);
+  --color-deep-blue-900: var(--deep-blue-900);
+  --color-deep-blue-800: var(--deep-blue-800);
+}
+
+.svg-icon {
+  width: 200px;
+  height: 200px;
 }
 
 @layer base {
@@ -214,11 +193,92 @@
   }
 }
 
-html {
-  opacity: 0;
+@utility caption-heading {
+  @apply text-[42px] leading-[46px] -tracking-[0.04em] font-normal;
+  font-family: Geist, sans-serif;
 }
 
-html[data-theme='dark'],
-html[data-theme='light'] {
-  opacity: initial;
+@utility bg-gradient-brand {
+  background: linear-gradient(95deg, #ffb94a 0.83%, #f74a0b 99.17%);
+}
+
+/* Caption */
+@utility text-caption {
+  @apply text-[16px] font-medium tracking-[3px] uppercase;
+  font-family:
+    Geist Mono,
+    sans-serif;
+}
+
+/* Headings */
+@utility text-h1-hero {
+  @apply text-[75px] leading-[78px] font-medium;
+  font-family: Geist, sans-serif;
+}
+
+@utility text-h1-blog {
+  @apply text-[60px] leading-[64px] font-medium;
+  font-family: Geist, sans-serif;
+}
+
+@utility text-h2 {
+  @apply text-[50px] leading-[55px];
+  font-family: Geist, sans-serif;
+}
+
+@utility text-h3 {
+  @apply text-[42px] leading-[46px];
+  font-family: Geist, sans-serif;
+}
+
+@utility text-h4 {
+  @apply text-[32px] leading-[36px];
+  font-family: Geist, sans-serif;
+}
+
+@utility text-h5 {
+  @apply text-[24px] leading-[28px];
+  font-family: Geist, sans-serif;
+}
+
+@utility text-h6 {
+  @apply text-[20px] leading-[24px];
+  font-family: Geist, sans-serif;
+}
+
+/* Body */
+@utility text-body-lg {
+  @apply text-[18px] leading-[25px];
+  font-family: Geist, sans-serif;
+}
+
+@utility text-body {
+  @apply text-[16px] leading-[24px];
+  font-family: Geist, sans-serif;
+}
+
+@utility text-body-spacious {
+  @apply text-[16px] leading-[28px] font-normal;
+  font-family: Geist, sans-serif;
+}
+
+@utility text-body-sm {
+  @apply text-[14px] leading-[22px];
+  font-family: Geist, sans-serif;
+}
+
+/* CTA */
+@utility text-cta-primary {
+  @apply text-[18px] font-medium;
+  font-family: Geist, sans-serif;
+}
+
+@utility text-cta-secondary {
+  @apply text-[20px] font-medium;
+  font-family: Geist, sans-serif;
+}
+
+@utility text-cta-tertiary {
+  @apply text-[16px] font-medium;
+  font-family: Geist, sans-serif;
 }
