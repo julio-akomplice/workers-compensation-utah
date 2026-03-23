@@ -12,6 +12,7 @@ interface SharedProps {
   ref?: Ref<HTMLImageElement | HTMLVideoElement | null>
   resource?: MediaType | string | number | null
   src?: StaticImageData
+  svgContent?: string | null
 }
 
 interface ImageProps extends SharedProps {

@@ -9,6 +9,7 @@ import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Image from 'next/image'
+import { cn } from '@/utilities/ui'
 
 const ScrollIndicator: React.FC = () => (
   <div className="row-start-3 w-fit h-fit mx-auto">
@@ -49,7 +50,12 @@ const ScrollIndicator: React.FC = () => (
   </div>
 )
 
-export const HomeHero: React.FC<Page['hero']> = ({ links, supportiveText, media }) => {
+export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> = ({
+  links,
+  supportiveText,
+  media,
+  svgContent,
+}) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
@@ -82,7 +88,9 @@ export const HomeHero: React.FC<Page['hero']> = ({ links, supportiveText, media 
             <div className="w-full max-w-200 mt-8.75">
               <Media
                 resource={media}
-                imgClassName="w-full h-auto"
+                svgContent={svgContent}
+                imgClassName=""
+                className={cn('[&_svg]:w-100 [&_svg]:h-auto')}
                 priority
                 loading="eager"
                 placeholder="empty"

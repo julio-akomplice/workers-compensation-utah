@@ -23,11 +23,44 @@ export const Media: CollectionConfig = {
     read: anyone,
     update: authenticated,
   },
+  hooks: {
+    beforeChange: [
+      ({ data, req }) => {
+        if (data?.mimeType?.includes('svg') && req.file) {
+          data.svgContent = req.file.data.toString('utf-8')
+        }
+        return data
+      },
+    ],
+    afterRead: [
+      async ({ doc }) => {
+        if (doc.mimeType?.includes('svg') && !doc.svgContent && doc.url) {
+          try {
+            const url = doc.url.startsWith('http')
+              ? doc.url
+              : `${process.env.NEXT_PUBLIC_SERVER_URL}${doc.url}`
+            const res = await fetch(url)
+            doc.svgContent = await res.text()
+          } catch {
+            // Failed to fetch SVG
+          }
+        }
+        return doc
+      },
+    ],
+  },
   fields: [
     {
       name: 'alt',
       type: 'text',
       //required: true,
+    },
+    {
+      name: 'svgContent',
+      type: 'textarea',
+      admin: {
+        hidden: true,
+      },
     },
     {
       name: 'caption',

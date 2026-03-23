@@ -1,0 +1,46 @@
+import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
+
+import { revalidatePath, revalidateTag } from 'next/cache'
+
+import type { PracticeArea } from '../../../payload-types'
+
+export const revalidatePracticeArea: CollectionAfterChangeHook<PracticeArea> = ({
+  doc,
+  previousDoc,
+  req: { payload, context },
+}) => {
+  if (!context.disableRevalidate) {
+    if (doc._status === 'published') {
+      const path = `/practice-areas/${doc.slug}`
+
+      payload.logger.info(`Revalidating practice area at path: ${path}`)
+
+      revalidatePath(path)
+      revalidateTag('practice-areas-sitemap')
+    }
+
+    // If the practice area was previously published, we need to revalidate the old path
+    if (previousDoc?._status === 'published' && doc._status !== 'published') {
+      const oldPath = `/practice-areas/${previousDoc.slug}`
+
+      payload.logger.info(`Revalidating old practice area at path: ${oldPath}`)
+
+      revalidatePath(oldPath)
+      revalidateTag('practice-areas-sitemap')
+    }
+  }
+  return doc
+}
+
+export const revalidateDelete: CollectionAfterDeleteHook<PracticeArea> = ({
+  doc,
+  req: { context },
+}) => {
+  if (!context.disableRevalidate) {
+    const path = `/practice-areas/${doc?.slug}`
+    revalidatePath(path)
+    revalidateTag('practice-areas-sitemap')
+  }
+
+  return doc
+}
