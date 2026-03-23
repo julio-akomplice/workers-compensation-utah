@@ -48,14 +48,19 @@ const placeholderBlur =
 export const ImageMedia: React.FC<MediaProps> = (props) => {
   const {
     alt: altFromProps,
+    blurDataURL,
     fill,
     pictureClassName,
     imgClassName,
+    loading: loadingFromProps,
+    placeholder,
     priority,
+    quality,
     resource,
     size: sizeFromProps,
+    sizes: sizesFromProps,
     src: srcFromProps,
-    loading: loadingFromProps,
+    unoptimized,
   } = props
 
   let width: number | undefined
@@ -78,26 +83,28 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
 
   // NOTE: this is used by the browser to determine which image to download at different screen sizes
-  const sizes = sizeFromProps
-    ? sizeFromProps
-    : Object.entries(breakpoints)
-        .map(([, value]) => `(max-width: ${value}px) ${value * 2}w`)
-        .join(', ')
+  const sizes =
+    sizesFromProps ||
+    sizeFromProps ||
+    Object.entries(breakpoints)
+      .map(([, value]) => `(max-width: ${value}px) ${value * 2}w`)
+      .join(', ')
 
   return (
     <picture className={cn(pictureClassName)}>
       <NextImage
         alt={alt || ''}
+        blurDataURL={blurDataURL || placeholderBlur}
         className={cn(imgClassName)}
         fill={fill}
         height={!fill ? height : undefined}
-        placeholder="blur"
-        blurDataURL={placeholderBlur}
-        priority={priority}
-        quality={100}
         loading={loading}
+        placeholder={placeholder || 'blur'}
+        priority={priority}
+        quality={quality ?? 100}
         sizes={sizes}
         src={src}
+        unoptimized={unoptimized}
         width={!fill ? width : undefined}
       />
     </picture>

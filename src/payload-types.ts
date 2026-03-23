@@ -159,7 +159,7 @@ export interface Page {
   id: string;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'homeHero';
     richText?: {
       root: {
         type: string;
@@ -175,6 +175,7 @@ export interface Page {
       };
       [k: string]: unknown;
     } | null;
+    supportiveText?: string | null;
     links?:
       | {
           link: {
@@ -191,10 +192,11 @@ export interface Page {
                 } | null);
             url?: string | null;
             label: string;
+            showArrow?: boolean | null;
             /**
              * Choose how the link should be rendered.
              */
-            appearance?: ('default' | 'outline') | null;
+            appearance?: 'gradient' | null;
           };
           id?: string | null;
         }[]
@@ -475,10 +477,11 @@ export interface CallToActionBlock {
               } | null);
           url?: string | null;
           label: string;
+          showArrow?: boolean | null;
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'outline') | null;
+          appearance?: null;
         };
         id?: string | null;
       }[]
@@ -525,10 +528,11 @@ export interface ContentBlock {
               } | null);
           url?: string | null;
           label: string;
+          showArrow?: boolean | null;
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ('default' | 'outline') | null;
+          appearance?: 'gradient' | null;
         };
         id?: string | null;
       }[]
@@ -1064,6 +1068,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         type?: T;
         richText?: T;
+        supportiveText?: T;
         links?:
           | T
           | {
@@ -1075,6 +1080,7 @@ export interface PagesSelect<T extends boolean = true> {
                     reference?: T;
                     url?: T;
                     label?: T;
+                    showArrow?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -1121,6 +1127,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              showArrow?: T;
               appearance?: T;
             };
         id?: T;
@@ -1147,6 +1154,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              showArrow?: T;
               appearance?: T;
             };
         id?: T;
@@ -1653,6 +1661,7 @@ export interface Header {
               } | null);
           url?: string | null;
           label: string;
+          showArrow?: boolean | null;
         };
         id?: string | null;
       }[]
@@ -1682,6 +1691,7 @@ export interface Footer {
               } | null);
           url?: string | null;
           label: string;
+          showArrow?: boolean | null;
         };
         id?: string | null;
       }[]
@@ -1705,6 +1715,7 @@ export interface HeaderSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              showArrow?: T;
             };
         id?: T;
       };
@@ -1728,6 +1739,7 @@ export interface FooterSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+              showArrow?: T;
             };
         id?: T;
       };

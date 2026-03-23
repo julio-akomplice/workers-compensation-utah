@@ -1,9 +1,13 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect } from 'react'
+
+import type { Page } from '@/payload-types'
 
 import heroImage from '@/assets/placeholder/image-placeholder.webp'
-import WCUHeroCompanyName from './image-wcu-hero-company-name.webp'
-import { ButtonArrow } from '@/components/ui/ButtonArrow'
-import CompanyName from './company-name.svg'
+import { CMSLink } from '@/components/Link'
+import { Media } from '@/components/Media'
+import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Image from 'next/image'
 
 const ScrollIndicator: React.FC = () => (
@@ -45,7 +49,13 @@ const ScrollIndicator: React.FC = () => (
   </div>
 )
 
-export const HomeHero: React.FC = () => {
+export const HomeHero: React.FC<Page['hero']> = ({ links, supportiveText, media }) => {
+  const { setHeaderTheme } = useHeaderTheme()
+
+  useEffect(() => {
+    setHeaderTheme('dark')
+  })
+
   return (
     <section className="relative text-black min-h-screen flex overflow-hidden pb-12.5">
       {/* Background Image */}
@@ -65,14 +75,30 @@ export const HomeHero: React.FC = () => {
         {/* Content */}
 
         <div className="relative z-10 flex flex-col items-center text-center px-4 row-start-2">
-          <p className="text-white caption-heading">Serving Utah for 30 Years</p>
+          {supportiveText && <p className="text-white caption-heading">{supportiveText}</p>}
 
           <h1 className="sr-only">Workers Compensation Utah</h1>
-          <div className="w-full max-w-200 mt-8.75">
-            <Image src={WCUHeroCompanyName} alt="Worker Compensation Utah" />
-          </div>
+          {media && typeof media === 'object' && (
+            <div className="w-full max-w-200 mt-8.75">
+              <Media
+                resource={media}
+                imgClassName="w-full h-auto"
+                priority
+                loading="eager"
+                placeholder="empty"
+              />
+            </div>
+          )}
 
-          <ButtonArrow className="mt-10">Free Case Evaluation</ButtonArrow>
+          {Array.isArray(links) && links.length > 0 && (
+            <ul className="flex gap-4 mt-10">
+              {links.map(({ link }, i) => (
+                <li key={i}>
+                  <CMSLink {...link} appearance="gradient" />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <ScrollIndicator />
       </div>
