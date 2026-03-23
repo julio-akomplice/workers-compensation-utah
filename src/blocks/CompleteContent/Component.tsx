@@ -14,19 +14,9 @@ export const CompleteContentBlock: React.FC<Props> = ({ sectionHeader, cards }) 
   return (
     <section className="w-full py-16">
       <div className="container mx-auto px-4">
-        {sectionHeader && (
-          <div className="mb-12">
-            {sectionHeader.supportiveText && (
-              <p className="mb-2 text-sm font-medium uppercase tracking-wide">
-                {sectionHeader.supportiveText}
-              </p>
-            )}
-            {sectionHeader.headline && (
-              <h2 className="text-h2 font-bold">{sectionHeader.headline}</h2>
-            )}
-            {sectionHeader.content && (
-              <p className="mt-4 max-w-2xl text-lg">{sectionHeader.content}</p>
-            )}
+        {sectionHeader && 'root' in sectionHeader && (
+          <div className="mb-12 section-header">
+            <RichText data={sectionHeader} enableGutter={false} enableProse={false} />
           </div>
         )}
 

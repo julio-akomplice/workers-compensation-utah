@@ -8,10 +8,12 @@ import {
   UnderlineFeature,
   type LinkFields,
 } from '@payloadcms/richtext-lexical'
+import { SupportiveTextFeature } from '@/lexical/supportiveText/feature.server'
 
 export const defaultLexical = lexicalEditor({
   features: [
     ParagraphFeature(),
+    SupportiveTextFeature(),
     UnderlineFeature(),
     BoldFeature(),
     ItalicFeature(),

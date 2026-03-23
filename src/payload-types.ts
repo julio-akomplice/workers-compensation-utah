@@ -819,10 +819,20 @@ export interface AwardsBlock {
  */
 export interface CompleteContentBlock {
   sectionHeader?: {
-    supportiveText?: string | null;
-    headline?: string | null;
-    content?: string | null;
-  };
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   cards?:
     | {
         image?: (string | null) | Media;
@@ -861,10 +871,20 @@ export interface CompleteContentBlock {
  */
 export interface PracticeAreasSectionBlock {
   sectionHeader?: {
-    supportiveText?: string | null;
-    headline?: string | null;
-    content?: string | null;
-  };
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   populateBy?: ('collection' | 'selection') | null;
   limit?: number | null;
   selectedPracticeAreas?: (string | PracticeArea)[] | null;
@@ -883,6 +903,10 @@ export interface PracticeAreasSectionBlock {
     url?: string | null;
     label: string;
     showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -1411,13 +1435,7 @@ export interface AwardsBlockSelect<T extends boolean = true> {
  * via the `definition` "CompleteContentBlock_select".
  */
 export interface CompleteContentBlockSelect<T extends boolean = true> {
-  sectionHeader?:
-    | T
-    | {
-        supportiveText?: T;
-        headline?: T;
-        content?: T;
-      };
+  sectionHeader?: T;
   cards?:
     | T
     | {
@@ -1445,13 +1463,7 @@ export interface CompleteContentBlockSelect<T extends boolean = true> {
  * via the `definition` "PracticeAreasSectionBlock_select".
  */
 export interface PracticeAreasSectionBlockSelect<T extends boolean = true> {
-  sectionHeader?:
-    | T
-    | {
-        supportiveText?: T;
-        headline?: T;
-        content?: T;
-      };
+  sectionHeader?: T;
   populateBy?: T;
   limit?: T;
   selectedPracticeAreas?: T;
@@ -1464,6 +1476,7 @@ export interface PracticeAreasSectionBlockSelect<T extends boolean = true> {
         url?: T;
         label?: T;
         showArrow?: T;
+        appearance?: T;
       };
   id?: T;
   blockName?: T;

@@ -79,7 +79,7 @@ export const PracticeAreas: CollectionConfig<'practice-areas'> = {
               fields: [
                 {
                   name: 'alternativeTitle',
-                  type: 'text',
+                  type: 'textarea',
                   label: 'Alternative Title',
                 },
                 {

@@ -1,55 +1,27 @@
-import type { Field, GroupField } from 'payload'
+import type { Field } from 'payload'
 
-import deepMerge from '@/utilities/deepMerge'
+import {
+  FixedToolbarFeature,
+  HeadingFeature,
+  InlineToolbarFeature,
+  ParagraphFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
+import { SupportiveTextFeature } from '@/lexical/supportiveText/feature.server'
 
-type SectionHeaderOptions = {
-  supportiveText?: boolean
-  headline?: boolean
-  content?: boolean
-  overrides?: Partial<GroupField>
-}
-
-const defaults: Required<Omit<SectionHeaderOptions, 'overrides'>> = {
-  supportiveText: true,
-  headline: true,
-  content: true,
-}
-
-export const sectionHeader = (options: SectionHeaderOptions = {}): Field => {
-  const opts = { ...defaults, ...options }
-
-  const fields: Field[] = []
-
-  if (opts.supportiveText) {
-    fields.push({
-      name: 'supportiveText',
-      type: 'text',
-      label: 'Supportive Text',
-    })
-  }
-
-  if (opts.headline) {
-    fields.push({
-      name: 'headline',
-      type: 'text',
-      label: 'Headline',
-    })
-  }
-
-  if (opts.content) {
-    fields.push({
-      name: 'content',
-      type: 'textarea',
-      label: 'Content',
-    })
-  }
-
-  const result: GroupField = {
+export const sectionHeader = (): Field => {
+  return {
     name: 'sectionHeader',
-    type: 'group',
+    type: 'richText',
     label: 'Section Header',
-    fields,
+    editor: lexicalEditor({
+      features: [
+        ParagraphFeature(),
+        SupportiveTextFeature(),
+        HeadingFeature({ enabledHeadingSizes: ['h2', 'h3'] }),
+        FixedToolbarFeature(),
+        InlineToolbarFeature(),
+      ],
+    }),
   }
-
-  return deepMerge(result, options.overrides ?? {})
 }

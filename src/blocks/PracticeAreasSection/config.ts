@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import type { PracticeArea } from '@/payload-types'
 
 import { link } from '@/fields/link'
 import { sectionHeader } from '@/fields/sectionHeader'
@@ -44,12 +45,37 @@ export const PracticeAreasSection: Block = {
       relationTo: 'practice-areas',
       hasMany: true,
       label: 'Select Practice Areas',
+      hooks: {
+        afterRead: [
+          async ({
+            value,
+            req,
+          }): Promise<Partial<PracticeArea>[] | (string | PracticeArea)[] | null | undefined> => {
+            if (!value || !Array.isArray(value) || value.length === 0) return value
+
+            const ids = value.map((item: string | PracticeArea) =>
+              typeof item === 'object' ? item.id : item,
+            )
+
+            const { docs } = await req.payload.find({
+              collection: 'practice-areas',
+              where: { id: { in: ids } },
+              select: {
+                title: true,
+                slug: true,
+                general: true,
+              },
+              limit: ids.length,
+            })
+
+            return docs
+          },
+        ],
+      },
       admin: {
         condition: (_, siblingData) => siblingData.populateBy === 'selection',
       },
     },
-    link({
-      appearances: false,
-    }),
+    link({}),
   ],
 }

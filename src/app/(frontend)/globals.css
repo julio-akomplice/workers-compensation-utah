@@ -284,3 +284,22 @@
   @apply text-[16px] font-medium;
   font-family: Geist, sans-serif;
 }
+
+/* Section Header */
+@utility section-header {
+  & h2,
+  & h2 {
+    @apply text-dark-blue;
+  }
+  & h2 {
+    @apply text-h2 font-semibold;
+  }
+
+  & h3 {
+    @apply text-h3 font-medium;
+  }
+
+  & p:not(.text-caption) {
+    @apply mx-auto mt-4 max-w-2xl text-body text-deep-blue-800;
+  }
+}
