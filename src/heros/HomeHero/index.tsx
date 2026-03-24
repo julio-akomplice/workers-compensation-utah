@@ -63,12 +63,13 @@ export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> =
   })
 
   return (
-    <section className="relative text-black min-h-screen flex overflow-hidden pb-12.5">
+    <section className="relative text-black h-screen overflow-hidden pb-12.5">
       {/* Background Image */}
       <Image
         src={heroImage}
         alt="Workers Compensation Utah"
-        className="absolute inset-0 w-full h-full object-cover -z-10"
+        fill
+        className="object-cover -z-10"
       />
 
       {/* Dark overlay for text readability */}
@@ -77,20 +78,20 @@ export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> =
         style={{ background: 'linear-gradient(0deg, #00070F 0%, rgba(0, 7, 15, 0.00) 100%)' }}
       />
 
-      <div className="grid grid-rows-[50px_1fr_50px] items-center justify-center min-h-full flex-1">
+      <div className="grid grid-rows-[50px_1fr_50px] items-center justify-center h-full">
         {/* Content */}
 
-        <div className="relative z-10 flex flex-col items-center text-center px-4 row-start-2">
+        <div className="relative z-10 flex flex-col items-center text-center px-8 md:px-12 lg:px-4 row-start-2">
           {supportiveText && <p className="text-white caption-heading">{supportiveText}</p>}
 
           <h1 className="sr-only">Workers Compensation Utah</h1>
           {media && typeof media === 'object' && (
-            <div className="w-full max-w-200 mt-8.75">
+            <div className="mt-8.75">
               <Media
                 resource={media}
                 svgContent={svgContent}
                 imgClassName=""
-                className={cn('[&_svg]:w-100 [&_svg]:h-auto')}
+                className={cn('w-full max-w-[90vw] md:max-w-[80vw] lg:max-w-200 [&_svg]:w-full [&_svg]:h-auto [&_svg]:max-w-[90vw] [&_svg]:md:max-w-[80vw] [&_svg]:lg:max-w-200')}
                 priority
                 loading="eager"
                 placeholder="empty"

@@ -10,6 +10,7 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { PracticeAreas } from './collections/PracticeAreas'
+import { AreasServed } from './collections/AreasServed'
 import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
 import { CaseQuestionnaireCTA } from './globals/CaseQuestionnaireCTA/config'
@@ -72,7 +73,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URL || '',
   }),
-  collections: [Pages, Posts, PracticeAreas, CaseStudies, Testimonials, Media, Categories, Users],
+  collections: [Pages, Posts, PracticeAreas, AreasServed, CaseStudies, Testimonials, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, CaseQuestionnaireCTA, ContactSection],
   plugins,

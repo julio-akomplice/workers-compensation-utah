@@ -10,6 +10,13 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+      label: 'Logo',
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [
@@ -24,6 +31,30 @@ export const Header: GlobalConfig = {
           RowLabel: '@/Header/RowLabel#RowLabel',
         },
       },
+    },
+    {
+      name: 'phone',
+      type: 'group',
+      label: 'Phone CTA',
+      fields: [
+        {
+          name: 'label',
+          type: 'text',
+          required: true,
+          label: 'Display Text',
+          defaultValue: '(801) 424-WORK (9675)',
+        },
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+          label: 'Phone Link',
+          defaultValue: 'tel:+18014249675',
+          admin: {
+            description: 'e.g. tel:+18014249675',
+          },
+        },
+      ],
     },
   ],
   hooks: {

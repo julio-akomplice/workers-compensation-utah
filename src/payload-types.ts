@@ -70,6 +70,7 @@ export interface Config {
     pages: Page;
     posts: Post;
     'practice-areas': PracticeArea;
+    'areas-served': AreasServed;
     'case-studies': CaseStudy;
     testimonials: Testimonial;
     media: Media;
@@ -95,6 +96,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'practice-areas': PracticeAreasSelect<false> | PracticeAreasSelect<true>;
+    'areas-served': AreasServedSelect<false> | AreasServedSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -1300,6 +1302,86 @@ export interface ContactSectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "areas-served".
+ */
+export interface AreasServed {
+  id: string;
+  title: string;
+  hero: {
+    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'homeHero';
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    supportiveText?: string | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: string | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+            showArrow?: boolean | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: 'gradient' | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    media?: (string | null) | Media;
+  };
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | CompleteContentBlock
+    | CaseQuestionnaireCTABlock
+    | ContactSectionBlock
+  )[];
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1499,6 +1581,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'practice-areas';
         value: string | PracticeArea;
+      } | null)
+    | ({
+        relationTo: 'areas-served';
+        value: string | AreasServed;
       } | null)
     | ({
         relationTo: 'case-studies';
@@ -2001,6 +2087,62 @@ export interface PracticeAreasSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "areas-served_select".
+ */
+export interface AreasServedSelect<T extends boolean = true> {
+  title?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        richText?: T;
+        supportiveText?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    showArrow?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+        media?: T;
+      };
+  layout?:
+    | T
+    | {
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        completeContentBlock?: T | CompleteContentBlockSelect<T>;
+        caseQuestionnaireCTA?: T | CaseQuestionnaireCTABlockSelect<T>;
+        contactSection?: T | ContactSectionBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "case-studies_select".
  */
 export interface CaseStudiesSelect<T extends boolean = true> {
@@ -2451,6 +2593,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: string;
+  logo: string | Media;
   navItems?:
     | {
         link: {
@@ -2472,6 +2615,13 @@ export interface Header {
         id?: string | null;
       }[]
     | null;
+  phone: {
+    label: string;
+    /**
+     * e.g. tel:+18014249675
+     */
+    url: string;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2481,27 +2631,60 @@ export interface Header {
  */
 export interface Footer {
   id: string;
-  navItems?:
+  /**
+   * Select practice areas to display in the footer.
+   */
+  practiceAreaLinks?: (string | PracticeArea)[] | null;
+  /**
+   * Select areas served to display in the footer.
+   */
+  areasServed?: (string | AreasServed)[] | null;
+  /**
+   * Select pages to display in the footer quick links.
+   */
+  quickLinks?: (string | Page)[] | null;
+  phone: {
+    label: string;
+    /**
+     * e.g. tel:+18015551234
+     */
+    url: string;
+    image?: (string | null) | Media;
+  };
+  fax: {
+    label: string;
+    /**
+     * e.g. fax:+18015551234
+     */
+    url: string;
+    image?: (string | null) | Media;
+  };
+  address: {
+    text: string;
+    /**
+     * Google Maps link for the address.
+     */
+    mapUrl?: string | null;
+    image?: (string | null) | Media;
+  };
+  socialLinks?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-          showArrow?: boolean | null;
-        };
+        name: string;
+        url: string;
+        image: string | Media;
         id?: string | null;
       }[]
     | null;
+  logo: string | Media;
+  /**
+   * Text displayed after the copyright year (year is auto-generated).
+   */
+  copyrightText?: string | null;
+  allRightsReservedText?: string | null;
+  privacyPolicyPage?: (string | null) | Page;
+  privacyPolicyLabel?: string | null;
+  legalMarketingText?: string | null;
+  legalMarketingUrl?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2581,6 +2764,7 @@ export interface ContactSection {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
   navItems?:
     | T
     | {
@@ -2595,6 +2779,12 @@ export interface HeaderSelect<T extends boolean = true> {
               showArrow?: T;
             };
         id?: T;
+      };
+  phone?:
+    | T
+    | {
+        label?: T;
+        url?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -2605,21 +2795,45 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  navItems?:
+  practiceAreaLinks?: T;
+  areasServed?: T;
+  quickLinks?: T;
+  phone?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              showArrow?: T;
-            };
+        label?: T;
+        url?: T;
+        image?: T;
+      };
+  fax?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        image?: T;
+      };
+  address?:
+    | T
+    | {
+        text?: T;
+        mapUrl?: T;
+        image?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        image?: T;
         id?: T;
       };
+  logo?: T;
+  copyrightText?: T;
+  allRightsReservedText?: T;
+  privacyPolicyPage?: T;
+  privacyPolicyLabel?: T;
+  legalMarketingText?: T;
+  legalMarketingUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2688,6 +2902,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'practice-areas';
           value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     global?: string | null;
     user?: (string | null) | User;

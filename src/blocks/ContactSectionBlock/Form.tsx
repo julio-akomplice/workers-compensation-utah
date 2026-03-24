@@ -87,11 +87,11 @@ export const ContactForm: React.FC<Props> = ({ form }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-4">
         {formFields?.map((field, index) => {
           if (field.blockType === 'message') {
             return field.message ? (
-              <div key={index} className="col-span-full">
+              <div key={index} className="md:col-span-full">
                 <RichText data={field.message} enableGutter={false} enableProse={false} />
               </div>
             ) : null
@@ -106,10 +106,10 @@ export const ContactForm: React.FC<Props> = ({ form }) => {
             field.blockType === 'textarea' || (width !== undefined && width === 100)
 
           const inputClassName =
-            'w-full rounded-[6px] border border-navy-50 bg-light-gray px-3 py-4 text-body text-dark-blue placeholder:text-navy-200 outline-none transition-colors focus:border-orange focus:ring-1 focus:ring-orange'
+            'w-full rounded-[6px] border border-navy-50 bg-off-white md:bg-light-gray px-3 py-4 text-body text-dark-blue placeholder:text-navy-200 outline-none transition-colors focus:border-orange focus:ring-1 focus:ring-orange'
 
           return (
-            <div key={index} className={isFullWidth ? 'col-span-full' : ''}>
+            <div key={index} className={isFullWidth ? 'md:col-span-full' : ''}>
               {label && (
                 <label
                   htmlFor={name}
@@ -192,7 +192,7 @@ export const ContactForm: React.FC<Props> = ({ form }) => {
 
       {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
 
-      <ButtonArrow type="submit" disabled={isLoading} className="mt-3 w-full">
+      <ButtonArrow type="submit" disabled={isLoading} className="mt-3 w-full md:h-[54px]">
         {isLoading ? 'Submitting...' : submitButtonLabel || 'Submit'}
       </ButtonArrow>
     </form>
