@@ -11,6 +11,7 @@ import {
   RichText as ConvertRichText,
 } from '@payloadcms/richtext-lexical/react'
 import type { SerializedSupportiveTextNode } from '@/lexical/supportiveText/node'
+import type { SerializedHighlightNode } from '@/lexical/highlight/node'
 
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 
@@ -27,6 +28,7 @@ type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps>
   | SerializedSupportiveTextNode
+  | SerializedHighlightNode
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
@@ -41,7 +43,10 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
   supportiveText: ({ node, nodesToJSX }) => (
-    <p className="mb-4 text-caption text-gold">{nodesToJSX({ nodes: node.children })}</p>
+    <p className="supportive-text">{nodesToJSX({ nodes: node.children })}</p>
+  ),
+  highlight: ({ node, nodesToJSX }) => (
+    <span className="highlight">{nodesToJSX({ nodes: node.children })}</span>
   ),
   blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,

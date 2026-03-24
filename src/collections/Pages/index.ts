@@ -10,6 +10,11 @@ import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { PracticeAreasSection } from '../../blocks/PracticeAreasSection/config'
+import { HomeAboutUs } from '../../blocks/HomeAboutUs/config'
+import { HomeTestimonialSection } from '../../blocks/HomeTestimonialSection/config'
+import { HomeCaseStudiesSection } from '../../blocks/HomeCaseStudiesSection/config'
+import { CaseQuestionnaireCTABlock } from '../../blocks/CaseQuestionnaireCTABlock/config'
+import { ContactSectionBlock } from '../../blocks/ContactSectionBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -75,7 +80,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, Awards, CompleteContent, PracticeAreasSection],
+              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, Awards, CompleteContent, PracticeAreasSection, HomeTestimonialSection, HomeAboutUs, HomeCaseStudiesSection, CaseQuestionnaireCTABlock, ContactSectionBlock],
               required: true,
               admin: {
                 initCollapsed: true,

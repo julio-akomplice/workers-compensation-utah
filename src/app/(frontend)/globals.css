@@ -47,6 +47,8 @@
   --breakpoint-2xl: 86rem;
   --font-mono: var(--font-geist-mono);
   --font-sans: var(--font-geist-sans);
+
+  --radius: 0.5rem;
 }
 
 @layer utilities {
@@ -288,18 +290,42 @@
 /* Section Header */
 @utility section-header {
   & h2,
-  & h2 {
+  & h3 {
     @apply text-dark-blue;
   }
   & h2 {
-    @apply text-h2 font-semibold;
+    @apply mt-5 text-h2 font-medium;
   }
 
   & h3 {
     @apply text-h3 font-medium;
   }
 
-  & p:not(.text-caption) {
+  & p:not(.supportive-text) {
     @apply mx-auto mt-4 max-w-2xl text-body text-deep-blue-800;
+  }
+
+  & p.supportive-text {
+    @apply text-caption text-gold;
+  }
+
+  & > *:first-child {
+    @apply mt-0;
+  }
+
+  & > *:last-child {
+    @apply mb-0;
+  }
+
+}
+
+@utility section-header--dark {
+  &.section-header h2,
+  &.section-header h3 {
+    @apply text-white;
+  }
+
+  &.section-header p:not(.supportive-text) {
+    @apply text-navy-100;
   }
 }

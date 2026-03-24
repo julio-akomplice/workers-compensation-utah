@@ -10,6 +10,11 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { PracticeAreasSectionBlock } from '@/blocks/PracticeAreasSection/Component'
+import { HomeAboutUsBlock } from '@/blocks/HomeAboutUs/Component'
+import { HomeTestimonialSectionBlock } from '@/blocks/HomeTestimonialSection/Component'
+import { HomeCaseStudiesSectionBlock } from '@/blocks/HomeCaseStudiesSection/Component'
+import { CaseQuestionnaireCTABlockComponent } from '@/blocks/CaseQuestionnaireCTABlock/Component'
+import { ContactSectionBlockComponent } from '@/blocks/ContactSectionBlock/Component'
 
 const blockComponents = {
   awards: AwardsBlock,
@@ -18,8 +23,13 @@ const blockComponents = {
   content: ContentBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,
+  homeAboutUs: HomeAboutUsBlock,
+  homeCaseStudiesSection: HomeCaseStudiesSectionBlock,
+  homeTestimonialSection: HomeTestimonialSectionBlock,
   mediaBlock: MediaBlock,
   practiceAreasSection: PracticeAreasSectionBlock,
+  caseQuestionnaireCTA: CaseQuestionnaireCTABlockComponent,
+  contactSection: ContactSectionBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{

@@ -16,6 +16,7 @@ export const Testimonials: CollectionConfig = {
     defaultColumns: ['name', 'title', 'rating', 'updatedAt'],
     useAsTitle: 'displayTitle',
   },
+  disableDuplicate: false,
   fields: [
     {
       name: 'displayTitle',

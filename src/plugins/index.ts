@@ -60,6 +60,8 @@ export const plugins: Plugin[] = [
     },
     formOverrides: {
       fields: ({ defaultFields }) => {
+        const slugsWithPlaceholder = ['text', 'email', 'textarea', 'number', 'state', 'country']
+
         return defaultFields.map((field) => {
           if ('name' in field && field.name === 'confirmationMessage') {
             return {
@@ -75,6 +77,32 @@ export const plugins: Plugin[] = [
               }),
             }
           }
+
+          if ('name' in field && field.name === 'fields' && field.type === 'blocks') {
+            return {
+              ...field,
+              blocks: field.blocks.map((block) => {
+                if (slugsWithPlaceholder.includes(block.slug)) {
+                  return {
+                    ...block,
+                    fields: [
+                      ...block.fields,
+                      {
+                        name: 'placeholder',
+                        type: 'text',
+                        label: 'Placeholder',
+                        admin: {
+                          width: '50%',
+                        },
+                      },
+                    ],
+                  }
+                }
+                return block
+              }),
+            }
+          }
+
           return field
         })
       },

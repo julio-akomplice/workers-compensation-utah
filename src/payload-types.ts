@@ -70,6 +70,7 @@ export interface Config {
     pages: Page;
     posts: Post;
     'practice-areas': PracticeArea;
+    'case-studies': CaseStudy;
     testimonials: Testimonial;
     media: Media;
     categories: Category;
@@ -94,6 +95,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'practice-areas': PracticeAreasSelect<false> | PracticeAreasSelect<true>;
+    'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
@@ -116,10 +118,14 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'case-questionnaire-cta': CaseQuestionnaireCta;
+    'contact-section': ContactSection;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'case-questionnaire-cta': CaseQuestionnaireCtaSelect<false> | CaseQuestionnaireCtaSelect<true>;
+    'contact-section': ContactSectionSelect<false> | ContactSectionSelect<true>;
   };
   locale: null;
   widgets: {
@@ -216,6 +222,11 @@ export interface Page {
     | AwardsBlock
     | CompleteContentBlock
     | PracticeAreasSectionBlock
+    | HomeTestimonialSectionBlock
+    | HomeAboutUsBlock
+    | HomeCaseStudiesSectionBlock
+    | CaseQuestionnaireCTABlock
+    | ContactSectionBlock
   )[];
   meta?: {
     title?: string | null;
@@ -649,6 +660,7 @@ export interface Form {
             label?: string | null;
             width?: number | null;
             required?: boolean | null;
+            placeholder?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'country';
@@ -658,6 +670,7 @@ export interface Form {
             label?: string | null;
             width?: number | null;
             required?: boolean | null;
+            placeholder?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'email';
@@ -688,6 +701,7 @@ export interface Form {
             width?: number | null;
             defaultValue?: number | null;
             required?: boolean | null;
+            placeholder?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'number';
@@ -715,6 +729,7 @@ export interface Form {
             label?: string | null;
             width?: number | null;
             required?: boolean | null;
+            placeholder?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'state';
@@ -725,6 +740,7 @@ export interface Form {
             width?: number | null;
             defaultValue?: string | null;
             required?: boolean | null;
+            placeholder?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'text';
@@ -735,6 +751,7 @@ export interface Form {
             width?: number | null;
             defaultValue?: string | null;
             required?: boolean | null;
+            placeholder?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'textarea';
@@ -1001,6 +1018,61 @@ export interface PracticeArea {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeTestimonialSectionBlock".
+ */
+export interface HomeTestimonialSectionBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Select up to 3 testimonials to display.
+   */
+  testimonials?: (string | Testimonial)[] | null;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  videos?:
+    | {
+        media: string | Media;
+        poster?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeTestimonialSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -1027,6 +1099,204 @@ export interface Testimonial {
   avatar: string | Media;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeAboutUsBlock".
+ */
+export interface HomeAboutUsBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image: string | Media;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeAboutUs';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeCaseStudiesSectionBlock".
+ */
+export interface HomeCaseStudiesSectionBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  limit?: number | null;
+  selectedCaseStudies?: (string | CaseStudy)[] | null;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeCaseStudiesSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies".
+ */
+export interface CaseStudy {
+  id: string;
+  displayTitle?: string | null;
+  /**
+   * e.g. "Workers Compensation Settlement"
+   */
+  category: string;
+  alternativeCategory?: string | null;
+  /**
+   * e.g. "$2,000,000"
+   */
+  settlementAmount: string;
+  /**
+   * Brief description of the case
+   */
+  description: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseQuestionnaireCTABlock".
+ */
+export interface CaseQuestionnaireCTABlock {
+  /**
+   * Enable to override all fields from the global CTA.
+   */
+  overrideAll?: boolean | null;
+  overrideImage?: boolean | null;
+  overrideContent?: boolean | null;
+  overrideLink?: boolean | null;
+  image?: (string | null) | Media;
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'caseQuestionnaireCTA';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSectionBlock".
+ */
+export interface ContactSectionBlock {
+  /**
+   * Enable to override all fields from the global Contact Section.
+   */
+  overrideAll?: boolean | null;
+  overrideSectionHeader?: boolean | null;
+  overrideMapUrl?: boolean | null;
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  mapUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1231,6 +1501,10 @@ export interface PayloadLockedDocument {
         value: string | PracticeArea;
       } | null)
     | ({
+        relationTo: 'case-studies';
+        value: string | CaseStudy;
+      } | null)
+    | ({
         relationTo: 'testimonials';
         value: string | Testimonial;
       } | null)
@@ -1349,6 +1623,11 @@ export interface PagesSelect<T extends boolean = true> {
         awards?: T | AwardsBlockSelect<T>;
         completeContentBlock?: T | CompleteContentBlockSelect<T>;
         practiceAreasSection?: T | PracticeAreasSectionBlockSelect<T>;
+        homeTestimonialSection?: T | HomeTestimonialSectionBlockSelect<T>;
+        homeAboutUs?: T | HomeAboutUsBlockSelect<T>;
+        homeCaseStudiesSection?: T | HomeCaseStudiesSectionBlockSelect<T>;
+        caseQuestionnaireCTA?: T | CaseQuestionnaireCTABlockSelect<T>;
+        contactSection?: T | ContactSectionBlockSelect<T>;
       };
   meta?:
     | T
@@ -1518,6 +1797,116 @@ export interface PracticeAreasSectionBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeTestimonialSectionBlock_select".
+ */
+export interface HomeTestimonialSectionBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  testimonials?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
+      };
+  videos?:
+    | T
+    | {
+        media?: T;
+        poster?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeAboutUsBlock_select".
+ */
+export interface HomeAboutUsBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  image?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeCaseStudiesSectionBlock_select".
+ */
+export interface HomeCaseStudiesSectionBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  populateBy?: T;
+  limit?: T;
+  selectedCaseStudies?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseQuestionnaireCTABlock_select".
+ */
+export interface CaseQuestionnaireCTABlockSelect<T extends boolean = true> {
+  overrideAll?: T;
+  overrideImage?: T;
+  overrideContent?: T;
+  overrideLink?: T;
+  image?: T;
+  sectionHeader?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSectionBlock_select".
+ */
+export interface ContactSectionBlockSelect<T extends boolean = true> {
+  overrideAll?: T;
+  overrideSectionHeader?: T;
+  overrideMapUrl?: T;
+  sectionHeader?: T;
+  mapUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1609,6 +1998,19 @@ export interface PracticeAreasSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies_select".
+ */
+export interface CaseStudiesSelect<T extends boolean = true> {
+  displayTitle?: T;
+  category?: T;
+  alternativeCategory?: T;
+  settlementAmount?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1805,6 +2207,7 @@ export interface FormsSelect<T extends boolean = true> {
               label?: T;
               width?: T;
               required?: T;
+              placeholder?: T;
               id?: T;
               blockName?: T;
             };
@@ -1815,6 +2218,7 @@ export interface FormsSelect<T extends boolean = true> {
               label?: T;
               width?: T;
               required?: T;
+              placeholder?: T;
               id?: T;
               blockName?: T;
             };
@@ -1833,6 +2237,7 @@ export interface FormsSelect<T extends boolean = true> {
               width?: T;
               defaultValue?: T;
               required?: T;
+              placeholder?: T;
               id?: T;
               blockName?: T;
             };
@@ -1862,6 +2267,7 @@ export interface FormsSelect<T extends boolean = true> {
               label?: T;
               width?: T;
               required?: T;
+              placeholder?: T;
               id?: T;
               blockName?: T;
             };
@@ -1873,6 +2279,7 @@ export interface FormsSelect<T extends boolean = true> {
               width?: T;
               defaultValue?: T;
               required?: T;
+              placeholder?: T;
               id?: T;
               blockName?: T;
             };
@@ -1884,6 +2291,7 @@ export interface FormsSelect<T extends boolean = true> {
               width?: T;
               defaultValue?: T;
               required?: T;
+              placeholder?: T;
               id?: T;
               blockName?: T;
             };
@@ -2099,6 +2507,77 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-questionnaire-cta".
+ */
+export interface CaseQuestionnaireCta {
+  id: string;
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image: string | Media;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-section".
+ */
+export interface ContactSection {
+  id: string;
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  form: string | Form;
+  mapUrl: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2141,6 +2620,40 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-questionnaire-cta_select".
+ */
+export interface CaseQuestionnaireCtaSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  image?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-section_select".
+ */
+export interface ContactSectionSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  form?: T;
+  mapUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

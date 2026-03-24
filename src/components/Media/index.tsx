@@ -7,7 +7,7 @@ import { SvgMedia } from './SvgMedia'
 import { VideoMedia } from './VideoMedia'
 
 export const Media: React.FC<Props> = (props) => {
-  const { className, htmlElement = 'div', resource } = props
+  const { className, htmlElement, resource } = props
 
   const isVideo = typeof resource === 'object' && resource?.mimeType?.includes('video')
   const isSVG = typeof resource === 'object' && resource?.mimeType?.includes('svg')
@@ -21,7 +21,7 @@ export const Media: React.FC<Props> = (props) => {
 
   return (
     <Tag
-      {...(htmlElement !== null
+      {...(htmlElement
         ? {
             className,
           }

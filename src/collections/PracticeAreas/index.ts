@@ -14,10 +14,7 @@ import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
-import {
-  revalidateDelete,
-  revalidatePracticeArea,
-} from './hooks/revalidatePracticeArea'
+import { revalidateDelete, revalidatePracticeArea } from './hooks/revalidatePracticeArea'
 
 import {
   MetaDescriptionField,
@@ -38,6 +35,8 @@ export const PracticeAreas: CollectionConfig<'practice-areas'> = {
   defaultPopulate: {
     title: true,
     slug: true,
+    general: true,
+    layout: true,
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
@@ -100,7 +99,16 @@ export const PracticeAreas: CollectionConfig<'practice-areas'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, Awards, CompleteContent, PracticeAreasSection],
+              blocks: [
+                CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                FormBlock,
+                Awards,
+                CompleteContent,
+                PracticeAreasSection,
+              ],
               required: true,
               admin: {
                 initCollapsed: true,

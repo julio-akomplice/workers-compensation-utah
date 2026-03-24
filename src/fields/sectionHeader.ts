@@ -8,6 +8,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import { SupportiveTextFeature } from '@/lexical/supportiveText/feature.server'
+import { HighlightFeature } from '@/lexical/highlight/feature.server'
 
 export const sectionHeader = (): Field => {
   return {
@@ -18,6 +19,7 @@ export const sectionHeader = (): Field => {
       features: [
         ParagraphFeature(),
         SupportiveTextFeature(),
+        HighlightFeature(),
         HeadingFeature({ enabledHeadingSizes: ['h2', 'h3'] }),
         FixedToolbarFeature(),
         InlineToolbarFeature(),
