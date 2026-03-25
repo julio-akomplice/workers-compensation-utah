@@ -24,6 +24,8 @@ import { TestimonialsSection } from '../../blocks/TestimonialsSection/config'
 import { FAQSection } from '../../blocks/FAQSection/config'
 import { ArticlesSection } from '../../blocks/ArticlesSection/config'
 import { LawyerBioBlock } from '../../blocks/LawyerBioBlock/config'
+import { ContactPageBlock } from '../../blocks/ContactPageBlock/config'
+import { LegalPageBlock } from '../../blocks/LegalPageBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -89,7 +91,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [Breadcrumb, CallToAction, Content, MediaBlock, Archive, FormBlock, Awards, CompleteContent, PracticeAreasSection, HomeTestimonialSection, HomeAboutUs, HomeCaseStudiesSection, CaseQuestionnaireCTABlock, ContactSectionBlock, AboutAboutFirm, AboutWhyChooseUs, AboutOurAttorney, AboutGetStarted, TestimonialsSection, FAQSection, ArticlesSection, LawyerBioBlock],
+              blocks: [Breadcrumb, CallToAction, Content, MediaBlock, Archive, FormBlock, Awards, CompleteContent, PracticeAreasSection, HomeTestimonialSection, HomeAboutUs, HomeCaseStudiesSection, CaseQuestionnaireCTABlock, ContactSectionBlock, ContactPageBlock, AboutAboutFirm, AboutWhyChooseUs, AboutOurAttorney, AboutGetStarted, TestimonialsSection, FAQSection, ArticlesSection, LawyerBioBlock, LegalPageBlock],
               required: true,
               admin: {
                 initCollapsed: true,
@@ -97,6 +99,21 @@ export const Pages: CollectionConfig<'pages'> = {
             },
           ],
           label: 'Content',
+        },
+        {
+          label: 'Settings',
+          fields: [
+            {
+              name: 'solidMenu',
+              type: 'checkbox',
+              label: 'Solid Menu',
+              defaultValue: false,
+              admin: {
+                description:
+                  'Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.',
+              },
+            },
+          ],
         },
         {
           name: 'meta',

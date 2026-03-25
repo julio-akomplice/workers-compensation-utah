@@ -64,11 +64,11 @@ export default async function Page({ params: paramsPromise }: Args) {
     return <PayloadRedirects url={url} />
   }
 
-  const { hero, layout } = page
+  const { hero, layout, solidMenu } = page
 
   return (
-    <article className="">
-      <PageClient />
+    <article className={solidMenu ? 'pt-header' : ''}>
+      <PageClient solidMenu={solidMenu ?? false} />
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 

@@ -8,16 +8,20 @@ import { Phone, X } from 'lucide-react'
 import type { Header, Page, Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import { cn } from '@/utilities/ui'
 
 interface HeaderClientProps {
   data: Header
+  initialSolidMenu?: boolean
 }
 
-export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
+export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMenu = false }) => {
   const [theme, setTheme] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { headerTheme, setHeaderTheme } = useHeaderTheme()
+  const { headerTheme, setHeaderTheme, solidMenu: contextSolidMenu } = useHeaderTheme()
+  // Use context value once hydrated, fall back to server-provided initial value
+  const solidMenu = contextSolidMenu || initialSolidMenu
   const pathname = usePathname()
 
   useEffect(() => {
@@ -71,13 +75,16 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-20 transition-colors duration-300 ${
-        scrolled ? 'bg-dark-blue' : ''
-      }`}
+      className={cn(
+        'fixed top-0 left-0 right-0 z-20',
+        solidMenu && 'bg-dark-blue',
+        !solidMenu && 'transition-colors duration-300',
+        !solidMenu && scrolled && 'bg-dark-blue',
+      )}
       {...(theme ? { 'data-theme': theme } : {})}
     >
-      {/* Dark gradient overlay — only when not scrolled */}
-      {!scrolled && (
+      {/* Dark gradient overlay — only when not scrolled and not solid menu */}
+      {!scrolled && !solidMenu && (
         <div className="absolute inset-0 h-[88px] md:h-[92px] bg-gradient-to-b from-off-black/40 to-transparent pointer-events-none" />
       )}
 

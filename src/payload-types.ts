@@ -222,6 +222,7 @@ export interface Page {
     | HomeCaseStudiesSectionBlock
     | CaseQuestionnaireCTABlock
     | ContactSectionBlock
+    | ContactPageBlock
     | AboutAboutFirmBlock
     | AboutWhyChooseUsBlock
     | AboutOurAttorneyBlock
@@ -230,7 +231,12 @@ export interface Page {
     | FAQSectionBlock
     | ArticlesSectionBlock
     | LawyerBioBlockBlock
+    | LegalPageBlock
   )[];
+  /**
+   * Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.
+   */
+  solidMenu?: boolean | null;
   meta?: {
     title?: string | null;
     /**
@@ -1318,6 +1324,52 @@ export interface ContactSectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactPageBlock".
+ */
+export interface ContactPageBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  phoneLink: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  form: string | Form;
+  mapUrl: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "AboutAboutFirmBlock".
  */
 export interface AboutAboutFirmBlock {
@@ -1763,6 +1815,34 @@ export interface LawyerBioBlockBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LegalPageBlock".
+ */
+export interface LegalPageBlock {
+  /**
+   * e.g. Privacy Policy, Terms of Service
+   */
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'legalPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "areas-served".
  */
 export interface AreasServed {
@@ -2166,6 +2246,7 @@ export interface PagesSelect<T extends boolean = true> {
         homeCaseStudiesSection?: T | HomeCaseStudiesSectionBlockSelect<T>;
         caseQuestionnaireCTA?: T | CaseQuestionnaireCTABlockSelect<T>;
         contactSection?: T | ContactSectionBlockSelect<T>;
+        contactPage?: T | ContactPageBlockSelect<T>;
         aboutAboutFirm?: T | AboutAboutFirmBlockSelect<T>;
         aboutWhyChooseUs?: T | AboutWhyChooseUsBlockSelect<T>;
         aboutOurAttorney?: T | AboutOurAttorneyBlockSelect<T>;
@@ -2174,7 +2255,9 @@ export interface PagesSelect<T extends boolean = true> {
         faqSection?: T | FAQSectionBlockSelect<T>;
         articlesSection?: T | ArticlesSectionBlockSelect<T>;
         lawyerBioBlock?: T | LawyerBioBlockBlockSelect<T>;
+        legalPage?: T | LegalPageBlockSelect<T>;
       };
+  solidMenu?: T;
   meta?:
     | T
     | {
@@ -2464,6 +2547,28 @@ export interface ContactSectionBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactPageBlock_select".
+ */
+export interface ContactPageBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  phoneLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
+      };
+  form?: T;
+  mapUrl?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "AboutAboutFirmBlock_select".
  */
 export interface AboutAboutFirmBlockSelect<T extends boolean = true> {
@@ -2654,6 +2759,16 @@ export interface LawyerBioBlockBlockSelect<T extends boolean = true> {
         id?: T;
       };
   bio?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LegalPageBlock_select".
+ */
+export interface LegalPageBlockSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
   id?: T;
   blockName?: T;
 }

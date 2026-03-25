@@ -91,6 +91,7 @@
 }
 
 :root {
+  --header-height: 89px;
   --gold: #ffb94a;
   --orange: #fa681c;
   --tangerine: #f74a0b;
@@ -200,6 +201,10 @@
 @utility caption-heading {
   @apply text-[42px] leading-[46px] -tracking-[0.04em] font-normal;
   font-family: Geist, sans-serif;
+}
+
+@utility pt-header {
+  padding-top: var(--header-height);
 }
 
 @utility scrollbar-hide {
@@ -317,6 +322,10 @@
     @apply text-caption text-gold;
   }
 
+  & span.highlight {
+    @apply text-orange;
+  }
+
   & > *:first-child {
     @apply mt-0;
   }
@@ -386,6 +395,94 @@
   @variant lg {
     & h2 {
       @apply text-[50px] leading-[55px] tracking-[-2px];
+    }
+  }
+}
+
+/* Rich Text Content */
+@utility richtext {
+  & p {
+    @apply text-body font-normal tracking-[-0.32px] text-deep-blue-900 mb-0;
+  }
+
+  & p + p {
+    @apply mt-6;
+  }
+
+  & a {
+    @apply text-orange no-underline cursor-pointer hover:underline;
+  }
+
+  & h2 {
+    @apply text-h4 font-medium tracking-[-0.96px] text-dark-blue mt-[50px] mb-[25px];
+  }
+
+  & h3 {
+    @apply text-h4 font-medium tracking-[-0.96px] text-dark-blue mt-[50px] mb-[25px];
+  }
+
+  & h4 {
+    @apply text-h5 font-medium tracking-[-0.72px] text-dark-blue mt-[50px] mb-[25px];
+  }
+
+  & ol {
+    @apply text-h4 list-decimal pl-[48px] font-medium tracking-[-0.96px] text-dark-blue mt-[50px] mb-[25px];
+  }
+
+  & ol li {
+    @apply mb-0;
+  }
+
+  & ol + p,
+  & ol + div {
+    @apply mt-0;
+  }
+
+  & ul {
+    @apply text-body list-disc pl-[24px] font-normal tracking-[-0.32px] text-deep-blue-900 my-6;
+  }
+
+  & ul li {
+    @apply mb-0;
+  }
+
+  & > *:first-child {
+    @apply mt-0;
+  }
+
+  /* Inline formatting */
+  & strong {
+    @apply font-semibold;
+  }
+
+  & em {
+    @apply italic;
+  }
+
+  & u {
+    @apply underline;
+  }
+
+  /* Alignment */
+  & [style*="text-align: center"] {
+    @apply text-center;
+  }
+
+  & [style*="text-align: right"] {
+    @apply text-right;
+  }
+
+  & [style*="text-align: justify"] {
+    @apply text-justify;
+  }
+
+  @variant md {
+    & p {
+      @apply text-[17px] leading-[25px] tracking-[-0.34px];
+    }
+
+    & ul {
+      @apply pl-[25.5px] text-[17px] leading-[25px] tracking-[-0.34px];
     }
   }
 }

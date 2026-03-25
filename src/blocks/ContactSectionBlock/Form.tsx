@@ -7,7 +7,10 @@ import { useForm } from 'react-hook-form'
 import type { Form as FormType } from '@/payload-types'
 import RichText from '@/components/RichText'
 import { getClientSideURL } from '@/utilities/getURL'
-import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { FormLabel } from '@/components/ui/FormLabel'
+import { FormError } from '@/components/ui/FormError'
 import { ButtonArrow } from '@/components/ui/ButtonArrow'
 
 type Props = {
@@ -105,50 +108,44 @@ export const ContactForm: React.FC<Props> = ({ form }) => {
           const isFullWidth =
             field.blockType === 'textarea' || (width !== undefined && width === 100)
 
-          const inputClassName =
-            'w-full rounded-[6px] border border-navy-50 bg-off-white md:bg-light-gray px-3 py-4 text-body text-dark-blue placeholder:text-navy-200 outline-none transition-colors focus:border-orange focus:ring-1 focus:ring-orange'
-
           return (
             <div key={index} className={isFullWidth ? 'md:col-span-full' : ''}>
-              {label && (
-                <label
-                  htmlFor={name}
-                  className="mb-1.5 block text-body-sm font-normal text-navy-500 -tracking-[0.02em]"
-                >
+              {label && field.blockType !== 'checkbox' && (
+                <FormLabel htmlFor={name} required={required}>
                   {label}
-                  {required && <span className="text-orange">*</span>}
-                </label>
+                </FormLabel>
               )}
 
               {field.blockType === 'textarea' ? (
-                <textarea
+                <Textarea
                   id={name}
                   placeholder={placeholder}
                   rows={4}
-                  className={inputClassName}
                   {...register(name, { required })}
                 />
               ) : field.blockType === 'email' ? (
-                <input
+                <Input
                   id={name}
                   type="email"
                   placeholder={placeholder}
-                  className={inputClassName}
                   {...register(name, {
                     required,
                     pattern: /^\S[^\s@]*@\S+$/,
                   })}
                 />
               ) : field.blockType === 'number' ? (
-                <input
+                <Input
                   id={name}
                   type="number"
                   placeholder={placeholder}
-                  className={inputClassName}
                   {...register(name, { required })}
                 />
               ) : field.blockType === 'select' && 'options' in field ? (
-                <select id={name} className={inputClassName} {...register(name, { required })}>
+                <select
+                  id={name}
+                  className="w-full rounded-[6px] border border-navy-50 bg-off-white md:bg-light-gray px-3 py-4 text-body text-dark-blue placeholder:text-navy-200 outline-none transition-colors focus:border-orange focus:ring-1 focus:ring-orange"
+                  {...register(name, { required })}
+                >
                   {placeholder && <option value="">{placeholder}</option>}
                   {field.options?.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -165,32 +162,27 @@ export const ContactForm: React.FC<Props> = ({ form }) => {
                     {...register(name, { required })}
                   />
                   {label && (
-                    <label htmlFor={name} className="text-sm text-deep-blue-1000">
+                    <FormLabel htmlFor={name} className="mb-0 text-sm text-deep-blue-1000">
                       {label}
-                    </label>
+                    </FormLabel>
                   )}
                 </div>
               ) : (
-                <input
+                <Input
                   id={name}
                   type="text"
                   placeholder={placeholder}
-                  className={inputClassName}
                   {...register(name, { required })}
                 />
               )}
 
-              {errors[name] && <p className="mt-1 text-xs text-red-500">This field is required</p>}
+              {errors[name] && <FormError>This field is required</FormError>}
             </div>
           )
         })}
       </div>
 
-      <p className="mt-1 text-body-sm text-navy-500 text-center -tracking-[0.02em]">
-        All fields are required.
-      </p>
-
-      {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
+      {error && <FormError className="mt-4 text-sm">{error}</FormError>}
 
       <ButtonArrow type="submit" disabled={isLoading} className="mt-3 w-full md:h-[54px]">
         {isLoading ? 'Submitting...' : submitButtonLabel || 'Submit'}

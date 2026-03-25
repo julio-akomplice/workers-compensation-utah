@@ -2,13 +2,22 @@
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import React, { useEffect } from 'react'
 
-const PageClient: React.FC = () => {
+interface PageClientProps {
+  solidMenu?: boolean
+}
+
+const PageClient: React.FC<PageClientProps> = ({ solidMenu = false }) => {
   /* Force the header to be dark mode while we have an image behind it */
-  const { setHeaderTheme } = useHeaderTheme()
+  const { setHeaderTheme, setSolidMenu } = useHeaderTheme()
 
   useEffect(() => {
     setHeaderTheme('light')
   }, [setHeaderTheme])
+
+  useEffect(() => {
+    setSolidMenu(solidMenu)
+  }, [solidMenu, setSolidMenu])
+
   return <React.Fragment />
 }
 
