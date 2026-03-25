@@ -67,20 +67,22 @@ export const AboutGetStartedBlock: React.FC<Props> = ({
 
         {/* Tablet: Horizontal scroll slider */}
         {steps && steps.length > 0 && (
-          <div className="hidden md:block lg:hidden -mr-8">
-            <div
-              ref={slider.scrollRef}
-              className="flex gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide pr-8"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              {steps.map((step, index) => (
-                <div
-                  key={step.id || index}
-                  className="snap-start shrink-0 w-[calc(50%-10px)]"
-                >
-                  <StepCard step={step} />
-                </div>
-              ))}
+          <div className="hidden md:block lg:hidden">
+            <div className="-mr-8">
+              <div
+                ref={slider.scrollRef}
+                className="flex gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide pr-8"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {steps.map((step, index) => (
+                  <div
+                    key={step.id || index}
+                    className="snap-start shrink-0 w-[65%]"
+                  >
+                    <StepCard step={step} />
+                  </div>
+                ))}
+              </div>
             </div>
             <DotNavigation
               count={steps.length}
@@ -93,7 +95,7 @@ export const AboutGetStartedBlock: React.FC<Props> = ({
 
         {/* Mobile: Single column stack */}
         {steps && steps.length > 0 && (
-          <div className="flex flex-col gap-10 md:hidden">
+          <div className="flex flex-col [&>*:not(:last-child)]:pb-10 md:hidden">
             {steps.map((step, index) => (
               <StepCard key={step.id || index} step={step} />
             ))}

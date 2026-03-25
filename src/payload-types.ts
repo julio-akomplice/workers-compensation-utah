@@ -474,6 +474,7 @@ export interface User {
  * via the `definition` "BreadcrumbBlock".
  */
 export interface BreadcrumbBlock {
+  theme?: ('white' | 'offWhite') | null;
   /**
    * Select the pages for the breadcrumb trail. Home is always included as the first item.
    */
@@ -2193,6 +2194,7 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "BreadcrumbBlock_select".
  */
 export interface BreadcrumbBlockSelect<T extends boolean = true> {
+  theme?: T;
   pages?: T;
   id?: T;
   blockName?: T;

@@ -9,6 +9,16 @@ export const Breadcrumb: Block = {
   },
   fields: [
     {
+      name: 'theme',
+      type: 'select',
+      label: 'Theme',
+      defaultValue: 'white',
+      options: [
+        { label: 'White', value: 'white' },
+        { label: 'Off White', value: 'offWhite' },
+      ],
+    },
+    {
       name: 'pages',
       type: 'relationship',
       relationTo: 'pages',

@@ -22,60 +22,65 @@ export const LawyerBioBlock: React.FC<Props> = ({
     <section className="w-full">
       {/* ===== MOBILE / TABLET: Stacked layout ===== */}
       <div className="lg:hidden">
-        {/* Profile Image - full width */}
-        <div className="w-full overflow-hidden">
-          <div className="aspect-390/339 md:aspect-770/556">
-            <Media
-              resource={profilePicture}
-              imgClassName="w-full h-full object-cover object-top"
-            />
-          </div>
-        </div>
+        {/* Profile Card */}
+        <div className="w-full md:px-12.25 md:pt-6">
+          <div className="overflow-hidden md:rounded-[10px]">
+            {/* Profile Image */}
+            <div className="overflow-hidden">
+              <div className="aspect-390/339 md:aspect-770/556">
+                <Media
+                  resource={profilePicture}
+                  imgClassName="w-full h-full object-cover object-top"
+                />
+              </div>
+            </div>
 
-        {/* Name + Phone/Fax Bar */}
-        <div className="bg-off-white px-5 py-5 md:px-12.25">
-          <div className="flex flex-col items-center gap-3.75 md:flex-row md:justify-center md:gap-15">
-            <h2 className="text-[24px] font-semibold leading-7 tracking-[-0.72px] text-navy-800">
-              {name}
-            </h2>
-            <div className="flex items-center gap-5">
-              {phone?.link && (
-                <a href={phone.link} className="flex items-end gap-2.75">
-                  {phone.icon && (
-                    <div className="size-7 shrink-0 [&_svg]:size-full">
-                      <Media resource={phone.icon} imgClassName="w-full h-full object-contain" />
-                    </div>
+            {/* Name + Phone/Fax Bar */}
+            <div className="bg-off-white px-5 py-5 md:px-12.25">
+              <div className="flex flex-col items-center gap-3.75 md:flex-row md:justify-center md:gap-15">
+                <h2 className="text-[24px] font-semibold leading-7 tracking-[-0.72px] text-navy-800">
+                  {name}
+                </h2>
+                <div className="flex items-center gap-5">
+                  {phone?.link && (
+                    <a href={phone.link} className="flex items-end gap-2.75">
+                      {phone.icon && (
+                        <div className="size-7 shrink-0 [&_svg]:size-full">
+                          <Media resource={phone.icon} imgClassName="w-full h-full object-contain" />
+                        </div>
+                      )}
+                      <span className="text-[16px] font-semibold leading-6 tracking-[-0.32px] text-navy-1000 md:text-[17px] md:leading-6.25 md:tracking-[-0.34px]">
+                        {phone.label}
+                      </span>
+                    </a>
                   )}
-                  <span className="text-[16px] font-semibold leading-6 tracking-[-0.32px] text-navy-1000 md:text-[17px] md:leading-6.25 md:tracking-[-0.34px]">
-                    {phone.label}
-                  </span>
-                </a>
-              )}
-              <div className="h-5.5 w-0 border-l border-navy-200" />
-              {fax?.link && (
-                <a href={fax.link} className="flex items-end gap-2.75">
-                  {fax.icon && (
-                    <div className="size-7 shrink-0 [&_svg]:size-full">
-                      <Media resource={fax.icon} imgClassName="w-full h-full object-contain" />
-                    </div>
+                  <div className="h-5.5 w-0 border-l border-navy-200" />
+                  {fax?.link && (
+                    <a href={fax.link} className="flex items-end gap-2.75">
+                      {fax.icon && (
+                        <div className="size-7 shrink-0 [&_svg]:size-full">
+                          <Media resource={fax.icon} imgClassName="w-full h-full object-contain" />
+                        </div>
+                      )}
+                      <span className="text-[16px] font-semibold leading-6 tracking-[-0.32px] text-navy-1000 md:text-[17px] md:leading-6.25 md:tracking-[-0.34px]">
+                        {fax.label}
+                      </span>
+                    </a>
                   )}
-                  <span className="text-[16px] font-semibold leading-6 tracking-[-0.32px] text-navy-1000 md:text-[17px] md:leading-6.25 md:tracking-[-0.34px]">
-                    {fax.label}
-                  </span>
-                </a>
-              )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Achievement Logos */}
         {achievements && achievements.length > 0 && (
-          <div className="bg-white px-3.25 py-5 md:px-7.75 md:py-2.5">
+          <div className="overflow-hidden bg-white px-3.25 py-5 md:px-7.75 md:py-2.5">
             <div className="flex items-center justify-center gap-4.25 md:gap-9.25">
               {achievements.map((achievement, index) => (
                 <div
                   key={achievement.id || index}
-                  className="h-[45px] w-[78px] shrink-0 md:h-24 md:w-41.25"
+                  className="h-[45px] w-[78px] shrink md:h-24 md:w-41.25"
                 >
                   <Media
                     resource={achievement.image}
@@ -109,7 +114,7 @@ export const LawyerBioBlock: React.FC<Props> = ({
         <div className="mx-auto flex max-w-[1320px] items-start gap-18.5 pb-25 pt-15">
           {/* Left Column: Profile Card (sticky, aligned to content end) */}
           <div className="sticky top-25 w-119 shrink-0 self-start">
-            <div className="overflow-clip rounded-[10px] bg-white">
+            <div className="overflow-hidden rounded-[10px] bg-white">
               {/* White top spacer */}
               <div className="h-10.25 w-full bg-white" />
 
@@ -130,8 +135,8 @@ export const LawyerBioBlock: React.FC<Props> = ({
                   {phone?.link && (
                     <a href={phone.link} className="flex items-end gap-2.75">
                       {phone.icon && (
-                        <div className="size-7 shrink-0 [&_svg]:size-full">
-                          <Media resource={phone.icon} imgClassName="w-full h-full object-contain" />
+                        <div className="size-7 shrink-0 [&_svg]:size-full [&_path]:fill-[#FA681C]">
+                          <Media resource={phone.icon} imgClassName="w-full h-full object-contain [&_svg]:size-full [&_path]:fill-[#FA681C]" />
                         </div>
                       )}
                       <span className="text-[16px] font-semibold leading-6 tracking-[-0.32px] text-navy-1000">
@@ -143,8 +148,8 @@ export const LawyerBioBlock: React.FC<Props> = ({
                   {fax?.link && (
                     <a href={fax.link} className="flex items-end gap-2.75">
                       {fax.icon && (
-                        <div className="size-7 shrink-0 [&_svg]:size-full">
-                          <Media resource={fax.icon} imgClassName="w-full h-full object-contain" />
+                        <div className="size-7 shrink-0 [&_svg]:size-full [&_path]:fill-[#FA681C]">
+                          <Media resource={fax.icon} imgClassName="w-full h-full object-contain [&_svg]:size-full [&_path]:fill-[#FA681C]" />
                         </div>
                       )}
                       <span className="text-[16px] font-semibold leading-6 tracking-[-0.32px] text-navy-1000">

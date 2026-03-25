@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
+import { cn } from '@/utilities/ui'
 import type { BreadcrumbBlock as BreadcrumbBlockProps, Page } from 'src/payload-types'
 
 type Props = {
@@ -36,9 +37,9 @@ const ChevronSeparator = () => (
   </svg>
 )
 
-export const BreadcrumbBlock: React.FC<Props> = ({ pages }) => {
+export const BreadcrumbBlock: React.FC<Props> = ({ theme, pages }) => {
   return (
-    <nav aria-label="Breadcrumb" className="w-full bg-white">
+    <nav aria-label="Breadcrumb" className={cn('w-full bg-white', theme === 'offWhite' && 'bg-off-white')}>
       <div className="container mx-auto px-5 md:px-8 lg:px-4">
         <ol className="flex items-center gap-1.5 py-4 border-b border-navy-30">
           {/* Home */}
