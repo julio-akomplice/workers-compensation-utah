@@ -44,29 +44,20 @@ export const FooterContent: React.FC<Props> = ({
 
   return (
     <footer className="w-full bg-dark-blue">
-      <div className="container mx-auto px-4 pt-12 pb-6 lg:pt-12 lg:pb-6">
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[200px_1fr_1fr_1fr_1fr] lg:gap-8">
-          {/* Logo Column */}
-          <div className="flex items-start">
-            <Link href="/">
-              {typeof logo === 'object' && logo !== null ? (
-                <Media resource={logo} className="[&_svg]:max-w-50 [&_svg]:w-full h-auto" />
-              ) : null}
-            </Link>
-          </div>
-
+      <div className="mx-auto px-4 pt-12 pb-6 md:px-8 md:pt-20 md:pb-10 lg:container lg:pt-12 lg:pb-6">
+        {/* Link Columns */}
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4 md:gap-x-16 lg:gap-16">
           {/* Practice Areas Column */}
           <div>
-            <h4 className="text-body font-medium text-white mb-6 tracking-[-0.32px]">
+            <h4 className="text-body font-medium text-white mb-5 tracking-[-0.34px]">
               Practice Areas
             </h4>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-[15px]">
               {resolvedPracticeAreas.map((area) => (
                 <li key={area.id}>
                   <Link
                     href={`/practice-areas/${area.slug}`}
-                    className="text-body font-medium text-navy-200 tracking-[-0.32px] hover:text-white transition-colors"
+                    className="text-body font-medium text-navy-200 tracking-[-0.34px] hover:text-white transition-colors"
                   >
                     {area.general?.alternativeTitle || area.title}
                   </Link>
@@ -76,7 +67,7 @@ export const FooterContent: React.FC<Props> = ({
                 <li>
                   <Link
                     href="/practice-areas"
-                    className="text-body font-medium text-navy-200 tracking-[-0.32px] hover:text-white transition-colors"
+                    className="text-body font-medium text-navy-200 tracking-[-0.34px] hover:text-white transition-colors"
                   >
                     View All
                   </Link>
@@ -87,15 +78,15 @@ export const FooterContent: React.FC<Props> = ({
 
           {/* Areas Served Column */}
           <div>
-            <h4 className="text-body font-medium text-white mb-6 tracking-[-0.32px]">
+            <h4 className="text-body font-medium text-white mb-5 tracking-[-0.34px]">
               Areas Served
             </h4>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-[15px]">
               {resolvedAreasServed.map((area) => (
                 <li key={area.id}>
                   <Link
                     href={`/areas-served/${area.slug}`}
-                    className="text-body font-medium text-navy-200 tracking-[-0.32px] hover:text-white transition-colors"
+                    className="text-body font-medium text-navy-200 tracking-[-0.34px] hover:text-white transition-colors"
                   >
                     {area.title}
                   </Link>
@@ -104,17 +95,17 @@ export const FooterContent: React.FC<Props> = ({
             </ul>
           </div>
 
-          {/* Quick Links Column */}
+          {/* Information Column */}
           <div>
-            <h4 className="text-body font-medium text-white mb-6 tracking-[-0.32px]">
-              Quick Links
+            <h4 className="text-body font-medium text-white mb-5 tracking-[-0.34px]">
+              Information
             </h4>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-[15px]">
               {resolvedQuickLinks.map((page) => (
                 <li key={page.id}>
                   <Link
                     href={`/${page.slug}`}
-                    className="text-body font-medium text-navy-200 tracking-[-0.32px] hover:text-white transition-colors"
+                    className="text-body font-medium text-navy-200 tracking-[-0.34px] hover:text-white transition-colors"
                   >
                     {page.title}
                   </Link>
@@ -125,13 +116,13 @@ export const FooterContent: React.FC<Props> = ({
 
           {/* Contact Column */}
           <div>
-            <h4 className="text-body font-medium text-white mb-6 tracking-[-0.32px]">Contact</h4>
+            <h4 className="text-body font-medium text-white mb-5 tracking-[-0.34px]">Contact</h4>
             <div className="flex flex-col gap-3">
               {/* Phone */}
               {phone?.label && phone?.url && (
                 <a
                   href={phone.url}
-                  className="flex items-center gap-2.5 text-body font-medium text-navy-200 tracking-[-0.32px] hover:text-white transition-colors"
+                  className="flex items-center gap-2.5 text-body font-medium text-navy-200 tracking-[-0.34px] hover:text-white transition-colors"
                 >
                   {typeof phone.image === 'object' && phone.image !== null && (
                     <span className="relative shrink-0 size-6">
@@ -150,7 +141,7 @@ export const FooterContent: React.FC<Props> = ({
               {fax?.label && fax?.url && (
                 <a
                   href={fax.url}
-                  className="flex items-center gap-2.5 text-body font-medium text-navy-200 tracking-[-0.32px] hover:text-white transition-colors"
+                  className="flex items-center gap-2.5 text-body font-medium text-navy-200 tracking-[-0.34px] hover:text-white transition-colors"
                 >
                   {typeof fax.image === 'object' && fax.image !== null && (
                     <span className="relative shrink-0 size-6">
@@ -167,18 +158,18 @@ export const FooterContent: React.FC<Props> = ({
 
               {/* Address */}
               {address?.text && (
-                <div className="mt-2">
+                <div className="mt-4">
                   {address.mapUrl ? (
                     <a
                       href={address.mapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-body font-medium text-navy-200 tracking-[-0.32px] hover:text-white transition-colors leading-normal"
+                      className="text-body font-medium text-navy-200 tracking-[-0.34px] hover:text-white transition-colors leading-normal"
                     >
                       {address.text}
                     </a>
                   ) : (
-                    <p className="text-body font-medium text-navy-200 tracking-[-0.32px] leading-normal">
+                    <p className="text-body font-medium text-navy-200 tracking-[-0.34px] leading-normal">
                       {address.text}
                     </p>
                   )}
@@ -187,7 +178,7 @@ export const FooterContent: React.FC<Props> = ({
 
               {/* Social Icons */}
               {socialLinks && socialLinks.length > 0 && (
-                <div className="flex gap-3 mt-3">
+                <div className="flex gap-4 mt-4">
                   {socialLinks.map((social) => (
                     <a
                       key={social.id}
@@ -195,7 +186,7 @@ export const FooterContent: React.FC<Props> = ({
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.name}
-                      className="relative block size-9 shrink-0 transition-opacity hover:opacity-80 overflow-clip"
+                      className="relative block size-7 shrink-0 transition-opacity hover:opacity-80 overflow-clip"
                     >
                       {typeof social.image === 'object' && social.image !== null && (
                         <Media resource={social.image} fill imgClassName="object-contain" />
@@ -208,52 +199,54 @@ export const FooterContent: React.FC<Props> = ({
           </div>
         </div>
 
-        {/* Divider */}
-        <hr className="border-t border-navy-800 mt-10 mb-6" />
+        {/* Bottom Section — Logo + Copyright */}
+        <div className="mt-[70px] flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          {/* Logo */}
+          <Link href="/" className="shrink-0">
+            {typeof logo === 'object' && logo !== null ? (
+              <Media resource={logo} className="[&_svg]:w-[207px] [&_svg]:h-auto" />
+            ) : null}
+          </Link>
 
-        {/* Bottom Section */}
-        <div className="text-body-sm text-navy-200 text-center tracking-[-0.28px]">
-          <p>
-            {copyrightText && (
-              <>
-                Copyright&copy; {new Date().getFullYear()} {copyrightText}
-              </>
-            )}
-            {allRightsReservedText && (
-              <>
-                {' | '}
-                {allRightsReservedText}
-              </>
-            )}
-            {resolvedPrivacyPage && privacyPolicyLabel && (
-              <>
-                {' | '}
-                <Link
-                  href={`/${resolvedPrivacyPage.slug}`}
-                  className="underline hover:text-white transition-colors"
-                >
-                  {privacyPolicyLabel}
-                </Link>
-              </>
-            )}
-            {legalMarketingText && (
-              <>
-                {' | '}
-                {legalMarketingUrl ? (
-                  <a
-                    href={legalMarketingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-white transition-colors"
+          {/* Copyright */}
+          <div className="text-body-sm text-navy-200 tracking-[-0.28px] leading-[22px] md:max-w-[334px]">
+            <p>
+              {copyrightText && (
+                <>
+                  Copyright&copy; {new Date().getFullYear()} {copyrightText}
+                </>
+              )}
+              {allRightsReservedText && <>{' | '}{allRightsReservedText}</>}
+              {resolvedPrivacyPage && privacyPolicyLabel && (
+                <>
+                  {' | '}
+                  <Link
+                    href={`/${resolvedPrivacyPage.slug}`}
+                    className="underline hover:text-white transition-colors"
                   >
-                    {legalMarketingText}
-                  </a>
-                ) : (
-                  legalMarketingText
-                )}
-              </>
-            )}
-          </p>
+                    {privacyPolicyLabel}
+                  </Link>
+                </>
+              )}
+              {legalMarketingText && (
+                <>
+                  {' | '}
+                  {legalMarketingUrl ? (
+                    <a
+                      href={legalMarketingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-white transition-colors"
+                    >
+                      {legalMarketingText}
+                    </a>
+                  ) : (
+                    legalMarketingText
+                  )}
+                </>
+              )}
+            </p>
+          </div>
         </div>
       </div>
     </footer>
