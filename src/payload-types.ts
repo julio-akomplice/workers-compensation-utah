@@ -70,6 +70,7 @@ export interface Config {
     pages: Page;
     posts: Post;
     'practice-areas': PracticeArea;
+    'practice-area-categories': PracticeAreaCategory;
     'areas-served': AreasServed;
     'case-studies': CaseStudy;
     testimonials: Testimonial;
@@ -97,6 +98,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'practice-areas': PracticeAreasSelect<false> | PracticeAreasSelect<true>;
+    'practice-area-categories': PracticeAreaCategoriesSelect<false> | PracticeAreaCategoriesSelect<true>;
     'areas-served': AreasServedSelect<false> | AreasServedSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
@@ -126,6 +128,7 @@ export interface Config {
     'contact-section': ContactSection;
     'faq-section': FaqSection;
     'articles-section': ArticlesSection;
+    'short-side-form': ShortSideForm;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -134,6 +137,7 @@ export interface Config {
     'contact-section': ContactSectionSelect<false> | ContactSectionSelect<true>;
     'faq-section': FaqSectionSelect<false> | FaqSectionSelect<true>;
     'articles-section': ArticlesSectionSelect<false> | ArticlesSectionSelect<true>;
+    'short-side-form': ShortSideFormSelect<false> | ShortSideFormSelect<true>;
   };
   locale: null;
   widgets: {
@@ -232,6 +236,8 @@ export interface Page {
     | ArticlesSectionBlock
     | LawyerBioBlockBlock
     | LegalPageBlock
+    | PracticeAreaPageBlock
+    | CaseQuestionnaireBlock
   )[];
   /**
    * Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.
@@ -1015,6 +1021,7 @@ export interface PracticeArea {
     image?: (string | null) | Media;
     description?: string | null;
   };
+  categories?: (string | null) | PracticeAreaCategory;
   publishedAt?: string | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
@@ -1024,6 +1031,21 @@ export interface PracticeArea {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "practice-area-categories".
+ */
+export interface PracticeAreaCategory {
+  id: string;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1843,6 +1865,67 @@ export interface LegalPageBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PracticeAreaPageBlock".
+ */
+export interface PracticeAreaPageBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Select the categories to display. Each category becomes a section with its practice areas.
+   */
+  categories: (string | PracticeAreaCategory)[];
+  /**
+   * The "Free Case Evaluation" button below the practice areas.
+   */
+  ctaLink: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'practiceAreaPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseQuestionnaireBlock".
+ */
+export interface CaseQuestionnaireBlock {
+  form: string | Form;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'caseQuestionnaire';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "areas-served".
  */
 export interface AreasServed {
@@ -2110,6 +2193,10 @@ export interface PayloadLockedDocument {
         value: string | PracticeArea;
       } | null)
     | ({
+        relationTo: 'practice-area-categories';
+        value: string | PracticeAreaCategory;
+      } | null)
+    | ({
         relationTo: 'areas-served';
         value: string | AreasServed;
       } | null)
@@ -2256,6 +2343,8 @@ export interface PagesSelect<T extends boolean = true> {
         articlesSection?: T | ArticlesSectionBlockSelect<T>;
         lawyerBioBlock?: T | LawyerBioBlockBlockSelect<T>;
         legalPage?: T | LegalPageBlockSelect<T>;
+        practiceAreaPage?: T | PracticeAreaPageBlockSelect<T>;
+        caseQuestionnaire?: T | CaseQuestionnaireBlockSelect<T>;
       };
   solidMenu?: T;
   meta?:
@@ -2774,6 +2863,36 @@ export interface LegalPageBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PracticeAreaPageBlock_select".
+ */
+export interface PracticeAreaPageBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  categories?: T;
+  ctaLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseQuestionnaireBlock_select".
+ */
+export interface CaseQuestionnaireBlockSelect<T extends boolean = true> {
+  form?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -2859,12 +2978,24 @@ export interface PracticeAreasSelect<T extends boolean = true> {
         image?: T;
         description?: T;
       };
+  categories?: T;
   publishedAt?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "practice-area-categories_select".
+ */
+export interface PracticeAreaCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3657,6 +3788,31 @@ export interface ArticlesSection {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "short-side-form".
+ */
+export interface ShortSideForm {
+  id: string;
+  header?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  form: string | Form;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -3807,6 +3963,17 @@ export interface ArticlesSectionSelect<T extends boolean = true> {
         showArrow?: T;
         appearance?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "short-side-form_select".
+ */
+export interface ShortSideFormSelect<T extends boolean = true> {
+  header?: T;
+  form?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

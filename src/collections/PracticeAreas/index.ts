@@ -143,6 +143,15 @@ export const PracticeAreas: CollectionConfig<'practice-areas'> = {
       ],
     },
     {
+      name: 'categories',
+      type: 'relationship',
+      admin: {
+        position: 'sidebar',
+      },
+      hasMany: false,
+      relationTo: 'practice-area-categories',
+    },
+    {
       name: 'publishedAt',
       type: 'date',
       admin: {
