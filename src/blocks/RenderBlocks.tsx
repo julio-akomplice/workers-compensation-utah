@@ -28,6 +28,8 @@ import { ContactPageBlockComponent } from '@/blocks/ContactPageBlock/Component'
 import { LegalPageBlockComponent } from '@/blocks/LegalPageBlock/Component'
 import { PracticeAreaPageBlockComponent } from '@/blocks/PracticeAreaPageBlock/Component'
 import { CaseQuestionnaireBlockComponent } from '@/blocks/CaseQuestionnaireBlock/Component'
+import { ResourcesPageBlockComponent } from '@/blocks/ResourcesPageBlock/Component'
+import { AreasServedPageBlockComponent } from '@/blocks/AreasServedPageBlock/Component'
 
 const blockComponents = {
   awards: AwardsBlock,
@@ -56,6 +58,8 @@ const blockComponents = {
   legalPage: LegalPageBlockComponent,
   practiceAreaPage: PracticeAreaPageBlockComponent,
   caseQuestionnaire: CaseQuestionnaireBlockComponent,
+  resourcesPage: ResourcesPageBlockComponent,
+  areasServedPage: AreasServedPageBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{

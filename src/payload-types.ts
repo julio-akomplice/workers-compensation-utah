@@ -238,6 +238,8 @@ export interface Page {
     | LegalPageBlock
     | PracticeAreaPageBlock
     | CaseQuestionnaireBlock
+    | ResourcesPageBlock
+    | AreasServedPageBlock
   )[];
   /**
    * Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.
@@ -1926,6 +1928,100 @@ export interface CaseQuestionnaireBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResourcesPageBlock".
+ */
+export interface ResourcesPageBlock {
+  sectionDescription: string;
+  resourceCards?:
+    | {
+        image: string | Media;
+        title: string;
+        websites?:
+          | {
+              url: string;
+              label: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaLink: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'resourcesPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AreasServedPageBlock".
+ */
+export interface AreasServedPageBlock {
+  /**
+   * Use H2 headings to create sections — they automatically populate the table of contents sidebar.
+   */
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * The phone number CTA button below the content.
+   */
+  ctaLink: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'areasServedPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "areas-served".
  */
 export interface AreasServed {
@@ -2345,6 +2441,8 @@ export interface PagesSelect<T extends boolean = true> {
         legalPage?: T | LegalPageBlockSelect<T>;
         practiceAreaPage?: T | PracticeAreaPageBlockSelect<T>;
         caseQuestionnaire?: T | CaseQuestionnaireBlockSelect<T>;
+        resourcesPage?: T | ResourcesPageBlockSelect<T>;
+        areasServedPage?: T | AreasServedPageBlockSelect<T>;
       };
   solidMenu?: T;
   meta?:
@@ -2888,6 +2986,60 @@ export interface PracticeAreaPageBlockSelect<T extends boolean = true> {
  */
 export interface CaseQuestionnaireBlockSelect<T extends boolean = true> {
   form?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResourcesPageBlock_select".
+ */
+export interface ResourcesPageBlockSelect<T extends boolean = true> {
+  sectionDescription?: T;
+  resourceCards?:
+    | T
+    | {
+        image?: T;
+        title?: T;
+        websites?:
+          | T
+          | {
+              url?: T;
+              label?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  ctaLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AreasServedPageBlock_select".
+ */
+export interface AreasServedPageBlockSelect<T extends boolean = true> {
+  content?: T;
+  ctaLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
+      };
   id?: T;
   blockName?: T;
 }

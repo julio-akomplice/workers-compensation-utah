@@ -46,7 +46,10 @@ export const LawyerBioBlock: React.FC<Props> = ({
                     <a href={phone.link} className="flex items-end gap-2.75">
                       {phone.icon && (
                         <div className="size-7 shrink-0 [&_svg]:size-full">
-                          <Media resource={phone.icon} imgClassName="w-full h-full object-contain" />
+                          <Media
+                            resource={phone.icon}
+                            imgClassName="w-full h-full object-contain"
+                          />
                         </div>
                       )}
                       <span className="text-[16px] font-semibold leading-6 tracking-[-0.32px] text-navy-1000 md:text-[17px] md:leading-6.25 md:tracking-[-0.34px]">
@@ -82,10 +85,7 @@ export const LawyerBioBlock: React.FC<Props> = ({
                   key={achievement.id || index}
                   className="h-[45px] w-[78px] shrink md:h-24 md:w-41.25"
                 >
-                  <Media
-                    resource={achievement.image}
-                    imgClassName="w-full h-full object-contain"
-                  />
+                  <Media resource={achievement.image} imgClassName="w-full h-full object-contain" />
                 </div>
               ))}
             </div>
@@ -101,7 +101,7 @@ export const LawyerBioBlock: React.FC<Props> = ({
               </div>
             )}
             {bio && 'root' in bio && (
-              <div className="lawyer-bio-content mt-8.75">
+              <div className="richtext mt-8.75">
                 <RichText data={bio} enableGutter={false} enableProse={false} />
               </div>
             )}
@@ -136,7 +136,10 @@ export const LawyerBioBlock: React.FC<Props> = ({
                     <a href={phone.link} className="flex items-end gap-2.75">
                       {phone.icon && (
                         <div className="size-7 shrink-0 [&_svg]:size-full [&_path]:fill-[#FA681C]">
-                          <Media resource={phone.icon} imgClassName="w-full h-full object-contain [&_svg]:size-full [&_path]:fill-[#FA681C]" />
+                          <Media
+                            resource={phone.icon}
+                            imgClassName="w-full h-full object-contain [&_svg]:size-full [&_path]:fill-[#FA681C]"
+                          />
                         </div>
                       )}
                       <span className="text-[16px] font-semibold leading-6 tracking-[-0.32px] text-navy-1000">
@@ -149,7 +152,10 @@ export const LawyerBioBlock: React.FC<Props> = ({
                     <a href={fax.link} className="flex items-end gap-2.75">
                       {fax.icon && (
                         <div className="size-7 shrink-0 [&_svg]:size-full [&_path]:fill-[#FA681C]">
-                          <Media resource={fax.icon} imgClassName="w-full h-full object-contain [&_svg]:size-full [&_path]:fill-[#FA681C]" />
+                          <Media
+                            resource={fax.icon}
+                            imgClassName="w-full h-full object-contain [&_svg]:size-full [&_path]:fill-[#FA681C]"
+                          />
                         </div>
                       )}
                       <span className="text-[16px] font-semibold leading-6 tracking-[-0.32px] text-navy-1000">
@@ -176,10 +182,7 @@ export const LawyerBioBlock: React.FC<Props> = ({
               <div className="mt-8.75 overflow-hidden">
                 <div className="flex items-center gap-7.5">
                   {achievements.map((achievement, index) => (
-                    <div
-                      key={achievement.id || index}
-                      className="h-19.75 w-34 shrink"
-                    >
+                    <div key={achievement.id || index} className="h-19.75 w-34 shrink">
                       <Media
                         resource={achievement.image}
                         imgClassName="w-full h-full object-contain"
@@ -192,7 +195,7 @@ export const LawyerBioBlock: React.FC<Props> = ({
 
             {/* Bio Rich Text */}
             {bio && 'root' in bio && (
-              <div className="lawyer-bio-content mt-8.75">
+              <div className="richtext mt-8.75">
                 <RichText data={bio} enableGutter={false} enableProse={false} />
               </div>
             )}
