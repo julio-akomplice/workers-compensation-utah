@@ -13,6 +13,7 @@ export const HomeCaseStudiesSection: Block = {
   },
   fields: [
     sectionHeader(),
+    sectionHeader({ overrides: { name: 'sectionHeaderMobile', label: 'Section Header (Mobile)' } }),
     {
       name: 'populateBy',
       type: 'select',

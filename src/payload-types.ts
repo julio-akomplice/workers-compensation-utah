@@ -1167,6 +1167,21 @@ export interface HomeCaseStudiesSectionBlock {
     };
     [k: string]: unknown;
   } | null;
+  sectionHeaderMobile?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   populateBy?: ('collection' | 'selection') | null;
   limit?: number | null;
   selectedCaseStudies?: (string | CaseStudy)[] | null;
@@ -1936,6 +1951,7 @@ export interface HomeAboutUsBlockSelect<T extends boolean = true> {
  */
 export interface HomeCaseStudiesSectionBlockSelect<T extends boolean = true> {
   sectionHeader?: T;
+  sectionHeaderMobile?: T;
   populateBy?: T;
   limit?: T;
   selectedCaseStudies?: T;

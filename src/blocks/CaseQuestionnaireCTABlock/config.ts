@@ -64,12 +64,13 @@ export const CaseQuestionnaireCTABlock: Block = {
         condition: (_, siblingData) => siblingData?.overrideAll || siblingData?.overrideImage,
       },
     },
-    {
-      ...sectionHeader(),
-      admin: {
-        condition: (_, siblingData) => siblingData?.overrideAll || siblingData?.overrideContent,
+    sectionHeader({
+      overrides: {
+        admin: {
+          condition: (_, siblingData) => siblingData?.overrideAll || siblingData?.overrideContent,
+        },
       },
-    },
+    }),
     link({
       overrides: {
         label: 'CTA Link',

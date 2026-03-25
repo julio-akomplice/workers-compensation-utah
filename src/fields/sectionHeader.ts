@@ -1,4 +1,4 @@
-import type { Field } from 'payload'
+import type { Field, RichTextField } from 'payload'
 
 import {
   FixedToolbarFeature,
@@ -9,9 +9,14 @@ import {
 } from '@payloadcms/richtext-lexical'
 import { SupportiveTextFeature } from '@/lexical/supportiveText/feature.server'
 import { HighlightFeature } from '@/lexical/highlight/feature.server'
+import deepMerge from '@/utilities/deepMerge'
 
-export const sectionHeader = (): Field => {
-  return {
+type SectionHeaderOptions = {
+  overrides?: Partial<RichTextField>
+}
+
+export const sectionHeader = ({ overrides = {} }: SectionHeaderOptions = {}): Field => {
+  const result: RichTextField = {
     name: 'sectionHeader',
     type: 'richText',
     label: 'Section Header',
@@ -26,4 +31,6 @@ export const sectionHeader = (): Field => {
       ],
     }),
   }
+
+  return deepMerge(result, overrides)
 }

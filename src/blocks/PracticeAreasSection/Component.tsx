@@ -48,7 +48,7 @@ export const PracticeAreasSectionBlock: React.FC<Props> = async ({
         )}
 
         {practiceAreas.length > 0 && (
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-7.5 md:grid-cols-3 lg:grid-cols-5">
             {practiceAreas.map((practiceArea, index) => {
               return (
                 <div key={index} className="flex flex-col border-b-[1.5px] border-navy-50 pb-3.75">

@@ -13,6 +13,7 @@ type Props = {
 
 export const HomeCaseStudiesSectionBlock: React.FC<Props> = ({
   sectionHeader,
+  sectionHeaderMobile,
   selectedCaseStudies,
   link,
 }) => {
@@ -20,11 +21,23 @@ export const HomeCaseStudiesSectionBlock: React.FC<Props> = ({
     (study): study is CaseStudy => typeof study !== 'string',
   )
 
+  const hasMobile = sectionHeaderMobile && 'root' in sectionHeaderMobile
+  const hasDesktop = sectionHeader && 'root' in sectionHeader
+  const hasBoth = hasMobile && hasDesktop
+
   return (
     <section className="w-full bg-white py-16 md:py-25">
       <div className="container mx-auto px-4">
-        {sectionHeader && 'root' in sectionHeader && (
-          <div className="mb-14.5 text-center section-header">
+        {hasMobile && (
+          <div className={cn('mb-14.5 text-center section-header', hasBoth && 'md:hidden')}>
+            <RichText data={sectionHeaderMobile} enableGutter={false} enableProse={false} />
+          </div>
+        )}
+
+        {hasDesktop && (
+          <div
+            className={cn('mb-14.5 text-center section-header', hasBoth && 'hidden md:block')}
+          >
             <RichText data={sectionHeader} enableGutter={false} enableProse={false} />
           </div>
         )}

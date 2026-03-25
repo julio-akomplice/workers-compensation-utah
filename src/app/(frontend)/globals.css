@@ -202,6 +202,14 @@
   font-family: Geist, sans-serif;
 }
 
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @utility bg-gradient-brand {
   background: linear-gradient(95deg, #ffb94a 0.83%, #f74a0b 99.17%);
 }
