@@ -337,3 +337,99 @@
     @apply text-navy-100;
   }
 }
+
+/* About Our Attorney Content */
+@utility about-attorney-content {
+  & p.supportive-text {
+    @apply text-caption text-gold mb-5;
+  }
+
+  & h2 {
+    @apply text-[45px] leading-[50px] font-semibold tracking-[-1.8px] text-dark-blue mb-[35px];
+    font-family: Geist, sans-serif;
+  }
+
+  & p:not(.supportive-text) {
+    @apply text-body text-deep-blue-900 tracking-[-0.32px] mb-0;
+  }
+
+  & p:not(.supportive-text) + p:not(.supportive-text) {
+    @apply mt-6;
+  }
+
+  @variant lg {
+    & h2 {
+      @apply text-[50px] leading-[55px] tracking-[-2px];
+    }
+  }
+}
+
+/* About Firm Content */
+@utility about-firm-content {
+  & p.supportive-text {
+    @apply text-caption text-gold mb-5;
+  }
+
+  & h2 {
+    @apply text-[45px] leading-[50px] font-semibold tracking-[-1.8px] text-dark-blue mb-[35px];
+    font-family: Geist, sans-serif;
+  }
+
+  & p:not(.supportive-text) {
+    @apply text-body text-deep-blue-900 tracking-[-0.32px] mb-0;
+  }
+
+  & p:not(.supportive-text) + p:not(.supportive-text) {
+    @apply mt-6;
+  }
+
+  @variant lg {
+    & h2 {
+      @apply text-[50px] leading-[55px] tracking-[-2px];
+    }
+  }
+}
+
+/* Lawyer Bio Content */
+@utility lawyer-bio-content {
+  & p {
+    @apply text-[16px] font-normal leading-[24px] tracking-[-0.32px] text-deep-blue-900 mb-0;
+  }
+
+  & p + p {
+    @apply mt-6;
+  }
+
+  & h2 {
+    @apply text-[32px] leading-[36px] font-semibold tracking-[-0.96px] text-dark-blue mt-[60px] mb-[35px];
+    font-family: Geist, sans-serif;
+  }
+
+  & h3 {
+    @apply text-[32px] leading-[36px] font-semibold tracking-[-0.96px] text-dark-blue mt-[60px] mb-[35px];
+    font-family: Geist, sans-serif;
+  }
+
+  & h4 {
+    @apply text-[24px] leading-[28px] font-semibold tracking-[-0.72px] text-dark-blue mt-[60px] mb-[35px];
+    font-family: Geist, sans-serif;
+  }
+
+  & ul {
+    @apply list-disc pl-[25px] text-[16px] font-normal leading-[24px] tracking-[-0.32px] text-deep-blue-900;
+  }
+
+  & ul li {
+    @apply mb-0;
+  }
+
+  @variant md {
+    & p {
+      @apply text-[17px] leading-[25px] tracking-[-0.34px];
+    }
+
+    & ul {
+      @apply text-[17px] leading-[25px] tracking-[-0.34px];
+    }
+  }
+}

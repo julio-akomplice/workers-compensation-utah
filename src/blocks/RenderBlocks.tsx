@@ -15,6 +15,15 @@ import { HomeTestimonialSectionBlock } from '@/blocks/HomeTestimonialSection/Com
 import { HomeCaseStudiesSectionBlock } from '@/blocks/HomeCaseStudiesSection/Component'
 import { CaseQuestionnaireCTABlockComponent } from '@/blocks/CaseQuestionnaireCTABlock/Component'
 import { ContactSectionBlockComponent } from '@/blocks/ContactSectionBlock/Component'
+import { BreadcrumbBlock } from '@/blocks/Breadcrumb/Component'
+import { AboutAboutFirmBlock } from '@/blocks/AboutAboutFirm/Component'
+import { AboutWhyChooseUsBlock } from '@/blocks/AboutWhyChooseUs/Component'
+import { AboutOurAttorneyBlock } from '@/blocks/AboutOurAttorney/Component'
+import { AboutGetStartedBlock } from '@/blocks/AboutGetStarted/Component'
+import { TestimonialsSectionBlock } from '@/blocks/TestimonialsSection/Component'
+import { FAQSectionBlockComponent } from '@/blocks/FAQSection/Component'
+import { ArticlesSectionBlock } from '@/blocks/ArticlesSection/Component'
+import { LawyerBioBlock } from '@/blocks/LawyerBioBlock/Component'
 
 const blockComponents = {
   awards: AwardsBlock,
@@ -30,6 +39,15 @@ const blockComponents = {
   practiceAreasSection: PracticeAreasSectionBlock,
   caseQuestionnaireCTA: CaseQuestionnaireCTABlockComponent,
   contactSection: ContactSectionBlockComponent,
+  breadcrumb: BreadcrumbBlock,
+  aboutAboutFirm: AboutAboutFirmBlock,
+  aboutWhyChooseUs: AboutWhyChooseUsBlock,
+  aboutOurAttorney: AboutOurAttorneyBlock,
+  aboutGetStarted: AboutGetStartedBlock,
+  testimonialsSection: TestimonialsSectionBlock,
+  faqSection: FAQSectionBlockComponent,
+  articlesSection: ArticlesSectionBlock,
+  lawyerBioBlock: LawyerBioBlock,
 }
 
 export const RenderBlocks: React.FC<{

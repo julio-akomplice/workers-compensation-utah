@@ -15,6 +15,15 @@ import { HomeTestimonialSection } from '../../blocks/HomeTestimonialSection/conf
 import { HomeCaseStudiesSection } from '../../blocks/HomeCaseStudiesSection/config'
 import { CaseQuestionnaireCTABlock } from '../../blocks/CaseQuestionnaireCTABlock/config'
 import { ContactSectionBlock } from '../../blocks/ContactSectionBlock/config'
+import { Breadcrumb } from '../../blocks/Breadcrumb/config'
+import { AboutAboutFirm } from '../../blocks/AboutAboutFirm/config'
+import { AboutWhyChooseUs } from '../../blocks/AboutWhyChooseUs/config'
+import { AboutOurAttorney } from '../../blocks/AboutOurAttorney/config'
+import { AboutGetStarted } from '../../blocks/AboutGetStarted/config'
+import { TestimonialsSection } from '../../blocks/TestimonialsSection/config'
+import { FAQSection } from '../../blocks/FAQSection/config'
+import { ArticlesSection } from '../../blocks/ArticlesSection/config'
+import { LawyerBioBlock } from '../../blocks/LawyerBioBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -80,7 +89,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, Awards, CompleteContent, PracticeAreasSection, HomeTestimonialSection, HomeAboutUs, HomeCaseStudiesSection, CaseQuestionnaireCTABlock, ContactSectionBlock],
+              blocks: [Breadcrumb, CallToAction, Content, MediaBlock, Archive, FormBlock, Awards, CompleteContent, PracticeAreasSection, HomeTestimonialSection, HomeAboutUs, HomeCaseStudiesSection, CaseQuestionnaireCTABlock, ContactSectionBlock, AboutAboutFirm, AboutWhyChooseUs, AboutOurAttorney, AboutGetStarted, TestimonialsSection, FAQSection, ArticlesSection, LawyerBioBlock],
               required: true,
               admin: {
                 initCollapsed: true,

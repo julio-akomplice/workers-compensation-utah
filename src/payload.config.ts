@@ -5,6 +5,7 @@ import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
 import { CaseStudies } from './collections/CaseStudies'
+import { FAQ } from './collections/FAQ'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -15,6 +16,8 @@ import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
 import { CaseQuestionnaireCTA } from './globals/CaseQuestionnaireCTA/config'
 import { ContactSection } from './globals/ContactSection/config'
+import { FAQSectionGlobal } from './globals/FAQSection/config'
+import { ArticlesSectionGlobal } from './globals/ArticlesSection/config'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -73,9 +76,9 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URL || '',
   }),
-  collections: [Pages, Posts, PracticeAreas, AreasServed, CaseStudies, Testimonials, Media, Categories, Users],
+  collections: [Pages, Posts, PracticeAreas, AreasServed, CaseStudies, Testimonials, FAQ, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, CaseQuestionnaireCTA, ContactSection],
+  globals: [Header, Footer, CaseQuestionnaireCTA, ContactSection, FAQSectionGlobal, ArticlesSectionGlobal],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,
