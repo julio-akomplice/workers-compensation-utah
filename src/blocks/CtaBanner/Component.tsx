@@ -25,7 +25,7 @@ export const CtaBannerBlockComponent: React.FC<Props> = ({ className, ctaBanner,
   )
 
   return (
-    <div className={cn('mx-auto my-8 w-full', className)}>
+    <div className={cn('stop-a mx-auto my-8 w-full', className)}>
       <div className="rounded-[10px] bg-gradient-to-r from-[#001f3e] to-[#00152b] px-5 py-5 text-center">
         <RichText
           data={processedTemplate}

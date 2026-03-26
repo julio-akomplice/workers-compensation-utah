@@ -408,7 +408,7 @@
     @apply mt-6;
   }
 
-  & a {
+  & a:not(.stop-a a) {
     @apply text-orange no-underline cursor-pointer hover:underline;
   }
 

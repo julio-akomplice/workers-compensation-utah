@@ -57,7 +57,7 @@ export const ContentWithSidebar: React.FC<Props> = ({
   const tocItems = explicitTocItems ?? autoTocItems
 
   return (
-    <div className="lg:flex lg:gap-10 xl:gap-16">
+    <div className="lg:flex lg:gap-10">
       {/* Table of Contents - Desktop only */}
       <div className="hidden lg:block lg:w-[176px] lg:shrink-0">
         <div className="sticky top-[120px]">
@@ -66,7 +66,7 @@ export const ContentWithSidebar: React.FC<Props> = ({
       </div>
 
       {/* Main Content */}
-      <div ref={contentRef} className="min-w-0 flex-1">
+      <div ref={contentRef} className="min-w-0 flex-1 max-w-[770px]">
         {children}
       </div>
 
