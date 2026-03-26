@@ -315,7 +315,7 @@
   }
 
   & p:not(.supportive-text) {
-    @apply mt-4 max-w-2xl text-body text-deep-blue-800;
+    @apply mt-4 text-body text-deep-blue-800;
   }
 
   & p.supportive-text {
@@ -401,7 +401,7 @@
 /* Rich Text Content */
 @utility richtext {
   & p {
-    @apply text-body font-normal tracking-[-0.32px] text-deep-blue-900 mb-0;
+    @apply text-body font-normal tracking-[-0.32px] text-deep-blue-900 mb-0 w-full;
   }
 
   & p + p {

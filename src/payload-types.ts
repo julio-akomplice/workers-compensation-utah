@@ -240,6 +240,8 @@ export interface Page {
     | CaseQuestionnaireBlock
     | ResourcesPageBlock
     | AreasServedPageBlock
+    | FAQPageBlock
+    | BlogPageBlock
   )[];
   /**
    * Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.
@@ -2022,6 +2024,58 @@ export interface AreasServedPageBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQPageBlock".
+ */
+export interface FAQPageBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogPageBlock".
+ */
+export interface BlogPageBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Number of posts to display per page
+   */
+  postsPerPage?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "areas-served".
  */
 export interface AreasServed {
@@ -2443,6 +2497,8 @@ export interface PagesSelect<T extends boolean = true> {
         caseQuestionnaire?: T | CaseQuestionnaireBlockSelect<T>;
         resourcesPage?: T | ResourcesPageBlockSelect<T>;
         areasServedPage?: T | AreasServedPageBlockSelect<T>;
+        faqPage?: T | FAQPageBlockSelect<T>;
+        blogPage?: T | BlogPageBlockSelect<T>;
       };
   solidMenu?: T;
   meta?:
@@ -3040,6 +3096,25 @@ export interface AreasServedPageBlockSelect<T extends boolean = true> {
         showArrow?: T;
         appearance?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQPageBlock_select".
+ */
+export interface FAQPageBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogPageBlock_select".
+ */
+export interface BlogPageBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  postsPerPage?: T;
   id?: T;
   blockName?: T;
 }

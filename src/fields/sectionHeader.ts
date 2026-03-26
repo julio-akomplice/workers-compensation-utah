@@ -1,6 +1,7 @@
 import type { Field, RichTextField } from 'payload'
 
 import {
+  AlignFeature,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
@@ -26,6 +27,7 @@ export const sectionHeader = ({ overrides = {} }: SectionHeaderOptions = {}): Fi
         SupportiveTextFeature(),
         HighlightFeature(),
         HeadingFeature({ enabledHeadingSizes: ['h2', 'h3'] }),
+        AlignFeature(),
         FixedToolbarFeature(),
         InlineToolbarFeature(),
       ],
