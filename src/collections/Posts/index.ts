@@ -12,7 +12,6 @@ import {
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Banner } from '../../blocks/Banner/config'
-import { CaseQuestionnaireCTABlock } from '../../blocks/CaseQuestionnaireCTABlock/config'
 import { Code } from '../../blocks/Code/config'
 import { CtaBanner } from '../../blocks/CtaBanner/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
@@ -91,7 +90,7 @@ export const Posts: CollectionConfig<'posts'> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, CaseQuestionnaireCTABlock, Code, CtaBanner, MediaBlock] }),
+                    BlocksFeature({ blocks: [Banner, Code, CtaBanner, MediaBlock] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
