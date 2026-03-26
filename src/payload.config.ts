@@ -15,6 +15,7 @@ import { PracticeAreas } from './collections/PracticeAreas'
 import { AreasServed } from './collections/AreasServed'
 import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
+import { CtaBanners } from './collections/CtaBanners'
 import { CaseQuestionnaireCTA } from './globals/CaseQuestionnaireCTA/config'
 import { ContactSection } from './globals/ContactSection/config'
 import { FAQSectionGlobal } from './globals/FAQSection/config'
@@ -90,6 +91,7 @@ export default buildConfig({
     Media,
     Categories,
     Users,
+    CtaBanners,
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [

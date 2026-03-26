@@ -119,6 +119,16 @@ export const Pages: CollectionConfig<'pages'> = {
                   'Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.',
               },
             },
+            {
+              name: 'excludeFromSlugRoute',
+              type: 'checkbox',
+              label: 'Exclude from Slug Route',
+              defaultValue: false,
+              admin: {
+                description:
+                  'Enable this if the page is rendered by a dedicated route (e.g. /posts). This prevents the page from also rendering at its slug URL.',
+              },
+            },
           ],
         },
         {

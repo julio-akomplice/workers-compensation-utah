@@ -1,7 +1,4 @@
 import React from 'react'
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
-import { unstable_cache } from 'next/cache'
 
 import type { CaseQuestionnaireCTABlock as CaseQuestionnaireCTABlockProps } from 'src/payload-types'
 
@@ -11,16 +8,28 @@ type Props = {
   className?: string
 } & CaseQuestionnaireCTABlockProps
 
-const getCaseQuestionnaireCTA = unstable_cache(
-  async () => {
-    const payload = await getPayload({ config: configPromise })
-    return payload.findGlobal({ slug: 'case-questionnaire-cta' })
-  },
-  ['global_case-questionnaire-cta'],
-  { tags: ['global_case-questionnaire-cta'] },
-)
+async function fetchGlobal() {
+  // Dynamic imports to avoid pulling @payload-config into the client bundle
+  const [{ getPayload }, { default: configPromise }, { unstable_cache }] = await Promise.all([
+    import('payload'),
+    import('@payload-config'),
+    import('next/cache'),
+  ])
 
-export const CaseQuestionnaireCTABlockComponent: React.FC<Props> = async ({
+  const getCached = unstable_cache(
+    async () => {
+      const payload = await getPayload({ config: configPromise })
+      return payload.findGlobal({ slug: 'case-questionnaire-cta' })
+    },
+    ['global_case-questionnaire-cta'],
+    { tags: ['global_case-questionnaire-cta'] },
+  )
+
+  return getCached()
+}
+
+export const CaseQuestionnaireCTAInlineBlock: React.FC<Props> = async ({
+  className,
   overrideAll,
   overrideImage,
   overrideContent,
@@ -29,7 +38,7 @@ export const CaseQuestionnaireCTABlockComponent: React.FC<Props> = async ({
   sectionHeader: overriddenSectionHeader,
   link: overriddenLink,
 }) => {
-  const global = await getCaseQuestionnaireCTA()
+  const global = await fetchGlobal()
 
   const useOverrideImage = overrideAll || overrideImage
   const useOverrideContent = overrideAll || overrideContent
@@ -41,10 +50,11 @@ export const CaseQuestionnaireCTABlockComponent: React.FC<Props> = async ({
   const link = useOverrideLink && overriddenLink ? overriddenLink : global.link
 
   return (
-    <section className="w-full py-15 bg-off-white md:py-20 lg:py-25">
-      <div className="container mx-auto px-5 md:px-8">
-        <CaseQuestionnaireCTACard image={image} sectionHeader={sectionHeader} link={link} />
-      </div>
-    </section>
+    <CaseQuestionnaireCTACard
+      image={image}
+      sectionHeader={sectionHeader}
+      link={link}
+      className={className}
+    />
   )
 }

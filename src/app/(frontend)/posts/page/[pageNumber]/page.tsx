@@ -1,13 +1,17 @@
-import type { Metadata } from 'next/types'
+import type { Metadata } from 'next'
 
-import { CollectionArchive } from '@/components/CollectionArchive'
-import { PageRange } from '@/components/PageRange'
-import { Pagination } from '@/components/Pagination'
+import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React from 'react'
-import PageClient from './page.client'
+import { draftMode } from 'next/headers'
+import React, { cache } from 'react'
 import { notFound } from 'next/navigation'
+
+import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { RenderHero } from '@/heros/RenderHero'
+import { generateMeta } from '@/utilities/generateMeta'
+import PageClient from './page.client'
+import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export const revalidate = 600
 
@@ -19,53 +23,39 @@ type Args = {
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { pageNumber } = await paramsPromise
-  const payload = await getPayload({ config: configPromise })
+  const { isEnabled: draft } = await draftMode()
 
   const sanitizedPageNumber = Number(pageNumber)
-
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
-  const posts = await payload.find({
-    collection: 'posts',
-    depth: 1,
-    limit: 12,
-    page: sanitizedPageNumber,
-    overrideAccess: false,
-  })
+  const page = await queryPageBySlug({ slug: 'blog' })
+
+  if (!page) {
+    return <PayloadRedirects url="/posts" />
+  }
+
+  const { hero, layout, solidMenu } = page
 
   return (
-    <div className="pt-24 pb-24">
-      <PageClient />
-      <div className="container mb-16">
-        <div className="prose dark:prose-invert max-w-none">
-          <h1>Posts</h1>
-        </div>
-      </div>
+    <article className={solidMenu ? 'pt-header' : ''}>
+      <PageClient solidMenu={solidMenu ?? false} />
+      <PayloadRedirects disableNotFound url={`/posts/page/${pageNumber}`} />
 
-      <div className="container mb-8">
-        <PageRange
-          collection="posts"
-          currentPage={posts.page}
-          limit={12}
-          totalDocs={posts.totalDocs}
-        />
-      </div>
+      {draft && <LivePreviewListener />}
 
-      <CollectionArchive posts={posts.docs} />
-
-      <div className="container">
-        {posts?.page && posts?.totalPages > 1 && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} />
-        )}
-      </div>
-    </div>
+      <RenderHero {...hero} />
+      <RenderBlocks blocks={layout} />
+    </article>
   )
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { pageNumber } = await paramsPromise
+  const page = await queryPageBySlug({ slug: 'blog' })
+  const meta = await generateMeta({ doc: page })
   return {
-    title: `Payload Website Template Posts Page ${pageNumber || ''}`,
+    ...meta,
+    title: meta.title ? `${meta.title} - Page ${pageNumber}` : `Posts Page ${pageNumber}`,
   }
 }
 
@@ -86,3 +76,24 @@ export async function generateStaticParams() {
 
   return pages
 }
+
+const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'pages',
+    draft,
+    limit: 1,
+    pagination: false,
+    overrideAccess: draft,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  })
+
+  return result.docs?.[0] || null
+})

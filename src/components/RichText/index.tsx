@@ -18,15 +18,19 @@ import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 import type {
   BannerBlock as BannerBlockProps,
   CallToActionBlock as CTABlockProps,
+  CaseQuestionnaireCTABlock as CaseQuestionnaireCTABlockProps,
+  CtaBannerBlock as CtaBannerBlockProps,
   MediaBlock as MediaBlockProps,
 } from '@/payload-types'
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
+import { CaseQuestionnaireCTAInlineBlock } from '@/blocks/CaseQuestionnaireCTABlock/InlineComponent'
+import { CtaBannerBlockComponent } from '@/blocks/CtaBanner/Component'
 import { cn } from '@/utilities/ui'
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps>
+  | SerializedBlockNode<CTABlockProps | CaseQuestionnaireCTABlockProps | MediaBlockProps | BannerBlockProps | CtaBannerBlockProps | CodeBlockProps>
   | SerializedSupportiveTextNode
   | SerializedHighlightNode
 
@@ -62,6 +66,10 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     ),
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
     cta: ({ node }) => <CallToActionBlock {...node.fields} />,
+    caseQuestionnaireCTA: ({ node }) => (
+      <CaseQuestionnaireCTAInlineBlock className="col-start-1 col-span-3" {...node.fields} />
+    ),
+    ctaBanner: ({ node }) => <CtaBannerBlockComponent className="col-start-2" {...node.fields} />,
   },
 })
 

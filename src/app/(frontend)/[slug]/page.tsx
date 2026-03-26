@@ -23,12 +23,13 @@ export async function generateStaticParams() {
     pagination: false,
     select: {
       slug: true,
+      excludeFromSlugRoute: true,
     },
   })
 
   const params = pages.docs
     ?.filter((doc) => {
-      return doc.slug !== 'home'
+      return doc.slug !== 'home' && !doc.excludeFromSlugRoute
     })
     .map(({ slug }) => {
       return { slug }
@@ -60,7 +61,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     page = homeStatic
   }
 
-  if (!page) {
+  if (!page || page.excludeFromSlugRoute) {
     return <PayloadRedirects url={url} />
   }
 

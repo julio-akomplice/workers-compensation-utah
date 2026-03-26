@@ -15,6 +15,8 @@ type Props = {
   form: FormType | null
   header?: ShortSideFormType['header']
   children: React.ReactNode
+  /** Pass explicit TOC items to skip auto-detection from h2 elements */
+  tocItems?: TOCItem[]
 }
 
 function slugify(text: string): string {
@@ -24,15 +26,18 @@ function slugify(text: string): string {
     .replace(/(^-|-$)/g, '')
 }
 
-export const AreasServedPageClient: React.FC<Props> = ({
+export const ContentWithSidebar: React.FC<Props> = ({
   form,
   header,
   children,
+  tocItems: explicitTocItems,
 }) => {
   const contentRef = useRef<HTMLDivElement>(null)
-  const [tocItems, setTocItems] = useState<TOCItem[]>([])
+  const [autoTocItems, setAutoTocItems] = useState<TOCItem[]>([])
 
   useEffect(() => {
+    // Skip auto-detection if explicit items were provided
+    if (explicitTocItems) return
     if (!contentRef.current) return
 
     const h2Elements = contentRef.current.querySelectorAll('h2')
@@ -46,8 +51,10 @@ export const AreasServedPageClient: React.FC<Props> = ({
       items.push({ id, label: text })
     })
 
-    setTocItems(items)
-  }, [])
+    setAutoTocItems(items)
+  }, [explicitTocItems])
+
+  const tocItems = explicitTocItems ?? autoTocItems
 
   return (
     <div className="lg:flex lg:gap-10 xl:gap-16">

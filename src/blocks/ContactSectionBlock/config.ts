@@ -11,6 +11,16 @@ export const ContactSectionBlock: Block = {
   },
   fields: [
     {
+      name: 'theme',
+      type: 'select',
+      label: 'Theme',
+      defaultValue: 'white',
+      options: [
+        { label: 'White', value: 'white' },
+        { label: 'Off White', value: 'offWhite' },
+      ],
+    },
+    {
       name: 'overrideAll',
       type: 'checkbox',
       label: 'Override All Content',

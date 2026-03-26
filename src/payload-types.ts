@@ -78,6 +78,7 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    'cta-banners': CtaBanner;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -106,6 +107,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'cta-banners': CtaBannersSelect<false> | CtaBannersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -247,6 +249,10 @@ export interface Page {
    * Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.
    */
   solidMenu?: boolean | null;
+  /**
+   * Enable this if the page is rendered by a dedicated route (e.g. /posts). This prevents the page from also rendering at its slug URL.
+   */
+  excludeFromSlugRoute?: boolean | null;
   meta?: {
     title?: string | null;
     /**
@@ -1322,6 +1328,7 @@ export interface CaseQuestionnaireCTABlock {
  * via the `definition` "ContactSectionBlock".
  */
 export interface ContactSectionBlock {
+  theme?: ('white' | 'offWhite') | null;
   /**
    * Enable to override all fields from the global Contact Section.
    */
@@ -2142,6 +2149,65 @@ export interface AreasServed {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cta-banners".
+ */
+export interface CtaBanner {
+  id: string;
+  /**
+   * Internal label for this banner (not displayed on the site)
+   */
+  title: string;
+  /**
+   * The banner content. Use {{variableName}} for dynamic parts. Example: "For a Free Legal Consultation with a {{topic}} Lawyer, Call {{phone}}"
+   */
+  template: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Define the variables used in your template. These serve as a reference and provide default values when not overridden in the block.
+   */
+  variables?:
+    | {
+        /**
+         * Must match the {{name}} in your template exactly
+         */
+        name: string;
+        /**
+         * Default text if not overridden in the block instance
+         */
+        defaultValue?: string | null;
+        /**
+         * Default: wrap this variable in a link?
+         */
+        isLink?: boolean | null;
+        /**
+         * Default link URL (e.g. tel:8014249675 or https://...)
+         */
+        href?: string | null;
+        /**
+         * Default: open link in a new tab?
+         */
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -2375,6 +2441,10 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
+        relationTo: 'cta-banners';
+        value: string | CtaBanner;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: string | Redirect;
       } | null)
@@ -2501,6 +2571,7 @@ export interface PagesSelect<T extends boolean = true> {
         blogPage?: T | BlogPageBlockSelect<T>;
       };
   solidMenu?: T;
+  excludeFromSlugRoute?: T;
   meta?:
     | T
     | {
@@ -2780,6 +2851,7 @@ export interface CaseQuestionnaireCTABlockSelect<T extends boolean = true> {
  * via the `definition` "ContactSectionBlock_select".
  */
 export interface ContactSectionBlockSelect<T extends boolean = true> {
+  theme?: T;
   overrideAll?: T;
   overrideSectionHeader?: T;
   overrideMapUrl?: T;
@@ -3467,6 +3539,26 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cta-banners_select".
+ */
+export interface CtaBannersSelect<T extends boolean = true> {
+  title?: T;
+  template?: T;
+  variables?:
+    | T
+    | {
+        name?: T;
+        defaultValue?: T;
+        isLink?: T;
+        href?: T;
+        newTab?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4284,6 +4376,44 @@ export interface CodeBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'code';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CtaBannerBlock".
+ */
+export interface CtaBannerBlock {
+  /**
+   * Select a CTA Banner template
+   */
+  ctaBanner: string | CtaBanner;
+  /**
+   * Override variable values from the template. Leave empty to use all defaults.
+   */
+  variables?:
+    | {
+        name: string;
+        /**
+         * The text that replaces the variable
+         */
+        value: string;
+        /**
+         * Wrap this variable in a link?
+         */
+        isLink?: boolean | null;
+        /**
+         * The URL for the link (e.g. tel:8014249675 or https://...)
+         */
+        href?: string | null;
+        /**
+         * Open link in a new tab?
+         */
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ctaBanner';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

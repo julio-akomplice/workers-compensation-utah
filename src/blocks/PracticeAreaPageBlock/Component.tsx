@@ -13,7 +13,8 @@ import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
 import Link from 'next/link'
 import { ArrowIcon } from '@/components/ui/ArrowIcon'
-import { PracticeAreaPageClient } from './Client'
+import { ContentWithSidebar } from '@/components/ContentWithSidebar'
+import { getShortSideForm } from '@/utilities/getShortSideForm'
 
 type Props = {
   className?: string
@@ -32,17 +33,7 @@ export const PracticeAreaPageBlockComponent: React.FC<Props> = async ({
   ctaLink,
 }) => {
   const payload = await getPayload({ config: configPromise })
-
-  // Fetch the global Short Side Form
-  const shortSideFormGlobal = await payload.findGlobal({
-    slug: 'short-side-form',
-  })
-
-  const form =
-    shortSideFormGlobal?.form && typeof shortSideFormGlobal.form === 'object'
-      ? shortSideFormGlobal.form
-      : null
-  const header = shortSideFormGlobal?.header || undefined
+  const { form, header } = await getShortSideForm()
 
   // Resolve categories
   const resolvedCategories: PracticeAreaCategory[] = (categories || [])
@@ -82,11 +73,10 @@ export const PracticeAreaPageBlockComponent: React.FC<Props> = async ({
       <div className="container mx-auto px-5 md:px-8 2xl:px-0">
         <div className="pb-16 pt-8 md:pb-20 md:pt-12 lg:pt-16">
           {/* Main Layout: TOC | Content | Form */}
-          <PracticeAreaPageClient
-            categorySections={categorySections.map((section) => ({
-              id: section.id,
-              title: section.title,
-              slug: section.slug,
+          <ContentWithSidebar
+            tocItems={categorySections.map((section) => ({
+              id: `category-${section.slug}`,
+              label: section.title,
             }))}
             form={form}
             header={header}
@@ -144,7 +134,7 @@ export const PracticeAreaPageBlockComponent: React.FC<Props> = async ({
                 <CMSLink {...ctaLink} />
               </div>
             )}
-          </PracticeAreaPageClient>
+          </ContentWithSidebar>
         </div>
       </div>
     </section>

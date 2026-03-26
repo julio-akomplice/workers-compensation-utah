@@ -22,6 +22,7 @@ const getContactSection = unstable_cache(
 )
 
 export const ContactSectionBlockComponent: React.FC<Props> = async ({
+  theme = 'white',
   overrideAll,
   overrideSectionHeader,
   overrideMapUrl,
@@ -41,11 +42,15 @@ export const ContactSectionBlockComponent: React.FC<Props> = async ({
   const form = typeof global.form === 'object' ? global.form : null
 
   return (
-    <section className="w-full bg-white py-[60px] md:py-[80px] lg:py-20">
+    <section
+      className={`w-full py-[60px] md:py-[80px] lg:py-20 ${theme === 'offWhite' ? 'bg-off-white' : 'bg-white'}`}
+    >
       <div className="container mx-auto px-5 md:px-0">
         <div className="mx-auto flex max-w-[636px] flex-col gap-10 lg:max-w-none lg:grid lg:grid-cols-2 lg:gap-12">
           {/* Left: Form */}
-          <div className="md:rounded-[15px] md:bg-off-white md:px-8 md:py-9 overflow-hidden">
+          <div
+            className={`md:rounded-[15px] md:px-8 md:py-9 overflow-hidden ${theme === 'offWhite' ? 'md:bg-white' : 'md:bg-off-white'}`}
+          >
             {sectionHeader && (
               <div className="mb-6 md:text-center [&_h2]:text-h4 [&_h2]:font-semibold [&_h2]:text-dark-blue [&_h3]:text-h4 [&_h3]:font-semibold [&_h3]:text-dark-blue [&_p]:text-body [&_p]:text-deep-blue-900 [&_p]:mt-2 [&_span.highlight]:text-orange">
                 <RichText data={sectionHeader} enableGutter={false} enableProse={false} />
