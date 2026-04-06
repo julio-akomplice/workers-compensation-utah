@@ -1,8 +1,8 @@
 import type { CollectionConfig } from 'payload'
-import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { slugField } from 'payload'
+import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 
 import {
   MetaDescriptionField,
@@ -26,6 +26,20 @@ export const FAQ: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['question', 'slug', 'updatedAt'],
+    livePreview: {
+      url: ({ data, req }) =>
+        generatePreviewPath({
+          slug: data?.slug,
+          collection: 'faq',
+          req,
+        }),
+    },
+    preview: (data, { req }) =>
+      generatePreviewPath({
+        slug: data?.slug as string,
+        collection: 'faq',
+        req,
+      }),
     useAsTitle: 'question',
   },
   fields: [

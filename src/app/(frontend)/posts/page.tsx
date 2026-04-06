@@ -15,13 +15,15 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 export const dynamic = 'force-static'
 export const revalidate = 600
 
+const postSlug = 'posts'
+
 export default async function Page() {
   const { isEnabled: draft } = await draftMode()
 
-  const page = await queryPageBySlug({ slug: 'blog' })
+  const page = await queryPageBySlug({ slug: postSlug })
 
   if (!page) {
-    return <PayloadRedirects url="/posts" />
+    return <PayloadRedirects url={`/${postSlug}`} />
   }
 
   const { hero, layout, solidMenu } = page
@@ -29,18 +31,20 @@ export default async function Page() {
   return (
     <article className={solidMenu ? 'pt-header' : ''}>
       <PageClient solidMenu={solidMenu ?? false} />
-      <PayloadRedirects disableNotFound url="/posts" />
+      <PayloadRedirects disableNotFound url={`/${postSlug}`} />
 
       {draft && <LivePreviewListener />}
 
       <RenderHero {...hero} />
-      <RenderBlocks blocks={layout} />
+      <div className="mx-auto max-w-[1200px]">
+        <RenderBlocks blocks={layout} />
+      </div>
     </article>
   )
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await queryPageBySlug({ slug: 'blog' })
+  const page = await queryPageBySlug({ slug: postSlug })
   return generateMeta({ doc: page })
 }
 

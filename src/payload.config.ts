@@ -16,6 +16,7 @@ import { AreasServed } from './collections/AreasServed'
 import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
 import { CtaBanners } from './collections/CtaBanners'
+import { Templates } from './collections/Templates'
 import { CaseQuestionnaireCTA } from './globals/CaseQuestionnaireCTA/config'
 import { ContactSection } from './globals/ContactSection/config'
 import { FAQSectionGlobal } from './globals/FAQSection/config'
@@ -92,6 +93,7 @@ export default buildConfig({
     Categories,
     Users,
     CtaBanners,
+    Templates,
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [

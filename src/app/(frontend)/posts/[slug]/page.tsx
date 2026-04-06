@@ -12,13 +12,14 @@ import { Breadcrumbs } from '@/components/Breadcrumbs'
 import type { Post, Category } from '@/payload-types'
 
 import { Media } from '@/components/Media'
-import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
-import { formatAuthors } from '@/utilities/formatAuthors'
-import { formatDateTime } from '@/utilities/formatDateTime'
 import PageClient from './page.client'
 import { ContentWithSidebar } from '@/components/ContentWithSidebar'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { FactCheckedBy } from './FactCheckedBy'
+import { BlogPostCTA } from './BlogPostCTA'
+import { PostNavigation } from './PostNavigation'
+import { TEMPLATE_TYPES, type TemplateType } from '@/collections/Templates/templateTypes'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -55,12 +56,13 @@ export default async function Post({ params: paramsPromise }: Args) {
 
   if (!post) return <PayloadRedirects url={url} />
 
-  const { form, header } = await getShortSideForm()
+  const [{ form, header }, template, { previousPost, nextPost }] = await Promise.all([
+    getShortSideForm(),
+    queryTemplate({ templateType: TEMPLATE_TYPES.BLOG_POST }),
+    getAdjacentPosts({ publishedAt: post.publishedAt, id: post.id }),
+  ])
 
-  const { categories, populatedAuthors, publishedAt, title, heroImage } = post
-
-  const hasAuthors =
-    populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
+  const { categories, title, heroImage, publishedAt } = post
 
   const categoryList =
     categories && Array.isArray(categories)
@@ -70,7 +72,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       : []
 
   return (
-    <article>
+    <article className="pt-header">
       <PageClient />
 
       {/* Allows redirects for valid pages too */}
@@ -78,8 +80,8 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      {/* Hero Banner */}
-      <PostHero post={post} />
+      {/* Hero Banner - hidden */}
+      {/* <PostHero post={post} /> */}
 
       {/* Breadcrumbs */}
       <Breadcrumbs
@@ -117,36 +119,28 @@ export default async function Post({ params: paramsPromise }: Args) {
                   {title}
                 </h1>
 
-                {/* Author & Date */}
-                <div className="mt-4 flex flex-wrap items-center gap-4 text-[14px] tracking-[-0.28px] text-navy-300">
-                  {hasAuthors && (
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-medium text-navy-500">By</span>
-                      <span className="font-semibold text-navy-800">
-                        {formatAuthors(populatedAuthors)}
-                      </span>
-                    </div>
-                  )}
-                  {hasAuthors && publishedAt && (
-                    <span className="text-navy-100">|</span>
-                  )}
-                  {publishedAt && (
-                    <time dateTime={publishedAt} className="text-navy-300">
-                      {formatDateTime(publishedAt)}
-                    </time>
-                  )}
-                </div>
+                {/* Author & Date - hidden */}
               </div>
 
               {/* Featured Image */}
               {heroImage && typeof heroImage !== 'string' && (
-                <div className="mb-8 aspect-[16/9] overflow-hidden rounded-[10px] md:mb-10">
+                <div className="aspect-[16/9] overflow-hidden rounded-[10px]">
                   <Media
                     resource={heroImage}
                     imgClassName="h-full w-full object-cover"
                   />
                 </div>
               )}
+
+              {/* Date + Divider */}
+              <div className="mt-5 mb-8 flex flex-col gap-[25px] md:mb-10">
+                {publishedAt && (
+                  <p className="text-[16px] font-normal leading-normal tracking-[-0.32px] text-deep-blue-900">
+                    Updated: {new Date(publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </p>
+                )}
+                <hr className="border-navy-30" />
+              </div>
 
               {/* Rich Text Content */}
               <RichText
@@ -155,6 +149,10 @@ export default async function Post({ params: paramsPromise }: Args) {
                 enableGutter={false}
                 enableProse={false}
               />
+
+              <FactCheckedBy data={template?.blogPost} />
+              <BlogPostCTA data={template?.blogPost} />
+              <PostNavigation previousPost={previousPost} nextPost={nextPost} />
             </ContentWithSidebar>
           </div>
         </div>
@@ -192,3 +190,63 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
 
   return result.docs?.[0] || null
 })
+
+const queryTemplate = cache(async ({ templateType }: { templateType: TemplateType }) => {
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'templates',
+    depth: 2,
+    limit: 1,
+    pagination: false,
+    where: {
+      templateType: {
+        equals: templateType,
+      },
+    },
+  })
+
+  return result.docs?.[0] || null
+})
+
+const getAdjacentPosts = cache(
+  async ({ publishedAt, id }: { publishedAt?: string | null; id: string }) => {
+    const payload = await getPayload({ config: configPromise })
+
+    const [prevResult, nextResult] = await Promise.all([
+      payload.find({
+        collection: 'posts',
+        draft: false,
+        limit: 1,
+        pagination: false,
+        sort: '-publishedAt',
+        select: { title: true, slug: true },
+        where: {
+          id: { not_equals: id },
+          ...(publishedAt
+            ? { publishedAt: { less_than: publishedAt } }
+            : {}),
+        },
+      }),
+      payload.find({
+        collection: 'posts',
+        draft: false,
+        limit: 1,
+        pagination: false,
+        sort: 'publishedAt',
+        select: { title: true, slug: true },
+        where: {
+          id: { not_equals: id },
+          ...(publishedAt
+            ? { publishedAt: { greater_than: publishedAt } }
+            : {}),
+        },
+      }),
+    ])
+
+    return {
+      previousPost: prevResult.docs?.[0] || null,
+      nextPost: nextResult.docs?.[0] || null,
+    }
+  },
+)

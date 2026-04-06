@@ -92,7 +92,7 @@ export const BlogPageBlockComponent: React.FC<Props> = async ({
                   {/* Category Pills */}
                   {categories.length > 0 && (
                     <div className="flex flex-wrap gap-2">
-                      {categories.map((cat) =>
+                      {categories.slice(0, 2).map((cat) =>
                         cat ? (
                           <span
                             key={cat.id}

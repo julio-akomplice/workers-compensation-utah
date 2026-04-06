@@ -79,6 +79,7 @@ export interface Config {
     categories: Category;
     users: User;
     'cta-banners': CtaBanner;
+    templates: Template;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -108,6 +109,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'cta-banners': CtaBannersSelect<false> | CtaBannersSelect<true>;
+    templates: TemplatesSelect<false> | TemplatesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -244,6 +246,7 @@ export interface Page {
     | AreasServedPageBlock
     | FAQPageBlock
     | BlogPageBlock
+    | CaseStudyPageBlock
   )[];
   /**
    * Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.
@@ -2083,6 +2086,53 @@ export interface BlogPageBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseStudyPageBlock".
+ */
+export interface CaseStudyPageBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  phoneLink: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  populateBy?: ('collection' | 'selection') | null;
+  limit?: number | null;
+  selectedCaseStudies?: (string | CaseStudy)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'caseStudyPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "areas-served".
  */
 export interface AreasServed {
@@ -2205,6 +2255,89 @@ export interface CtaBanner {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "templates".
+ */
+export interface Template {
+  id: string;
+  /**
+   * Internal label for this template (e.g. "FAQ Template")
+   */
+  title: string;
+  templateType: 'faq' | 'case-study' | 'blog-post' | 'practice-area' | 'areas-served';
+  hero: {
+    type: 'none' | 'mediumImpact' | 'homeHero';
+    title?: string | null;
+    supportiveText?: string | null;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: string | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+            showArrow?: boolean | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: 'gradient' | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    media?: (string | null) | Media;
+  };
+  blogPost?: {
+    link: {
+      type?: ('reference' | 'custom') | null;
+      newTab?: boolean | null;
+      reference?:
+        | ({
+            relationTo: 'pages';
+            value: string | Page;
+          } | null)
+        | ({
+            relationTo: 'posts';
+            value: string | Post;
+          } | null);
+      url?: string | null;
+      label: string;
+      showArrow?: boolean | null;
+      /**
+       * Choose how the link should be rendered.
+       */
+      appearance?: 'gradient' | null;
+    };
+    factCheckedBy: {
+      /**
+       * e.g. "Content checked by Richard R. Burke"
+       */
+      title: string;
+      /**
+       * Short bio or credentials of the person who reviewed the content.
+       */
+      description: string;
+      image: string | Media;
+    };
+  };
+  /**
+   * Enable this when the template has no hero image. The navigation bar will have a solid dark background instead of being transparent.
+   */
+  solidMenu?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2445,6 +2578,10 @@ export interface PayloadLockedDocument {
         value: string | CtaBanner;
       } | null)
     | ({
+        relationTo: 'templates';
+        value: string | Template;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: string | Redirect;
       } | null)
@@ -2569,6 +2706,7 @@ export interface PagesSelect<T extends boolean = true> {
         areasServedPage?: T | AreasServedPageBlockSelect<T>;
         faqPage?: T | FAQPageBlockSelect<T>;
         blogPage?: T | BlogPageBlockSelect<T>;
+        caseStudyPage?: T | CaseStudyPageBlockSelect<T>;
       };
   solidMenu?: T;
   excludeFromSlugRoute?: T;
@@ -3192,6 +3330,29 @@ export interface BlogPageBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseStudyPageBlock_select".
+ */
+export interface CaseStudyPageBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  phoneLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
+      };
+  populateBy?: T;
+  limit?: T;
+  selectedCaseStudies?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -3559,6 +3720,64 @@ export interface CtaBannersSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "templates_select".
+ */
+export interface TemplatesSelect<T extends boolean = true> {
+  title?: T;
+  templateType?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        title?: T;
+        supportiveText?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    showArrow?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+        media?: T;
+      };
+  blogPost?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              showArrow?: T;
+              appearance?: T;
+            };
+        factCheckedBy?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              image?: T;
+            };
+      };
+  solidMenu?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4335,6 +4554,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'faq';
           value: string | Faq;
+        } | null)
+      | ({
+          relationTo: 'templates';
+          value: string | Template;
         } | null);
     global?: string | null;
     user?: (string | null) | User;
@@ -4365,6 +4588,17 @@ export interface BannerBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'banner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlockquoteBlock".
+ */
+export interface BlockquoteBlock {
+  quote: string;
+  author?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blockquote';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

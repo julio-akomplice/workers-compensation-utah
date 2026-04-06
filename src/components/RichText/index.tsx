@@ -17,12 +17,14 @@ import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 
 import type {
   BannerBlock as BannerBlockProps,
+  BlockquoteBlock as BlockquoteBlockProps,
   CallToActionBlock as CTABlockProps,
   CaseQuestionnaireCTABlock as CaseQuestionnaireCTABlockProps,
   CtaBannerBlock as CtaBannerBlockProps,
   MediaBlock as MediaBlockProps,
 } from '@/payload-types'
 import { BannerBlock } from '@/blocks/Banner/Component'
+import { BlockquoteBlock } from '@/blocks/Blockquote/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { CaseQuestionnaireCTALexicalBlock } from '@/blocks/CaseQuestionnaireCTABlock/LexicalComponent'
 import { CtaBannerBlockComponent } from '@/blocks/CtaBanner/Component'
@@ -30,7 +32,7 @@ import { cn } from '@/utilities/ui'
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | CaseQuestionnaireCTABlockProps | MediaBlockProps | BannerBlockProps | CtaBannerBlockProps | CodeBlockProps>
+  | SerializedBlockNode<CTABlockProps | CaseQuestionnaireCTABlockProps | MediaBlockProps | BannerBlockProps | BlockquoteBlockProps | CtaBannerBlockProps | CodeBlockProps>
   | SerializedSupportiveTextNode
   | SerializedHighlightNode
 
@@ -54,9 +56,10 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   ),
   blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
+    blockquote: ({ node }) => <BlockquoteBlock {...node.fields} />,
     mediaBlock: ({ node }) => (
       <MediaBlock
-        className="col-start-1 col-span-3"
+        className="col-start-1 col-span-3 my-10"
         imgClassName="m-0"
         {...node.fields}
         captionClassName="mx-auto max-w-[48rem]"

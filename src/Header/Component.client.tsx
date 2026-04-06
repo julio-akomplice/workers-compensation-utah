@@ -77,15 +77,18 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-20',
-        solidMenu && 'bg-dark-blue',
-        !solidMenu && 'transition-colors duration-300',
-        !solidMenu && scrolled && 'bg-dark-blue',
+        // Tablet and below: always solid
+        'bg-dark-blue lg:bg-transparent',
+        // Desktop: solid when solidMenu or scrolled
+        solidMenu && 'lg:bg-dark-blue',
+        !solidMenu && 'lg:transition-colors lg:duration-300',
+        !solidMenu && scrolled && 'lg:bg-dark-blue',
       )}
       {...(theme ? { 'data-theme': theme } : {})}
     >
-      {/* Dark gradient overlay — only when not scrolled and not solid menu */}
+      {/* Dark gradient overlay — only on desktop when not scrolled and not solid menu */}
       {!scrolled && !solidMenu && (
-        <div className="absolute inset-0 h-[88px] md:h-[92px] bg-gradient-to-b from-off-black/40 to-transparent pointer-events-none" />
+        <div className="hidden lg:block absolute inset-0 h-[92px] bg-gradient-to-b from-off-black/40 to-transparent pointer-events-none" />
       )}
 
       <div className="container relative">

@@ -45,9 +45,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             }}
           />
 
-          <Header />
-          {children}
-          <Footer />
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1 mt-[88px] md:mt-[92px] lg:mt-0">{children}</main>
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>

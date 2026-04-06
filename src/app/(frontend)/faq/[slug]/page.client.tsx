@@ -3,13 +3,13 @@ import { useHeaderTheme } from '@/providers/HeaderTheme'
 import React, { useEffect } from 'react'
 
 const PageClient: React.FC = () => {
-  /* Force the header to be dark mode while we have an image behind it */
   const { setHeaderTheme, setSolidMenu } = useHeaderTheme()
 
   useEffect(() => {
     setHeaderTheme('dark')
-    setSolidMenu(true)
+    // setSolidMenu(true)
   }, [setHeaderTheme, setSolidMenu])
+
   return <React.Fragment />
 }
 
