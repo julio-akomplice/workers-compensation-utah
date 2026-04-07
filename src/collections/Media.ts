@@ -40,7 +40,9 @@ export const Media: CollectionConfig = {
               ? doc.url
               : `${process.env.NEXT_PUBLIC_SERVER_URL}${doc.url}`
             const res = await fetch(url)
-            doc.svgContent = await res.text()
+            if (res.ok) {
+              doc.svgContent = await res.text()
+            }
           } catch {
             // Failed to fetch SVG
           }

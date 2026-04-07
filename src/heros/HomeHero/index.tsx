@@ -4,11 +4,9 @@ import React, { useEffect } from 'react'
 
 import type { Page } from '@/payload-types'
 
-import heroImage from '@/assets/placeholder/image-placeholder.webp'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
-import Image from 'next/image'
 import { cn } from '@/utilities/ui'
 
 const ScrollIndicator: React.FC = () => (
@@ -53,7 +51,8 @@ const ScrollIndicator: React.FC = () => (
 export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> = ({
   links,
   supportiveText,
-  media,
+  headlineImage,
+  background,
   svgContent,
 }) => {
   const { setHeaderTheme } = useHeaderTheme()
@@ -65,12 +64,15 @@ export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> =
   return (
     <section className="relative text-black h-screen overflow-hidden pb-12.5">
       {/* Background Image */}
-      <Image
-        src={heroImage}
-        alt="Workers Compensation Utah"
-        fill
-        className="object-cover -z-10"
-      />
+      {background && typeof background === 'object' && (
+        <Media
+          resource={background}
+          fill
+          imgClassName="object-cover -z-10"
+          priority
+          loading="eager"
+        />
+      )}
 
       {/* Dark overlay for text readability */}
       <div
@@ -85,10 +87,10 @@ export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> =
           {supportiveText && <p className="text-white caption-heading">{supportiveText}</p>}
 
           <h1 className="sr-only">Workers Compensation Utah</h1>
-          {media && typeof media === 'object' && (
+          {headlineImage && typeof headlineImage === 'object' && (
             <div className="mt-8.75">
               <Media
-                resource={media}
+                resource={headlineImage}
                 svgContent={svgContent}
                 imgClassName=""
                 className={cn('w-full max-w-[90vw] md:max-w-[80vw] lg:max-w-200 [&_svg]:w-full [&_svg]:h-auto [&_svg]:max-w-[90vw] [&_svg]:md:max-w-[80vw] [&_svg]:lg:max-w-200')}

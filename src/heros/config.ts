@@ -43,17 +43,28 @@ export const hero: Field = {
         condition: (_, { type } = {}) => type === 'homeHero',
       },
     },
+    {
+      name: 'headlineImage',
+      type: 'upload',
+      label: 'Headline Image',
+      admin: {
+        condition: (_, { type } = {}) => type === 'homeHero',
+      },
+      relationTo: 'media',
+    },
     linkGroup({
       overrides: {
-        maxRows: 2,
+        minRows: 1,
+        maxRows: 1,
         admin: {
           condition: (_, { type } = {}) => type === 'homeHero',
         },
       },
     }),
     {
-      name: 'media',
+      name: 'background',
       type: 'upload',
+      label: 'Background',
       admin: {
         condition: (_, { type } = {}) => ['mediumImpact', 'homeHero'].includes(type),
       },

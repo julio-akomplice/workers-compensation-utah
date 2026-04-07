@@ -6,7 +6,7 @@ import type { Page } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 
-export const MediumImpactHero: React.FC<Page['hero']> = ({ title, media }) => {
+export const MediumImpactHero: React.FC<Page['hero']> = ({ title, background }) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {
@@ -18,8 +18,8 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({ title, media }) => {
       className="relative -mt-[10.4rem] flex items-center justify-center text-white"
       data-theme="dark"
     >
-      {media && typeof media === 'object' && (
-        <Media fill imgClassName="object-cover -z-10" priority resource={media} />
+      {background && typeof background === 'object' && (
+        <Media fill imgClassName="object-cover -z-10" priority resource={background} />
       )}
 
       <div className="absolute inset-0 bg-gradient-to-b from-[#00070f]/30 via-transparent to-transparent -z-[5]" />

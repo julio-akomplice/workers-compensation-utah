@@ -188,6 +188,7 @@ export interface Page {
     type: 'none' | 'mediumImpact' | 'homeHero';
     title?: string | null;
     supportiveText?: string | null;
+    headlineImage?: (string | null) | Media;
     links?:
       | {
           link: {
@@ -213,7 +214,7 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
-    media?: (string | null) | Media;
+    background?: (string | null) | Media;
   };
   layout: (
     | BreadcrumbBlock
@@ -265,56 +266,6 @@ export interface Page {
     description?: string | null;
   };
   publishedAt?: string | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
- */
-export interface Post {
-  id: string;
-  title: string;
-  heroImage?: (string | null) | Media;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  relatedPosts?: (string | Post)[] | null;
-  categories?: (string | Category)[] | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-    description?: string | null;
-  };
-  publishedAt?: string | null;
-  authors?: (string | User)[] | null;
-  populatedAuthors?:
-    | {
-        id?: string | null;
-        name?: string | null;
-      }[]
-    | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -443,6 +394,56 @@ export interface FolderInterface {
   folderType?: 'media'[] | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string;
+  title: string;
+  heroImage?: (string | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  relatedPosts?: (string | Post)[] | null;
+  categories?: (string | Category)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  authors?: (string | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -984,6 +985,7 @@ export interface PracticeArea {
     type: 'none' | 'mediumImpact' | 'homeHero';
     title?: string | null;
     supportiveText?: string | null;
+    headlineImage?: (string | null) | Media;
     links?:
       | {
           link: {
@@ -1009,7 +1011,7 @@ export interface PracticeArea {
           id?: string | null;
         }[]
       | null;
-    media?: (string | null) | Media;
+    background?: (string | null) | Media;
   };
   general: {
     alternativeTitle?: string | null;
@@ -2142,6 +2144,7 @@ export interface AreasServed {
     type: 'none' | 'mediumImpact' | 'homeHero';
     title?: string | null;
     supportiveText?: string | null;
+    headlineImage?: (string | null) | Media;
     links?:
       | {
           link: {
@@ -2167,7 +2170,7 @@ export interface AreasServed {
           id?: string | null;
         }[]
       | null;
-    media?: (string | null) | Media;
+    background?: (string | null) | Media;
   };
   layout: (
     | CallToActionBlock
@@ -2271,6 +2274,7 @@ export interface Template {
     type: 'none' | 'mediumImpact' | 'homeHero';
     title?: string | null;
     supportiveText?: string | null;
+    headlineImage?: (string | null) | Media;
     links?:
       | {
           link: {
@@ -2296,7 +2300,7 @@ export interface Template {
           id?: string | null;
         }[]
       | null;
-    media?: (string | null) | Media;
+    background?: (string | null) | Media;
   };
   blogPost?: {
     link: {
@@ -2655,6 +2659,7 @@ export interface PagesSelect<T extends boolean = true> {
         type?: T;
         title?: T;
         supportiveText?: T;
+        headlineImage?: T;
         links?:
           | T
           | {
@@ -2671,7 +2676,7 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               id?: T;
             };
-        media?: T;
+        background?: T;
       };
   layout?:
     | T
@@ -3394,6 +3399,7 @@ export interface PracticeAreasSelect<T extends boolean = true> {
         type?: T;
         title?: T;
         supportiveText?: T;
+        headlineImage?: T;
         links?:
           | T
           | {
@@ -3410,7 +3416,7 @@ export interface PracticeAreasSelect<T extends boolean = true> {
                   };
               id?: T;
             };
-        media?: T;
+        background?: T;
       };
   general?:
     | T
@@ -3469,6 +3475,7 @@ export interface AreasServedSelect<T extends boolean = true> {
         type?: T;
         title?: T;
         supportiveText?: T;
+        headlineImage?: T;
         links?:
           | T
           | {
@@ -3485,7 +3492,7 @@ export interface AreasServedSelect<T extends boolean = true> {
                   };
               id?: T;
             };
-        media?: T;
+        background?: T;
       };
   layout?:
     | T
@@ -3734,6 +3741,7 @@ export interface TemplatesSelect<T extends boolean = true> {
         type?: T;
         title?: T;
         supportiveText?: T;
+        headlineImage?: T;
         links?:
           | T
           | {
@@ -3750,7 +3758,7 @@ export interface TemplatesSelect<T extends boolean = true> {
                   };
               id?: T;
             };
-        media?: T;
+        background?: T;
       };
   blogPost?:
     | T
