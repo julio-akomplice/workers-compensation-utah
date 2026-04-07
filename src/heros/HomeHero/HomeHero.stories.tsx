@@ -18,7 +18,7 @@ export const Default: Story = {
   args: {
     type: 'homeHero',
     supportiveText: 'Serving Utah for 30 Years',
-    media: {
+    headlineImage: {
       id: '1',
       alt: 'Workers Compensation Utah',
       url: 'http://localhost:3000/api/media/file/image-hero1-300x169.webp',
