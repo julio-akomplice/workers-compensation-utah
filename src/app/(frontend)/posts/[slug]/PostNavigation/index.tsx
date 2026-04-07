@@ -13,10 +13,10 @@ export const PostNavigation: React.FC<Props> = ({ previousPost, nextPost }) => {
   if (!previousPost && !nextPost) return null
 
   return (
-    <nav className="mt-16 flex items-start justify-between border-t border-navy-30 pt-10">
+    <nav className="mt-16 flex items-start justify-between gap-4 border-t border-navy-30 pt-10">
       {/* Previous */}
       {previousPost ? (
-        <Link href={`/posts/${previousPost.slug}`} className="group flex max-w-[206px] flex-col items-start gap-4">
+        <Link href={`/posts/${previousPost.slug}`} className="group flex max-w-[206px] cursor-pointer flex-col items-start gap-4">
           <span className="flex size-[44px] items-center justify-center rounded-full border border-navy-200 transition-colors group-hover:border-deep-blue-900">
             <ArrowIcon className="size-6 rotate-180 text-navy-200 transition-colors group-hover:text-deep-blue-900" />
           </span>
@@ -35,7 +35,7 @@ export const PostNavigation: React.FC<Props> = ({ previousPost, nextPost }) => {
 
       {/* Next */}
       {nextPost ? (
-        <Link href={`/posts/${nextPost.slug}`} className="group flex max-w-[206px] flex-col items-end gap-4">
+        <Link href={`/posts/${nextPost.slug}`} className="group flex max-w-[206px] cursor-pointer flex-col items-end gap-4">
           <span className="flex size-[44px] items-center justify-center rounded-full border border-navy-200 transition-colors group-hover:border-deep-blue-900">
             <ArrowIcon className="size-6 text-navy-200 transition-colors group-hover:text-deep-blue-900" />
           </span>
