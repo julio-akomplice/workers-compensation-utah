@@ -8,6 +8,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        default: 'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
         gradient: [
           'relative isolate overflow-hidden text-white rounded-[6px]',
           // ::after = blue (bottom layer)
@@ -16,9 +17,16 @@ const buttonVariants = cva(
           'before:absolute before:inset-0 before:[background:linear-gradient(95deg,#FFB94A_0.83%,#F74A0B)] before:shadow-[inset_0_-3px_7px_0_#FFB94A] before:transition-opacity before:duration-300 before:z-[-1] before:pointer-events-none',
           'hover:before:opacity-0',
         ].join(' '),
+        outline: 'border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
+        secondary: 'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
         default: cn('h-12 px-6 py-3.5'),
+        sm: 'h-8 rounded-md gap-1.5 px-3 text-xs has-[>svg]:px-2.5',
+        lg: 'h-14 rounded-md px-8 has-[>svg]:px-4',
+        icon: 'size-9',
       },
     },
     defaultVariants: {

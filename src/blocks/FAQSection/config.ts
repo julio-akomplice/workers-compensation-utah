@@ -1,4 +1,4 @@
-import type { Block } from 'payload'
+import type { Block, Field } from 'payload'
 
 import { link } from '@/fields/link'
 import { sectionHeader } from '@/fields/sectionHeader'
@@ -52,7 +52,7 @@ export const FAQSection: Block = {
         condition: (_, siblingData) =>
           siblingData?.overrideAll || siblingData?.overrideSectionHeader,
       },
-    },
+    } as Field,
     {
       name: 'faqs',
       type: 'relationship',

@@ -1,4 +1,4 @@
-import type { Block } from 'payload'
+import type { Block, Field } from 'payload'
 
 import { sectionHeader } from '@/fields/sectionHeader'
 
@@ -61,7 +61,7 @@ export const ContactSectionBlock: Block = {
         condition: (_, siblingData) =>
           siblingData?.overrideAll || siblingData?.overrideSectionHeader,
       },
-    },
+    } as Field,
     {
       name: 'mapUrl',
       type: 'text',

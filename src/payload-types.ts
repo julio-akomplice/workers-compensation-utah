@@ -548,7 +548,7 @@ export interface CallToActionBlock {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: null;
+          appearance?: ('default' | 'outline') | null;
         };
         id?: string | null;
       }[]

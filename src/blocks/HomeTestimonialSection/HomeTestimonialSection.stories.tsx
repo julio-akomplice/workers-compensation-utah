@@ -113,15 +113,13 @@ export const Default: Story = {
     videos: [
       {
         id: '1',
-        video: createMockMedia({ filename: 'testimonial-video-1.mp4' }).image,
-        thumbnail: createMockMedia({ filename: 'video-thumb-1.webp' }).image,
-        caption: 'What made you realize you were with the right people?',
+        media: createMockMedia({ filename: 'testimonial-video-1.mp4' }).image,
+        poster: createMockMedia({ filename: 'video-thumb-1.webp' }).image,
       },
       {
         id: '2',
-        video: createMockMedia({ filename: 'testimonial-video-2.mp4' }).image,
-        thumbnail: createMockMedia({ filename: 'video-thumb-2.webp' }).image,
-        caption: 'How did our team help you cope with the challenges of your Workers\' Comp case?',
+        media: createMockMedia({ filename: 'testimonial-video-2.mp4' }).image,
+        poster: createMockMedia({ filename: 'video-thumb-2.webp' }).image,
       },
     ],
   },

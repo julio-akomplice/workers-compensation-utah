@@ -112,10 +112,10 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
               ) : null
             }
 
-            const name = 'name' in field ? field.name : field.blockType
-            const label = 'label' in field ? field.label : undefined
+            const name = field.name
+            const label = field.label ?? undefined
             const placeholder = 'placeholder' in field ? (field.placeholder ?? '') : ''
-            const required = 'required' in field ? (field.required ?? false) : false
+            const required = field.required ?? false
 
             return (
               <div key={index}>

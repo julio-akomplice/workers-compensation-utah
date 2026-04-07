@@ -46,6 +46,7 @@ export const seedAreasServed = async (payload: Payload): Promise<void> => {
         disableRevalidate: true,
       },
       data: {
+        hero: { type: 'none' },
         title: area.title,
         slug: area.slug,
         _status: 'published',

@@ -1,4 +1,4 @@
-import type { GlobalConfig } from 'payload'
+import type { Field, GlobalConfig } from 'payload'
 
 import { sectionHeader } from '@/fields/sectionHeader'
 import { revalidateShortSideForm } from './hooks/revalidateShortSideForm'
@@ -17,7 +17,7 @@ export const ShortSideFormGlobal: GlobalConfig = {
       ...sectionHeader(),
       name: 'header',
       label: 'Header',
-    },
+    } as Field,
     {
       name: 'form',
       type: 'relationship',

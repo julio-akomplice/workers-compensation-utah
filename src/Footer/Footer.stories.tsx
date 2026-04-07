@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 
 import { FooterContent } from './FooterContent'
 import { createMockMedia } from '@/utilities/createMockMedia'
-import type { PracticeArea, Page } from '@/payload-types'
+import type { PracticeArea, Page, AreasServed } from '@/payload-types'
 
 const meta: Meta<typeof FooterContent> = {
   title: 'Globals/Footer',
@@ -36,6 +36,16 @@ const mockPage = (id: string, title: string, slug: string): Page => ({
   updatedAt: '',
 })
 
+const mockAreasServed = (id: string, title: string): AreasServed => ({
+  id,
+  title,
+  slug: title.toLowerCase().replace(/\s+/g, '-'),
+  hero: { type: 'none' },
+  layout: [],
+  createdAt: '',
+  updatedAt: '',
+})
+
 export const Default: Story = {
   args: {
     id: '1',
@@ -49,13 +59,13 @@ export const Default: Story = {
       mockPracticeArea('6', 'Wrongful Death', 'wrongful-death'),
     ],
     areasServed: [
-      { city: 'Draper', id: '1' },
-      { city: 'Ogden', id: '2' },
-      { city: 'Orem', id: '3' },
-      { city: 'Provo', id: '4' },
-      { city: 'Salt Lake City', id: '5' },
-      { city: 'West Jordan', id: '6' },
-      { city: 'West Valley City', id: '7' },
+      mockAreasServed('1', 'Draper'),
+      mockAreasServed('2', 'Ogden'),
+      mockAreasServed('3', 'Orem'),
+      mockAreasServed('4', 'Provo'),
+      mockAreasServed('5', 'Salt Lake City'),
+      mockAreasServed('6', 'West Jordan'),
+      mockAreasServed('7', 'West Valley City'),
     ],
     quickLinks: [
       mockPage('10', 'About', 'about'),
@@ -66,16 +76,14 @@ export const Default: Story = {
       mockPage('15', 'Blog', 'blog'),
       mockPage('16', 'FAQS', 'faqs'),
     ],
-    phone: '(801) 424-9675',
-    fax: '(801) 683-7575',
-    address: '2046 E Murray Holladay Rd # 108, Holladay, UT 84117',
-    addressMapUrl: 'https://maps.google.com/?q=2046+E+Murray+Holladay+Rd+108+Holladay+UT+84117',
+    phone: { label: '(801) 424-9675', url: 'tel:+18014249675' },
+    fax: { label: '(801) 683-7575', url: 'fax:+18016837575' },
+    address: { text: '2046 E Murray Holladay Rd # 108, Holladay, UT 84117', mapUrl: 'https://maps.google.com/?q=2046+E+Murray+Holladay+Rd+108+Holladay+UT+84117' },
     socialLinks: [
-      { platform: 'linkedin', url: 'https://linkedin.com', id: '1' },
-      { platform: 'google', url: 'https://google.com', id: '2' },
+      { name: 'LinkedIn', url: 'https://linkedin.com', image: 'mock-image', id: '1' },
+      { name: 'Google', url: 'https://google.com', image: 'mock-image', id: '2' },
     ],
-    copyrightYear: '2026',
-    companyName: "Workers' Compensation Utah",
+    copyrightText: "Workers' Compensation Utah",
     allRightsReservedText: 'All Rights Reserved',
     privacyPolicyPage: mockPage('20', 'Privacy Policy', 'privacy-policy'),
     privacyPolicyLabel: 'Privacy Policy',

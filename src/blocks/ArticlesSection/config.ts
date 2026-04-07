@@ -1,4 +1,4 @@
-import type { Block } from 'payload'
+import type { Block, Field } from 'payload'
 
 import { sectionHeader } from '@/fields/sectionHeader'
 import { link } from '@/fields/link'
@@ -36,7 +36,7 @@ export const ArticlesSection: Block = {
         condition: (_, siblingData) =>
           siblingData?.overrideAll || siblingData?.overrideSectionHeader,
       },
-    },
+    } as Field,
     link({
       overrides: {
         label: 'CTA Link',

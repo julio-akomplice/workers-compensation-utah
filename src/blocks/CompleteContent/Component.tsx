@@ -24,37 +24,21 @@ export const CompleteContentBlock: React.FC<Props> = ({ sectionHeader, cards }) 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {cards.map((card, index) => (
               <div key={index} className="flex flex-col">
-                {card.enableIcon && card.icon && (
-                  <div className="mb-4">
-                    <Media resource={card.icon} imgClassName="h-12 w-12" />
-                  </div>
-                )}
-
-                {card.enableImage && card.image && (
+                {card.image && (
                   <div className="mb-4">
                     <Media resource={card.image} imgClassName="w-full rounded" />
                   </div>
                 )}
 
-                {card.enableHeadline && card.headline && (
+                {card.headline && (
                   <h3 className="text-h5 font-semibold">{card.headline}</h3>
                 )}
 
-                {card.enableRichHeadline && card.richHeadline && (
-                  <RichText data={card.richHeadline} enableGutter={false} />
-                )}
-
-                {card.enableContent && card.content && (
+                {card.content && (
                   <p className="mt-2">{card.content}</p>
                 )}
 
-                {card.enableRichContent && card.richContent && (
-                  <div className="mt-2">
-                    <RichText data={card.richContent} enableGutter={false} />
-                  </div>
-                )}
-
-                {card.enableCta && card.link && (
+                {card.link && (
                   <div className="mt-4">
                     <CMSLink {...card.link} />
                   </div>

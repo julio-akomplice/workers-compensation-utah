@@ -12,7 +12,6 @@ import type { Faq, Template } from '@/payload-types'
 import { Media } from '@/components/Media'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { RenderHero } from '@/heros/RenderHero'
-import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { generateMeta } from '@/utilities/generateMeta'
 import RichText from '@/components/RichText'
 import PageClient from './page.client'
@@ -167,8 +166,6 @@ export default async function IndividualFAQPage({ params: paramsPromise }: Args)
         </div>
       </section>
 
-      {/* Template Layout Blocks */}
-      {template?.layout && <RenderBlocks blocks={template.layout} />}
     </article>
   )
 }

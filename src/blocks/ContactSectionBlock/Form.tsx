@@ -100,11 +100,11 @@ export const ContactForm: React.FC<Props> = ({ form }) => {
             ) : null
           }
 
-          const name = 'name' in field ? field.name : field.blockType
-          const label = 'label' in field ? field.label : undefined
+          const name = field.name
+          const label = field.label ?? undefined
           const placeholder = 'placeholder' in field ? (field.placeholder ?? '') : ''
-          const required = 'required' in field ? (field.required ?? false) : false
-          const width = 'width' in field ? field.width : undefined
+          const required = field.required ?? false
+          const width = field.width ?? undefined
           const isFullWidth =
             field.blockType === 'textarea' || (width !== undefined && width === 100)
 
