@@ -79,6 +79,9 @@ export default buildConfig({
   editor: defaultLexical,
   db: mongooseAdapter({
     url: process.env.DATABASE_URL || '',
+    connectOptions: {
+      dbName: 'workers-compensation',
+    },
   }),
   collections: [
     Pages,
