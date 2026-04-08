@@ -133,6 +133,7 @@ export interface Config {
     'faq-section': FaqSection;
     'articles-section': ArticlesSection;
     'short-side-form': ShortSideForm;
+    'awards-section': AwardsSection;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -142,6 +143,7 @@ export interface Config {
     'faq-section': FaqSectionSelect<false> | FaqSectionSelect<true>;
     'articles-section': ArticlesSectionSelect<false> | ArticlesSectionSelect<true>;
     'short-side-form': ShortSideFormSelect<false> | ShortSideFormSelect<true>;
+    'awards-section': AwardsSectionSelect<false> | AwardsSectionSelect<true>;
   };
   locale: null;
   widgets: {
@@ -248,6 +250,7 @@ export interface Page {
     | FAQPageBlock
     | BlogPageBlock
     | CaseStudyPageBlock
+    | AwardsSectionBlock
   )[];
   /**
    * Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.
@@ -2135,6 +2138,24 @@ export interface CaseStudyPageBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AwardsSectionBlock".
+ */
+export interface AwardsSectionBlock {
+  overrideHeadline?: boolean | null;
+  headline?: string | null;
+  overrideGallery?: boolean | null;
+  gallery?:
+    | {
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'awardsSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "areas-served".
  */
 export interface AreasServed {
@@ -2712,6 +2733,7 @@ export interface PagesSelect<T extends boolean = true> {
         faqPage?: T | FAQPageBlockSelect<T>;
         blogPage?: T | BlogPageBlockSelect<T>;
         caseStudyPage?: T | CaseStudyPageBlockSelect<T>;
+        awardsSection?: T | AwardsSectionBlockSelect<T>;
       };
   solidMenu?: T;
   excludeFromSlugRoute?: T;
@@ -3353,6 +3375,23 @@ export interface CaseStudyPageBlockSelect<T extends boolean = true> {
   populateBy?: T;
   limit?: T;
   selectedCaseStudies?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AwardsSectionBlock_select".
+ */
+export interface AwardsSectionBlockSelect<T extends boolean = true> {
+  overrideHeadline?: T;
+  headline?: T;
+  overrideGallery?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -4359,6 +4398,22 @@ export interface ShortSideForm {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "awards-section".
+ */
+export interface AwardsSection {
+  id: string;
+  headline: string;
+  gallery?:
+    | {
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -4520,6 +4575,22 @@ export interface ArticlesSectionSelect<T extends boolean = true> {
 export interface ShortSideFormSelect<T extends boolean = true> {
   header?: T;
   form?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "awards-section_select".
+ */
+export interface AwardsSectionSelect<T extends boolean = true> {
+  headline?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -22,6 +22,7 @@ import { ContactSection } from './globals/ContactSection/config'
 import { FAQSectionGlobal } from './globals/FAQSection/config'
 import { ArticlesSectionGlobal } from './globals/ArticlesSection/config'
 import { ShortSideFormGlobal } from './globals/ShortSideForm/config'
+import { AwardsSectionGlobal } from './globals/AwardsSection/config'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -107,6 +108,7 @@ export default buildConfig({
     FAQSectionGlobal,
     ArticlesSectionGlobal,
     ShortSideFormGlobal,
+    AwardsSectionGlobal,
   ],
   plugins,
   secret: process.env.PAYLOAD_SECRET,

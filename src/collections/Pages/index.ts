@@ -33,6 +33,7 @@ import { AreasServedPageBlock } from '../../blocks/AreasServedPageBlock/config'
 import { FAQPageBlock } from '../../blocks/FAQPageBlock/config'
 import { BlogPageBlock } from '../../blocks/BlogPageBlock/config'
 import { CaseStudyPageBlock } from '../../blocks/CaseStudyPageBlock/config'
+import { AwardsSectionBlock } from '../../blocks/AwardsSectionBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -98,7 +99,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [Breadcrumb, CallToAction, Content, MediaBlock, Archive, FormBlock, Awards, CompleteContent, PracticeAreasSection, HomeTestimonialSection, HomeAboutUs, HomeCaseStudiesSection, CaseQuestionnaireCTABlock, ContactSectionBlock, ContactPageBlock, AboutAboutFirm, AboutWhyChooseUs, AboutOurAttorney, AboutGetStarted, TestimonialsSection, FAQSection, ArticlesSection, LawyerBioBlock, LegalPageBlock, PracticeAreaPageBlock, CaseQuestionnaireBlock, ResourcesPageBlock, AreasServedPageBlock, FAQPageBlock, BlogPageBlock, CaseStudyPageBlock],
+              blocks: [Breadcrumb, CallToAction, Content, MediaBlock, Archive, FormBlock, Awards, CompleteContent, PracticeAreasSection, HomeTestimonialSection, HomeAboutUs, HomeCaseStudiesSection, CaseQuestionnaireCTABlock, ContactSectionBlock, ContactPageBlock, AboutAboutFirm, AboutWhyChooseUs, AboutOurAttorney, AboutGetStarted, TestimonialsSection, FAQSection, ArticlesSection, LawyerBioBlock, LegalPageBlock, PracticeAreaPageBlock, CaseQuestionnaireBlock, ResourcesPageBlock, AreasServedPageBlock, FAQPageBlock, BlogPageBlock, CaseStudyPageBlock, AwardsSectionBlock],
               required: true,
               admin: {
                 initCollapsed: true,

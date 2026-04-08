@@ -36,7 +36,7 @@ export default async function Page() {
       {draft && <LivePreviewListener />}
 
       <RenderHero {...hero} />
-      <div className="mx-auto max-w-[1200px]">
+      <div className="">
         <RenderBlocks blocks={layout} />
       </div>
     </article>
