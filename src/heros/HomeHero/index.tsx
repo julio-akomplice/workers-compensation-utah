@@ -7,6 +7,7 @@ import type { Page } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
+import { getMediaUrl } from '@/utilities/getMediaUrl'
 import { cn } from '@/utilities/ui'
 
 const ScrollIndicator: React.FC = () => (
@@ -52,6 +53,7 @@ export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> =
   links,
   supportiveText,
   headlineImage,
+  backgroundVideo,
   background,
   svgContent,
 }) => {
@@ -63,15 +65,33 @@ export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> =
 
   return (
     <section className="relative text-black h-screen overflow-hidden pb-12.5">
-      {/* Background Image */}
-      {background && typeof background === 'object' && (
-        <Media
-          resource={background}
-          fill
-          imgClassName="object-cover -z-10"
-          priority
-          loading="eager"
-        />
+      {/* Background Video or Image */}
+      {backgroundVideo?.video && typeof backgroundVideo.video === 'object' ? (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover -z-10"
+          poster={
+            backgroundVideo.poster && typeof backgroundVideo.poster === 'object'
+              ? getMediaUrl(`/media/${backgroundVideo.poster.filename}`)
+              : undefined
+          }
+        >
+          <source src={getMediaUrl(`/media/${backgroundVideo.video.filename}`)} />
+        </video>
+      ) : (
+        background &&
+        typeof background === 'object' && (
+          <Media
+            resource={background}
+            fill
+            imgClassName="object-cover -z-10"
+            priority
+            loading="eager"
+          />
+        )
       )}
 
       {/* Dark overlay for text readability */}

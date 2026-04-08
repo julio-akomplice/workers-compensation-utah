@@ -216,6 +216,16 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
+    /**
+     * Optional video background. If provided, it will be used instead of the background image.
+     */
+    backgroundVideo?: {
+      video?: (string | null) | Media;
+      /**
+       * Poster image shown while the video loads.
+       */
+      poster?: (string | null) | Media;
+    };
     background?: (string | null) | Media;
   };
   layout: (
@@ -1014,6 +1024,16 @@ export interface PracticeArea {
           id?: string | null;
         }[]
       | null;
+    /**
+     * Optional video background. If provided, it will be used instead of the background image.
+     */
+    backgroundVideo?: {
+      video?: (string | null) | Media;
+      /**
+       * Poster image shown while the video loads.
+       */
+      poster?: (string | null) | Media;
+    };
     background?: (string | null) | Media;
   };
   general: {
@@ -2191,6 +2211,16 @@ export interface AreasServed {
           id?: string | null;
         }[]
       | null;
+    /**
+     * Optional video background. If provided, it will be used instead of the background image.
+     */
+    backgroundVideo?: {
+      video?: (string | null) | Media;
+      /**
+       * Poster image shown while the video loads.
+       */
+      poster?: (string | null) | Media;
+    };
     background?: (string | null) | Media;
   };
   layout: (
@@ -2321,6 +2351,16 @@ export interface Template {
           id?: string | null;
         }[]
       | null;
+    /**
+     * Optional video background. If provided, it will be used instead of the background image.
+     */
+    backgroundVideo?: {
+      video?: (string | null) | Media;
+      /**
+       * Poster image shown while the video loads.
+       */
+      poster?: (string | null) | Media;
+    };
     background?: (string | null) | Media;
   };
   blogPost?: {
@@ -2696,6 +2736,12 @@ export interface PagesSelect<T extends boolean = true> {
                     appearance?: T;
                   };
               id?: T;
+            };
+        backgroundVideo?:
+          | T
+          | {
+              video?: T;
+              poster?: T;
             };
         background?: T;
       };
@@ -3455,6 +3501,12 @@ export interface PracticeAreasSelect<T extends boolean = true> {
                   };
               id?: T;
             };
+        backgroundVideo?:
+          | T
+          | {
+              video?: T;
+              poster?: T;
+            };
         background?: T;
       };
   general?:
@@ -3530,6 +3582,12 @@ export interface AreasServedSelect<T extends boolean = true> {
                     appearance?: T;
                   };
               id?: T;
+            };
+        backgroundVideo?:
+          | T
+          | {
+              video?: T;
+              poster?: T;
             };
         background?: T;
       };
@@ -3796,6 +3854,12 @@ export interface TemplatesSelect<T extends boolean = true> {
                     appearance?: T;
                   };
               id?: T;
+            };
+        backgroundVideo?:
+          | T
+          | {
+              video?: T;
+              poster?: T;
             };
         background?: T;
       };

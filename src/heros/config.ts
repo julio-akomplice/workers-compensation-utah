@@ -62,6 +62,32 @@ export const hero: Field = {
       },
     }),
     {
+      name: 'backgroundVideo',
+      type: 'group',
+      label: 'Background Video',
+      admin: {
+        condition: (_, { type } = {}) => type === 'homeHero',
+        description: 'Optional video background. If provided, it will be used instead of the background image.',
+      },
+      fields: [
+        {
+          name: 'video',
+          type: 'upload',
+          label: 'Video',
+          relationTo: 'media',
+        },
+        {
+          name: 'poster',
+          type: 'upload',
+          label: 'Video Poster',
+          relationTo: 'media',
+          admin: {
+            description: 'Poster image shown while the video loads.',
+          },
+        },
+      ],
+    },
+    {
       name: 'background',
       type: 'upload',
       label: 'Background',
