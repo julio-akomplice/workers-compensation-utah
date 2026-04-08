@@ -35,16 +35,16 @@ export const Media: CollectionConfig = {
     afterRead: [
       async ({ doc }) => {
         if (doc.mimeType?.includes('svg') && !doc.svgContent && doc.url) {
+          // Only fetch if URL is absolute (e.g. S3). Skip relative/local paths
+          // since files may no longer exist locally after migrating to S3.
+          if (!doc.url.startsWith('http')) return doc
           try {
-            const url = doc.url.startsWith('http')
-              ? doc.url
-              : `${process.env.NEXT_PUBLIC_SERVER_URL}${doc.url}`
-            const res = await fetch(url)
+            const res = await fetch(doc.url, { signal: AbortSignal.timeout(5000) })
             if (res.ok) {
               doc.svgContent = await res.text()
             }
           } catch {
-            // Failed to fetch SVG
+            // Failed to fetch SVG — don't block rendering
           }
         }
         return doc

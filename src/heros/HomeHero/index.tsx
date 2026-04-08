@@ -7,7 +7,6 @@ import type { Page } from '@/payload-types'
 import { CMSLink } from '@/components/Link'
 import { Media } from '@/components/Media'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
-import { getMediaUrl } from '@/utilities/getMediaUrl'
 import { cn } from '@/utilities/ui'
 
 const ScrollIndicator: React.FC = () => (
@@ -75,11 +74,11 @@ export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> =
           className="absolute inset-0 w-full h-full object-cover -z-10"
           poster={
             backgroundVideo.poster && typeof backgroundVideo.poster === 'object'
-              ? getMediaUrl(`/media/${backgroundVideo.poster.filename}`)
+              ? backgroundVideo.poster.url || undefined
               : undefined
           }
         >
-          <source src={getMediaUrl(`/media/${backgroundVideo.video.filename}`)} />
+          <source src={backgroundVideo.video.url || ''} />
         </video>
       ) : (
         background &&
