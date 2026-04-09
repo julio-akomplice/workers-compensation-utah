@@ -24,3 +24,7 @@ node_modules/
 storybook-static
 
 *.tsbuildinfo
+
+# Claude Code configuration and MCP credentials
+.claude/
+.mcp.json
