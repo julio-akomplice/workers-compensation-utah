@@ -64,6 +64,7 @@ export type SupportedTimezones =
 export interface Config {
   auth: {
     users: UserAuthOperations;
+    'payload-mcp-api-keys': PayloadMcpApiKeyAuthOperations;
   };
   blocks: {};
   collections: {
@@ -80,6 +81,7 @@ export interface Config {
     users: User;
     'cta-banners': CtaBanner;
     templates: Template;
+    'payload-mcp-api-keys': PayloadMcpApiKey;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -110,6 +112,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     'cta-banners': CtaBannersSelect<false> | CtaBannersSelect<true>;
     templates: TemplatesSelect<false> | TemplatesSelect<true>;
+    'payload-mcp-api-keys': PayloadMcpApiKeysSelect<false> | PayloadMcpApiKeysSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -149,7 +152,7 @@ export interface Config {
   widgets: {
     collections: CollectionsWidget;
   };
-  user: User;
+  user: User | PayloadMcpApiKey;
   jobs: {
     tasks: {
       schedulePublish: TaskSchedulePublish;
@@ -162,6 +165,24 @@ export interface Config {
   };
 }
 export interface UserAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
+  };
+}
+export interface PayloadMcpApiKeyAuthOperations {
   forgotPassword: {
     email: string;
     password: string;
@@ -2608,6 +2629,127 @@ export interface Template {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * API keys control which collections, resources, tools, and prompts MCP clients can access
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-mcp-api-keys".
+ */
+export interface PayloadMcpApiKey {
+  id: string;
+  /**
+   * The user that the API key is associated with.
+   */
+  user: string | User;
+  /**
+   * A useful label for the API key.
+   */
+  label?: string | null;
+  /**
+   * The purpose of the API key.
+   */
+  description?: string | null;
+  pages?: {
+    /**
+     * Allow clients to find pages.
+     */
+    find?: boolean | null;
+  };
+  posts?: {
+    /**
+     * Allow clients to find posts.
+     */
+    find?: boolean | null;
+  };
+  practiceAreas?: {
+    /**
+     * Allow clients to find practice-areas.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to create practice-areas.
+     */
+    create?: boolean | null;
+    /**
+     * Allow clients to update practice-areas.
+     */
+    update?: boolean | null;
+  };
+  practiceAreaCategories?: {
+    /**
+     * Allow clients to find practice-area-categories.
+     */
+    find?: boolean | null;
+  };
+  areasServed?: {
+    /**
+     * Allow clients to find areas-served.
+     */
+    find?: boolean | null;
+  };
+  caseStudies?: {
+    /**
+     * Allow clients to find case-studies.
+     */
+    find?: boolean | null;
+  };
+  testimonials?: {
+    /**
+     * Allow clients to find testimonials.
+     */
+    find?: boolean | null;
+  };
+  faq?: {
+    /**
+     * Allow clients to find faq.
+     */
+    find?: boolean | null;
+  };
+  media?: {
+    /**
+     * Allow clients to find media.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to create media.
+     */
+    create?: boolean | null;
+    /**
+     * Allow clients to update media.
+     */
+    update?: boolean | null;
+  };
+  categories?: {
+    /**
+     * Allow clients to find categories.
+     */
+    find?: boolean | null;
+  };
+  users?: {
+    /**
+     * Allow clients to find users.
+     */
+    find?: boolean | null;
+  };
+  ctaBanners?: {
+    /**
+     * Allow clients to find cta-banners.
+     */
+    find?: boolean | null;
+  };
+  templates?: {
+    /**
+     * Allow clients to find templates.
+     */
+    find?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
+  collection: 'payload-mcp-api-keys';
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
@@ -2850,6 +2992,10 @@ export interface PayloadLockedDocument {
         value: string | Template;
       } | null)
     | ({
+        relationTo: 'payload-mcp-api-keys';
+        value: string | PayloadMcpApiKey;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: string | Redirect;
       } | null)
@@ -2870,10 +3016,15 @@ export interface PayloadLockedDocument {
         value: string | FolderInterface;
       } | null);
   globalSlug?: string | null;
-  user: {
-    relationTo: 'users';
-    value: string | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'payload-mcp-api-keys';
+        value: string | PayloadMcpApiKey;
+      };
   updatedAt: string;
   createdAt: string;
 }
@@ -2883,10 +3034,15 @@ export interface PayloadLockedDocument {
  */
 export interface PayloadPreference {
   id: string;
-  user: {
-    relationTo: 'users';
-    value: string | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: string | User;
+      }
+    | {
+        relationTo: 'payload-mcp-api-keys';
+        value: string | PayloadMcpApiKey;
+      };
   key?: string | null;
   value?:
     | {
@@ -4169,6 +4325,89 @@ export interface TemplatesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-mcp-api-keys_select".
+ */
+export interface PayloadMcpApiKeysSelect<T extends boolean = true> {
+  user?: T;
+  label?: T;
+  description?: T;
+  pages?:
+    | T
+    | {
+        find?: T;
+      };
+  posts?:
+    | T
+    | {
+        find?: T;
+      };
+  practiceAreas?:
+    | T
+    | {
+        find?: T;
+        create?: T;
+        update?: T;
+      };
+  practiceAreaCategories?:
+    | T
+    | {
+        find?: T;
+      };
+  areasServed?:
+    | T
+    | {
+        find?: T;
+      };
+  caseStudies?:
+    | T
+    | {
+        find?: T;
+      };
+  testimonials?:
+    | T
+    | {
+        find?: T;
+      };
+  faq?:
+    | T
+    | {
+        find?: T;
+      };
+  media?:
+    | T
+    | {
+        find?: T;
+        create?: T;
+        update?: T;
+      };
+  categories?:
+    | T
+    | {
+        find?: T;
+      };
+  users?:
+    | T
+    | {
+        find?: T;
+      };
+  ctaBanners?:
+    | T
+    | {
+        find?: T;
+      };
+  templates?:
+    | T
+    | {
+        find?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  enableAPIKey?: T;
+  apiKey?: T;
+  apiKeyIndex?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
