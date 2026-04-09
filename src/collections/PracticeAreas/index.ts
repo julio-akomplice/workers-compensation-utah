@@ -11,6 +11,7 @@ import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { PracticeAreasSection } from '../../blocks/PracticeAreasSection/config'
 import { PracticeAreaContentBlock } from '../../blocks/PracticeAreaContentBlock/config'
+import { FAQContentBlock } from '../../blocks/FAQContentBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -98,6 +99,12 @@ export const PracticeAreas: CollectionConfig<'practice-areas'> = {
               ],
             },
             {
+              name: 'contentSection',
+              type: 'group',
+              label: 'Content',
+              fields: PracticeAreaContentBlock.fields,
+            },
+            {
               name: 'layout',
               type: 'blocks',
               blocks: [
@@ -110,6 +117,7 @@ export const PracticeAreas: CollectionConfig<'practice-areas'> = {
                 CompleteContent,
                 PracticeAreasSection,
                 PracticeAreaContentBlock,
+                FAQContentBlock,
               ],
               required: true,
               admin: {

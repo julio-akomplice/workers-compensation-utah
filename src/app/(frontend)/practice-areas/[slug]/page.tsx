@@ -9,6 +9,9 @@ import React, { cache } from 'react'
 import type { Page } from '@/payload-types'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
+import RichText from '@/components/RichText'
+import { ContentWithSidebar } from '@/components/ContentWithSidebar'
+import { getShortSideForm } from '@/utilities/getShortSideForm'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -51,7 +54,8 @@ export default async function PracticeAreaPage({ params: paramsPromise }: Args) 
     return <PayloadRedirects url={url} />
   }
 
-  const { hero, layout } = practiceArea
+  const { hero, layout, contentSection } = practiceArea
+  const { form, header } = await getShortSideForm()
 
   return (
     <article>
@@ -61,6 +65,24 @@ export default async function PracticeAreaPage({ params: paramsPromise }: Args) 
       {draft && <LivePreviewListener />}
 
       <RenderHero {...hero} />
+      {contentSection?.content && (
+        <section className="w-full bg-white">
+          <div className="container mx-auto px-5 md:px-8 2xl:px-0">
+            <div className="pb-16 pt-8 md:pb-20 md:pt-12 lg:pt-16">
+              <ContentWithSidebar form={form} header={header}>
+                <div>
+                  <RichText
+                    className="richtext"
+                    data={contentSection.content}
+                    enableGutter={false}
+                    enableProse={false}
+                  />
+                </div>
+              </ContentWithSidebar>
+            </div>
+          </div>
+        </section>
+      )}
       <RenderBlocks blocks={layout as Page['layout'][0][]} />
 
       {/* @ts-expect-error global sections don't need block props */}

@@ -1,6 +1,5 @@
 import type { Block } from 'payload'
 
-import { link } from '@/fields/link'
 import {
   BlocksFeature,
   FixedToolbarFeature,
@@ -50,14 +49,5 @@ export const PracticeAreaContentBlock: Block = {
         ],
       }),
     },
-    link({
-      overrides: {
-        name: 'ctaLink',
-        label: 'CTA Button',
-        admin: {
-          description: 'The phone number CTA button below the content.',
-        },
-      },
-    }),
   ],
 }

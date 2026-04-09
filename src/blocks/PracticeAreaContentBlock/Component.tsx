@@ -3,7 +3,6 @@ import React from 'react'
 import type { PracticeAreaContentBlock as PracticeAreaContentBlockProps } from 'src/payload-types'
 
 import RichText from '@/components/RichText'
-import { CMSLink } from '@/components/Link'
 import { ContentWithSidebar } from '@/components/ContentWithSidebar'
 import { getShortSideForm } from '@/utilities/getShortSideForm'
 
@@ -11,7 +10,7 @@ type Props = {
   className?: string
 } & PracticeAreaContentBlockProps
 
-export const PracticeAreaContentBlockComponent: React.FC<Props> = async ({ content, ctaLink }) => {
+export const PracticeAreaContentBlockComponent: React.FC<Props> = async ({ content }) => {
   const { form, header } = await getShortSideForm()
 
   return (
@@ -31,12 +30,6 @@ export const PracticeAreaContentBlockComponent: React.FC<Props> = async ({ conte
               </div>
             )}
 
-            {/* CTA Button */}
-            {ctaLink && (
-              <div className="mt-10 md:mt-12">
-                <CMSLink {...ctaLink} />
-              </div>
-            )}
           </ContentWithSidebar>
         </div>
       </div>

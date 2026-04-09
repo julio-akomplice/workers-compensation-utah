@@ -1041,6 +1041,26 @@ export interface PracticeArea {
     icon: string | Media;
     shortDescription: string;
   };
+  contentSection: {
+    /**
+     * Use H2 headings to create sections — they automatically populate the table of contents sidebar.
+     */
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
   layout: (
     | CallToActionBlock
     | ContentBlock
@@ -1051,6 +1071,7 @@ export interface PracticeArea {
     | CompleteContentBlock
     | PracticeAreasSectionBlock
     | PracticeAreaContentBlock
+    | FAQContentBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1094,10 +1115,52 @@ export interface PracticeAreaContentBlock {
     };
     [k: string]: unknown;
   };
-  /**
-   * The phone number CTA button below the content.
-   */
-  ctaLink: {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'practiceAreaContent';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQContentBlock".
+ */
+export interface FAQContentBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  faqs?:
+    | {
+        question: string;
+        answer: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  link: {
     type?: ('reference' | 'custom') | null;
     newTab?: boolean | null;
     reference?:
@@ -1119,7 +1182,7 @@ export interface PracticeAreaContentBlock {
   };
   id?: string | null;
   blockName?: string | null;
-  blockType: 'practiceAreaContent';
+  blockType: 'faqContent';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3567,6 +3630,11 @@ export interface PracticeAreasSelect<T extends boolean = true> {
         icon?: T;
         shortDescription?: T;
       };
+  contentSection?:
+    | T
+    | {
+        content?: T;
+      };
   layout?:
     | T
     | {
@@ -3579,6 +3647,7 @@ export interface PracticeAreasSelect<T extends boolean = true> {
         completeContentBlock?: T | CompleteContentBlockSelect<T>;
         practiceAreasSection?: T | PracticeAreasSectionBlockSelect<T>;
         practiceAreaContent?: T | PracticeAreaContentBlockSelect<T>;
+        faqContent?: T | FAQContentBlockSelect<T>;
       };
   meta?:
     | T
@@ -3601,7 +3670,23 @@ export interface PracticeAreasSelect<T extends boolean = true> {
  */
 export interface PracticeAreaContentBlockSelect<T extends boolean = true> {
   content?: T;
-  ctaLink?:
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQContentBlock_select".
+ */
+export interface FAQContentBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  faqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  link?:
     | T
     | {
         type?: T;

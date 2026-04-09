@@ -7,8 +7,8 @@ export const FAQSection: Block = {
   slug: 'faqSection',
   interfaceName: 'FAQSectionBlock',
   labels: {
-    singular: 'FAQ Section',
-    plural: 'FAQ Section Blocks',
+    singular: 'Global FAQ Section',
+    plural: 'Global FAQ Section Blocks',
   },
   fields: [
     {
