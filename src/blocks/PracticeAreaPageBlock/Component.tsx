@@ -80,6 +80,7 @@ export const PracticeAreaPageBlockComponent: React.FC<Props> = async ({
             }))}
             form={form}
             header={header}
+
           >
             {/* Section Header */}
             {sectionHeader && 'root' in sectionHeader && (

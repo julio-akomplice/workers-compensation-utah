@@ -17,6 +17,8 @@ type Props = {
   children: React.ReactNode
   /** Pass explicit TOC items to skip auto-detection from h2 elements */
   tocItems?: TOCItem[]
+  /** Additional content rendered below the form in the right sidebar */
+  sidebarExtra?: React.ReactNode
 }
 
 function slugify(text: string): string {
@@ -31,6 +33,7 @@ export const ContentWithSidebar: React.FC<Props> = ({
   header,
   children,
   tocItems: explicitTocItems,
+  sidebarExtra,
 }) => {
   const contentRef = useRef<HTMLDivElement>(null)
   const [autoTocItems, setAutoTocItems] = useState<TOCItem[]>([])
@@ -70,11 +73,12 @@ export const ContentWithSidebar: React.FC<Props> = ({
         {children}
       </div>
 
-      {/* Short Side Form - Desktop only */}
-      {form && (
+      {/* Right Sidebar - Desktop only */}
+      {(form || sidebarExtra) && (
         <div className="hidden lg:block lg:w-[316px] lg:shrink-0">
-          <div className="sticky top-[120px]">
-            <ShortSideForm form={form} header={header} />
+          <div className="sticky top-[120px] flex flex-col gap-5">
+            {form && <ShortSideForm form={form} header={header} />}
+            {sidebarExtra}
           </div>
         </div>
       )}

@@ -137,6 +137,22 @@ export const PracticeAreas: CollectionConfig<'practice-areas'> = {
           label: 'Content',
         },
         {
+          label: 'Related Pages',
+          fields: [
+            {
+              name: 'relatedPages',
+              type: 'relationship',
+              relationTo: 'practice-areas',
+              hasMany: true,
+              label: 'Related Pages',
+              admin: {
+                description:
+                  'Select practice areas to display as related page links in the sidebar.',
+              },
+            },
+          ],
+        },
+        {
           name: 'meta',
           label: 'SEO',
           fields: [

@@ -11,6 +11,7 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import RichText from '@/components/RichText'
 import { ContentWithSidebar } from '@/components/ContentWithSidebar'
+import { RelatedPages } from '@/components/RelatedPages'
 import { getShortSideForm } from '@/utilities/getShortSideForm'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
@@ -50,8 +51,16 @@ export default async function PracticeAreaPage({ params: paramsPromise }: Args) 
     return <PayloadRedirects url={url} />
   }
 
-  const { hero, layout, contentSection } = practiceArea
+  const { hero, layout, contentSection, relatedPages } = practiceArea
   const { form, header } = await getShortSideForm()
+
+  const relatedPageLinks = (relatedPages || [])
+    .map((page) => (typeof page === 'object' ? page : null))
+    .filter((page): page is NonNullable<typeof page> => page !== null)
+    .map((page) => ({
+      title: page.title,
+      href: `/practice-areas/${page.slug}`,
+    }))
 
   return (
     <article>
@@ -65,7 +74,11 @@ export default async function PracticeAreaPage({ params: paramsPromise }: Args) 
         <section className="w-full bg-white">
           <div className="container mx-auto px-5 md:px-8 2xl:px-0">
             <div className="pb-16 pt-8 md:pb-20 md:pt-12 lg:pt-16">
-              <ContentWithSidebar form={form} header={header}>
+              <ContentWithSidebar
+                form={form}
+                header={header}
+                sidebarExtra={<RelatedPages pages={relatedPageLinks} />}
+              >
                 <div>
                   <RichText
                     className="richtext"

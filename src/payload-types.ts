@@ -1132,6 +1132,10 @@ export interface PracticeArea {
     | ArticlesSectionBlock
     | ContactSectionBlock
   )[];
+  /**
+   * Select practice areas to display as related page links in the sidebar.
+   */
+  relatedPages?: (string | PracticeArea)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -3910,6 +3914,7 @@ export interface PracticeAreasSelect<T extends boolean = true> {
         articlesSection?: T | ArticlesSectionBlockSelect<T>;
         contactSection?: T | ContactSectionBlockSelect<T>;
       };
+  relatedPages?: T;
   meta?:
     | T
     | {
