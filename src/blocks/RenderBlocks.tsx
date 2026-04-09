@@ -34,6 +34,7 @@ import { FAQPageBlockComponent } from '@/blocks/FAQPageBlock/Component'
 import { BlogPageBlockComponent } from '@/blocks/BlogPageBlock/Component'
 import { CaseStudyPageBlockComponent } from '@/blocks/CaseStudyPageBlock/Component'
 import { AwardsSectionBlockComponent } from '@/blocks/AwardsSectionBlock/Component'
+import { PracticeAreaContentBlockComponent } from '@/blocks/PracticeAreaContentBlock/Component'
 
 const blockComponents = {
   awards: AwardsBlock,
@@ -68,6 +69,7 @@ const blockComponents = {
   blogPage: BlogPageBlockComponent,
   caseStudyPage: CaseStudyPageBlockComponent,
   awardsSection: AwardsSectionBlockComponent,
+  practiceAreaContent: PracticeAreaContentBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{

@@ -1050,6 +1050,7 @@ export interface PracticeArea {
     | AwardsBlock
     | CompleteContentBlock
     | PracticeAreasSectionBlock
+    | PracticeAreaContentBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1069,6 +1070,56 @@ export interface PracticeArea {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PracticeAreaContentBlock".
+ */
+export interface PracticeAreaContentBlock {
+  /**
+   * Use H2 headings to create sections — they automatically populate the table of contents sidebar.
+   */
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * The phone number CTA button below the content.
+   */
+  ctaLink: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'practiceAreaContent';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3527,6 +3578,7 @@ export interface PracticeAreasSelect<T extends boolean = true> {
         awards?: T | AwardsBlockSelect<T>;
         completeContentBlock?: T | CompleteContentBlockSelect<T>;
         practiceAreasSection?: T | PracticeAreasSectionBlockSelect<T>;
+        practiceAreaContent?: T | PracticeAreaContentBlockSelect<T>;
       };
   meta?:
     | T
@@ -3542,6 +3594,26 @@ export interface PracticeAreasSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PracticeAreaContentBlock_select".
+ */
+export interface PracticeAreaContentBlockSelect<T extends boolean = true> {
+  content?: T;
+  ctaLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4791,6 +4863,51 @@ export interface CtaBannerBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'ctaBanner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoBlock".
+ */
+export interface VideoBlock {
+  video: string | Media;
+  /**
+   * Thumbnail image shown before the video plays.
+   */
+  poster?: (string | null) | Media;
+  autoplay?: boolean | null;
+  muted?: boolean | null;
+  loop?: boolean | null;
+  controls?: boolean | null;
+  playsInline?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videoBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactCtaBlock".
+ */
+export interface ContactCtaBlock {
+  /**
+   * Button text
+   */
+  label: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactCta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PhoneButtonBlock".
+ */
+export interface PhoneButtonBlock {
+  /**
+   * Button text (e.g. "Call (801) 424-9675")
+   */
+  label: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'phoneButton';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

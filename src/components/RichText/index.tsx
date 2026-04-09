@@ -22,17 +22,23 @@ import type {
   CaseQuestionnaireCTABlock as CaseQuestionnaireCTABlockProps,
   CtaBannerBlock as CtaBannerBlockProps,
   MediaBlock as MediaBlockProps,
+  VideoBlock as VideoBlockProps,
+  ContactCtaBlock as ContactCtaBlockProps,
+  PhoneButtonBlock as PhoneButtonBlockProps,
 } from '@/payload-types'
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { BlockquoteBlock } from '@/blocks/Blockquote/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { CaseQuestionnaireCTALexicalBlock } from '@/blocks/CaseQuestionnaireCTABlock/LexicalComponent'
 import { CtaBannerBlockComponent } from '@/blocks/CtaBanner/Component'
+import { VideoBlockComponent } from '@/blocks/VideoBlock/Component'
+import { ContactCtaBlockComponent } from '@/blocks/ContactCtaBlock/Component'
+import { PhoneButtonBlockComponent } from '@/blocks/PhoneButtonBlock/Component'
 import { cn } from '@/utilities/ui'
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | CaseQuestionnaireCTABlockProps | MediaBlockProps | BannerBlockProps | BlockquoteBlockProps | CtaBannerBlockProps | CodeBlockProps>
+  | SerializedBlockNode<CTABlockProps | CaseQuestionnaireCTABlockProps | MediaBlockProps | BannerBlockProps | BlockquoteBlockProps | CtaBannerBlockProps | VideoBlockProps | ContactCtaBlockProps | PhoneButtonBlockProps | CodeBlockProps>
   | SerializedSupportiveTextNode
   | SerializedHighlightNode
 
@@ -55,11 +61,11 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     <span className="highlight">{nodesToJSX({ nodes: node.children })}</span>
   ),
   blocks: {
-    banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
+    banner: ({ node }) => <BannerBlock className="mb-4" {...node.fields} />,
     blockquote: ({ node }) => <BlockquoteBlock {...node.fields} />,
     mediaBlock: ({ node }) => (
       <MediaBlock
-        className="col-start-1 col-span-3 my-10"
+        className="my-10"
         imgClassName="m-0"
         {...node.fields}
         captionClassName="mx-auto max-w-[48rem]"
@@ -67,10 +73,13 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         disableInnerContainer={true}
       />
     ),
-    code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
+    code: ({ node }) => <CodeBlock {...node.fields} />,
     cta: ({ node }) => <CallToActionBlock {...node.fields} />,
-    caseQuestionnaireCTA: ({ node }) => <CaseQuestionnaireCTALexicalBlock className="col-start-2" {...node.fields} />,
-    ctaBanner: ({ node }) => <CtaBannerBlockComponent className="col-start-2" {...node.fields} />,
+    caseQuestionnaireCTA: ({ node }) => <CaseQuestionnaireCTALexicalBlock {...node.fields} />,
+    ctaBanner: ({ node }) => <CtaBannerBlockComponent {...node.fields} />,
+    videoBlock: ({ node }) => <VideoBlockComponent className="my-10" {...node.fields} />,
+    contactCta: ({ node }) => <ContactCtaBlockComponent {...node.fields} />,
+    phoneButton: ({ node }) => <PhoneButtonBlockComponent {...node.fields} />,
   },
 })
 

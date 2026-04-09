@@ -10,6 +10,7 @@ import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { PracticeAreasSection } from '../../blocks/PracticeAreasSection/config'
+import { PracticeAreaContentBlock } from '../../blocks/PracticeAreaContentBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -108,6 +109,7 @@ export const PracticeAreas: CollectionConfig<'practice-areas'> = {
                 Awards,
                 CompleteContent,
                 PracticeAreasSection,
+                PracticeAreaContentBlock,
               ],
               required: true,
               admin: {

@@ -31,7 +31,7 @@ export const CtaBannerBlockComponent: React.FC<Props> = ({ className, ctaBanner,
           data={processedTemplate}
           enableGutter={false}
           enableProse={false}
-          className="cta-banner-richtext [&_p]:text-[24px] [&_p]:font-semibold [&_p]:leading-7 [&_p]:tracking-[-0.72px] [&_p]:text-white [&_a]:text-[#ffb94a] [&_a]:hover:text-[#ffc96e]"
+          className="cta-banner-richtext [&_p]:text-[24px] [&_p]:font-semibold [&_p]:leading-7 [&_p]:tracking-[-0.72px] [&_p]:text-white [&_a]:text-[#ffb94a] [&_a]:hover:text-[#ffc96e] [&_a]:hover:underline"
         />
       </div>
     </div>
