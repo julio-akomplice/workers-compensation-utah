@@ -21,6 +21,11 @@ const mockPracticeArea = (id: string, title: string, slug: string): PracticeArea
   slug,
   hero: { type: 'none' },
   general: { alternativeTitle: null, icon: 'mock-icon', shortDescription: '' },
+  contentSection: {
+    content: {
+      root: { type: 'root', children: [], direction: null, format: '', indent: 0, version: 1 },
+    },
+  },
   layout: [],
   createdAt: '',
   updatedAt: '',
