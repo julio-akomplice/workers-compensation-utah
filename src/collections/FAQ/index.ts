@@ -11,6 +11,7 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { schemaMarkup } from '../../fields/schemaMarkup'
 
 export const FAQ: CollectionConfig = {
   slug: 'faq',
@@ -92,6 +93,7 @@ export const FAQ: CollectionConfig = {
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
             }),
+            schemaMarkup,
           ],
         },
       ],

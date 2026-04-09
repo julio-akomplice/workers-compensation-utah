@@ -17,6 +17,7 @@ import { CtaBanner } from '../CtaBanner/config'
 import { VideoBlock } from '../VideoBlock/config'
 import { ContactCtaBlock } from '../ContactCtaBlock/config'
 import { PhoneButtonBlock } from '../PhoneButtonBlock/config'
+import { ManualCtaBanner } from '../ManualCtaBanner/config'
 
 export const PracticeAreaContentBlock: Block = {
   slug: 'practiceAreaContent',
@@ -43,7 +44,7 @@ export const PracticeAreaContentBlock: Block = {
           UnorderedListFeature(),
           OrderedListFeature(),
           LinkFeature(),
-          BlocksFeature({ blocks: [MediaBlock, CtaBanner, VideoBlock, ContactCtaBlock, PhoneButtonBlock] }),
+          BlocksFeature({ blocks: [MediaBlock, CtaBanner, ManualCtaBanner, VideoBlock, ContactCtaBlock, PhoneButtonBlock] }),
           FixedToolbarFeature(),
           InlineToolbarFeature(),
         ],

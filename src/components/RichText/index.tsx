@@ -21,6 +21,7 @@ import type {
   CallToActionBlock as CTABlockProps,
   CaseQuestionnaireCTABlock as CaseQuestionnaireCTABlockProps,
   CtaBannerBlock as CtaBannerBlockProps,
+  ManualCtaBannerBlock as ManualCtaBannerBlockProps,
   MediaBlock as MediaBlockProps,
   VideoBlock as VideoBlockProps,
   ContactCtaBlock as ContactCtaBlockProps,
@@ -34,11 +35,14 @@ import { CtaBannerBlockComponent } from '@/blocks/CtaBanner/Component'
 import { VideoBlockComponent } from '@/blocks/VideoBlock/Component'
 import { ContactCtaBlockComponent } from '@/blocks/ContactCtaBlock/Component'
 import { PhoneButtonBlockComponent } from '@/blocks/PhoneButtonBlock/Component'
+import { ManualCtaBannerBlockComponent } from '@/blocks/ManualCtaBanner/Component'
+import { PhoneInlineBlockComponent } from '@/blocks/PhoneInlineBlock/Component'
+import { PhoneWorkInlineBlockComponent } from '@/blocks/PhoneWorkInlineBlock/Component'
 import { cn } from '@/utilities/ui'
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | CaseQuestionnaireCTABlockProps | MediaBlockProps | BannerBlockProps | BlockquoteBlockProps | CtaBannerBlockProps | VideoBlockProps | ContactCtaBlockProps | PhoneButtonBlockProps | CodeBlockProps>
+  | SerializedBlockNode<CTABlockProps | CaseQuestionnaireCTABlockProps | MediaBlockProps | BannerBlockProps | BlockquoteBlockProps | CtaBannerBlockProps | ManualCtaBannerBlockProps | VideoBlockProps | ContactCtaBlockProps | PhoneButtonBlockProps | CodeBlockProps>
   | SerializedSupportiveTextNode
   | SerializedHighlightNode
 
@@ -80,6 +84,11 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     videoBlock: ({ node }) => <VideoBlockComponent className="my-10" {...node.fields} />,
     contactCta: ({ node }) => <ContactCtaBlockComponent {...node.fields} />,
     phoneButton: ({ node }) => <PhoneButtonBlockComponent {...node.fields} />,
+    manualCtaBanner: ({ node }) => <ManualCtaBannerBlockComponent {...node.fields} />,
+  },
+  inlineBlocks: {
+    phoneInline: () => <PhoneInlineBlockComponent />,
+    phoneWorkInline: () => <PhoneWorkInlineBlockComponent />,
   },
 })
 

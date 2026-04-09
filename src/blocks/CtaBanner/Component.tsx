@@ -1,7 +1,6 @@
 import React from 'react'
 import type { CtaBannerBlock as CtaBannerBlockProps, CtaBanner } from '@/payload-types'
-import { cn } from '@/utilities/ui'
-import RichText from '@/components/RichText'
+import { CtaBannerDisplay } from '@/components/CtaBannerDisplay'
 
 type Props = {
   className?: string
@@ -24,18 +23,7 @@ export const CtaBannerBlockComponent: React.FC<Props> = ({ className, ctaBanner,
     mergedVariables,
   )
 
-  return (
-    <div className={cn('stop-a mx-auto my-8 w-full', className)}>
-      <div className="rounded-[10px] bg-gradient-to-r from-[#001f3e] to-[#00152b] px-5 py-5 text-center">
-        <RichText
-          data={processedTemplate}
-          enableGutter={false}
-          enableProse={false}
-          className="cta-banner-richtext [&_p]:text-[24px] [&_p]:font-semibold [&_p]:leading-7 [&_p]:tracking-[-0.72px] [&_p]:text-white [&_a]:text-[#ffb94a] [&_a]:hover:text-[#ffc96e] [&_a]:hover:underline"
-        />
-      </div>
-    </div>
-  )
+  return <CtaBannerDisplay data={processedTemplate} className={className} />
 }
 
 type MergedVariable = {

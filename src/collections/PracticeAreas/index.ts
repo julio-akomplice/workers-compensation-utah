@@ -25,6 +25,7 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { schemaMarkup } from '../../fields/schemaMarkup'
 
 export const PracticeAreas: CollectionConfig<'practice-areas'> = {
   slug: 'practice-areas',
@@ -148,6 +149,7 @@ export const PracticeAreas: CollectionConfig<'practice-areas'> = {
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
             }),
+            schemaMarkup,
           ],
         },
       ],

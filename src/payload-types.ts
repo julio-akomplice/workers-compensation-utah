@@ -277,6 +277,23 @@ export interface Page {
      */
     image?: (string | null) | Media;
     description?: string | null;
+    /**
+     * Add JSON-LD schema markup objects for this page.
+     */
+    schema?:
+      | {
+          data:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   publishedAt?: string | null;
   /**
@@ -440,6 +457,23 @@ export interface Post {
      */
     image?: (string | null) | Media;
     description?: string | null;
+    /**
+     * Add JSON-LD schema markup objects for this page.
+     */
+    schema?:
+      | {
+          data:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   publishedAt?: string | null;
   authors?: (string | User)[] | null;
@@ -1080,6 +1114,23 @@ export interface PracticeArea {
      */
     image?: (string | null) | Media;
     description?: string | null;
+    /**
+     * Add JSON-LD schema markup objects for this page.
+     */
+    schema?:
+      | {
+          data:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   categories?: (string | null) | PracticeAreaCategory;
   publishedAt?: string | null;
@@ -1859,6 +1910,23 @@ export interface Faq {
      */
     image?: (string | null) | Media;
     description?: string | null;
+    /**
+     * Add JSON-LD schema markup objects for this page.
+     */
+    schema?:
+      | {
+          data:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   publishedAt?: string | null;
   /**
@@ -2354,6 +2422,23 @@ export interface AreasServed {
      */
     image?: (string | null) | Media;
     description?: string | null;
+    /**
+     * Add JSON-LD schema markup objects for this page.
+     */
+    schema?:
+      | {
+          data:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   publishedAt?: string | null;
   /**
@@ -2903,6 +2988,12 @@ export interface PagesSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        schema?:
+          | T
+          | {
+              data?: T;
+              id?: T;
+            };
       };
   publishedAt?: T;
   generateSlug?: T;
@@ -3571,6 +3662,12 @@ export interface PostsSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        schema?:
+          | T
+          | {
+              data?: T;
+              id?: T;
+            };
       };
   publishedAt?: T;
   authors?: T;
@@ -3655,6 +3752,12 @@ export interface PracticeAreasSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        schema?:
+          | T
+          | {
+              data?: T;
+              id?: T;
+            };
       };
   categories?: T;
   publishedAt?: T;
@@ -3766,6 +3869,12 @@ export interface AreasServedSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        schema?:
+          | T
+          | {
+              data?: T;
+              id?: T;
+            };
       };
   publishedAt?: T;
   generateSlug?: T;
@@ -3816,6 +3925,12 @@ export interface FaqSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        schema?:
+          | T
+          | {
+              data?: T;
+              id?: T;
+            };
       };
   publishedAt?: T;
   generateSlug?: T;
@@ -4948,6 +5063,48 @@ export interface CtaBannerBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'ctaBanner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PhoneInlineBlock".
+ */
+export interface PhoneInlineBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'phoneInline';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PhoneWorkInlineBlock".
+ */
+export interface PhoneWorkInlineBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'phoneWorkInline';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ManualCtaBannerBlock".
+ */
+export interface ManualCtaBannerBlock {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'manualCtaBanner';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

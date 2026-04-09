@@ -23,6 +23,7 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { schemaMarkup } from '../../fields/schemaMarkup'
 
 export const AreasServed: CollectionConfig<'areas-served'> = {
   slug: 'areas-served',
@@ -115,6 +116,7 @@ export const AreasServed: CollectionConfig<'areas-served'> = {
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
             }),
+            schemaMarkup,
           ],
         },
       ],

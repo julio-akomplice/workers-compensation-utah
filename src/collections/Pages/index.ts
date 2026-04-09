@@ -47,6 +47,7 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { schemaMarkup } from '../../fields/schemaMarkup'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -158,6 +159,7 @@ export const Pages: CollectionConfig<'pages'> = {
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
             }),
+            schemaMarkup,
           ],
         },
       ],
