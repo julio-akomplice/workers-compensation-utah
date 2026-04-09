@@ -1,3 +1,4 @@
+import { mcpPlugin } from '@payloadcms/plugin-mcp'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
@@ -25,6 +26,49 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
+  mcpPlugin({
+    collections: {
+      pages: {
+        enabled: { find: true },
+      },
+      posts: {
+        enabled: { find: true },
+      },
+      'practice-areas': {
+        enabled: { find: true, create: true, update: true, delete: false },
+      },
+      'practice-area-categories': {
+        enabled: { find: true },
+      },
+      'areas-served': {
+        enabled: { find: true },
+      },
+      'case-studies': {
+        enabled: { find: true },
+      },
+      testimonials: {
+        enabled: { find: true },
+      },
+      faq: {
+        enabled: { find: true },
+      },
+      media: {
+        enabled: { find: true, create: true, update: true, delete: false },
+      },
+      categories: {
+        enabled: { find: true },
+      },
+      users: {
+        enabled: { find: true },
+      },
+      'cta-banners': {
+        enabled: { find: true },
+      },
+      templates: {
+        enabled: { find: true },
+      },
+    },
+  }),
   s3Storage({
     collections: {
       media: true,
