@@ -15,10 +15,6 @@ import { getShortSideForm } from '@/utilities/getShortSideForm'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
-import { CaseQuestionnaireCTABlockComponent } from '@/blocks/CaseQuestionnaireCTABlock/Component'
-import { ContactSectionBlockComponent } from '@/blocks/ContactSectionBlock/Component'
-import { FAQSectionBlockComponent } from '@/blocks/FAQSection/Component'
-import { ArticlesSectionBlock } from '@/blocks/ArticlesSection/Component'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -84,15 +80,6 @@ export default async function PracticeAreaPage({ params: paramsPromise }: Args) 
         </section>
       )}
       <RenderBlocks blocks={layout as Page['layout'][0][]} />
-
-      {/* @ts-expect-error global sections don't need block props */}
-      <CaseQuestionnaireCTABlockComponent />
-      {/* @ts-expect-error global sections don't need block props */}
-      <ContactSectionBlockComponent />
-      {/* @ts-expect-error global sections don't need block props */}
-      <FAQSectionBlockComponent />
-      {/* @ts-expect-error global sections don't need block props */}
-      <ArticlesSectionBlock />
     </article>
   )
 }

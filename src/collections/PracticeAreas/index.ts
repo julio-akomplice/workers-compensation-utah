@@ -12,6 +12,10 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { PracticeAreasSection } from '../../blocks/PracticeAreasSection/config'
 import { PracticeAreaContentBlock } from '../../blocks/PracticeAreaContentBlock/config'
 import { FAQContentBlock } from '../../blocks/FAQContentBlock/config'
+import { CaseQuestionnaireCTABlock } from '../../blocks/CaseQuestionnaireCTABlock/config'
+import { FAQSection } from '../../blocks/FAQSection/config'
+import { ArticlesSection } from '../../blocks/ArticlesSection/config'
+import { ContactSectionBlock } from '../../blocks/ContactSectionBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -119,6 +123,10 @@ export const PracticeAreas: CollectionConfig<'practice-areas'> = {
                 PracticeAreasSection,
                 PracticeAreaContentBlock,
                 FAQContentBlock,
+                CaseQuestionnaireCTABlock,
+                FAQSection,
+                ArticlesSection,
+                ContactSectionBlock,
               ],
               required: true,
               admin: {

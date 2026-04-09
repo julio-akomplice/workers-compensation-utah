@@ -1106,6 +1106,10 @@ export interface PracticeArea {
     | PracticeAreasSectionBlock
     | PracticeAreaContentBlock
     | FAQContentBlock
+    | CaseQuestionnaireCTABlock
+    | FAQSectionBlock
+    | ArticlesSectionBlock
+    | ContactSectionBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1234,6 +1238,252 @@ export interface FAQContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'faqContent';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseQuestionnaireCTABlock".
+ */
+export interface CaseQuestionnaireCTABlock {
+  /**
+   * Enable to override all fields from the global CTA.
+   */
+  overrideAll?: boolean | null;
+  overrideImage?: boolean | null;
+  overrideContent?: boolean | null;
+  overrideLink?: boolean | null;
+  image?: (string | null) | Media;
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'caseQuestionnaireCTA';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQSectionBlock".
+ */
+export interface FAQSectionBlock {
+  /**
+   * Enable to override all fields from the global FAQ Section.
+   */
+  overrideAll?: boolean | null;
+  overrideSectionHeader?: boolean | null;
+  overrideFaqs?: boolean | null;
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Select FAQs to display in this section.
+   */
+  faqs?: (string | Faq)[] | null;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: string;
+  question: string;
+  image?: (string | null) | Media;
+  shortAnswer: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+    /**
+     * Add JSON-LD schema markup objects for this page.
+     */
+    schema?:
+      | {
+          data:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  publishedAt?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArticlesSectionBlock".
+ */
+export interface ArticlesSectionBlock {
+  /**
+   * Enable to override all fields from the global Articles Section.
+   */
+  overrideAll?: boolean | null;
+  overrideSectionHeader?: boolean | null;
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'gradient' | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'articlesSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSectionBlock".
+ */
+export interface ContactSectionBlock {
+  theme?: ('white' | 'offWhite') | null;
+  /**
+   * Enable to override all fields from the global Contact Section.
+   */
+  overrideAll?: boolean | null;
+  overrideSectionHeader?: boolean | null;
+  overrideMapUrl?: boolean | null;
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  mapUrl?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1463,90 +1713,6 @@ export interface CaseStudy {
   description: string;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CaseQuestionnaireCTABlock".
- */
-export interface CaseQuestionnaireCTABlock {
-  /**
-   * Enable to override all fields from the global CTA.
-   */
-  overrideAll?: boolean | null;
-  overrideImage?: boolean | null;
-  overrideContent?: boolean | null;
-  overrideLink?: boolean | null;
-  image?: (string | null) | Media;
-  sectionHeader?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  link?: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null);
-    url?: string | null;
-    label: string;
-    showArrow?: boolean | null;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: 'gradient' | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'caseQuestionnaireCTA';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContactSectionBlock".
- */
-export interface ContactSectionBlock {
-  theme?: ('white' | 'offWhite') | null;
-  /**
-   * Enable to override all fields from the global Contact Section.
-   */
-  overrideAll?: boolean | null;
-  overrideSectionHeader?: boolean | null;
-  overrideMapUrl?: boolean | null;
-  sectionHeader?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  mapUrl?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'contactSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1824,168 +1990,6 @@ export interface TestimonialsSectionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'testimonialsSection';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FAQSectionBlock".
- */
-export interface FAQSectionBlock {
-  /**
-   * Enable to override all fields from the global FAQ Section.
-   */
-  overrideAll?: boolean | null;
-  overrideSectionHeader?: boolean | null;
-  overrideFaqs?: boolean | null;
-  sectionHeader?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Select FAQs to display in this section.
-   */
-  faqs?: (string | Faq)[] | null;
-  link?: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null);
-    url?: string | null;
-    label: string;
-    showArrow?: boolean | null;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: 'gradient' | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'faqSection';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faq".
- */
-export interface Faq {
-  id: string;
-  question: string;
-  image?: (string | null) | Media;
-  shortAnswer: string;
-  answer: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-    description?: string | null;
-    /**
-     * Add JSON-LD schema markup objects for this page.
-     */
-    schema?:
-      | {
-          data:
-            | {
-                [k: string]: unknown;
-              }
-            | unknown[]
-            | string
-            | number
-            | boolean
-            | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  publishedAt?: string | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ArticlesSectionBlock".
- */
-export interface ArticlesSectionBlock {
-  /**
-   * Enable to override all fields from the global Articles Section.
-   */
-  overrideAll?: boolean | null;
-  overrideSectionHeader?: boolean | null;
-  sectionHeader?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  link?: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null);
-    url?: string | null;
-    label: string;
-    showArrow?: boolean | null;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: 'gradient' | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'articlesSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3745,6 +3749,10 @@ export interface PracticeAreasSelect<T extends boolean = true> {
         practiceAreasSection?: T | PracticeAreasSectionBlockSelect<T>;
         practiceAreaContent?: T | PracticeAreaContentBlockSelect<T>;
         faqContent?: T | FAQContentBlockSelect<T>;
+        caseQuestionnaireCTA?: T | CaseQuestionnaireCTABlockSelect<T>;
+        faqSection?: T | FAQSectionBlockSelect<T>;
+        articlesSection?: T | ArticlesSectionBlockSelect<T>;
+        contactSection?: T | ContactSectionBlockSelect<T>;
       };
   meta?:
     | T
