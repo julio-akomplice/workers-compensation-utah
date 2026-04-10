@@ -2452,16 +2452,50 @@ export interface AreasServed {
     };
     background?: (string | null) | Media;
   };
+  general: {
+    alternativeTitle?: string | null;
+    shortDescription: string;
+  };
+  contentSection: {
+    /**
+     * Use H2 headings to create sections — they automatically populate the table of contents sidebar.
+     */
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
   layout: (
     | CallToActionBlock
     | ContentBlock
     | MediaBlock
     | ArchiveBlock
     | FormBlock
+    | AwardsBlock
     | CompleteContentBlock
+    | PracticeAreasSectionBlock
+    | PracticeAreaContentBlock
+    | FAQContentBlock
     | CaseQuestionnaireCTABlock
+    | FAQSectionBlock
+    | ArticlesSectionBlock
     | ContactSectionBlock
   )[];
+  /**
+   * Select areas served to display as related page links in the sidebar.
+   */
+  relatedPages?: (string | AreasServed)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -2493,6 +2527,15 @@ export interface AreasServed {
    */
   generateSlug?: boolean | null;
   slug: string;
+  parent?: (string | null) | AreasServed;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | AreasServed;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -4056,6 +4099,17 @@ export interface AreasServedSelect<T extends boolean = true> {
             };
         background?: T;
       };
+  general?:
+    | T
+    | {
+        alternativeTitle?: T;
+        shortDescription?: T;
+      };
+  contentSection?:
+    | T
+    | {
+        content?: T;
+      };
   layout?:
     | T
     | {
@@ -4064,10 +4118,17 @@ export interface AreasServedSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        awards?: T | AwardsBlockSelect<T>;
         completeContentBlock?: T | CompleteContentBlockSelect<T>;
+        practiceAreasSection?: T | PracticeAreasSectionBlockSelect<T>;
+        practiceAreaContent?: T | PracticeAreaContentBlockSelect<T>;
+        faqContent?: T | FAQContentBlockSelect<T>;
         caseQuestionnaireCTA?: T | CaseQuestionnaireCTABlockSelect<T>;
+        faqSection?: T | FAQSectionBlockSelect<T>;
+        articlesSection?: T | ArticlesSectionBlockSelect<T>;
         contactSection?: T | ContactSectionBlockSelect<T>;
       };
+  relatedPages?: T;
   meta?:
     | T
     | {
@@ -4084,6 +4145,15 @@ export interface AreasServedSelect<T extends boolean = true> {
   publishedAt?: T;
   generateSlug?: T;
   slug?: T;
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

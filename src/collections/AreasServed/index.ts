@@ -7,8 +7,14 @@ import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { Awards } from '../../blocks/Awards/config'
 import { CompleteContent } from '../../blocks/CompleteContent/config'
+import { PracticeAreasSection } from '../../blocks/PracticeAreasSection/config'
+import { PracticeAreaContentBlock } from '../../blocks/PracticeAreaContentBlock/config'
+import { FAQContentBlock } from '../../blocks/FAQContentBlock/config'
 import { CaseQuestionnaireCTABlock } from '../../blocks/CaseQuestionnaireCTABlock/config'
+import { FAQSection } from '../../blocks/FAQSection/config'
+import { ArticlesSection } from '../../blocks/ArticlesSection/config'
 import { ContactSectionBlock } from '../../blocks/ContactSectionBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
@@ -75,6 +81,30 @@ export const AreasServed: CollectionConfig<'areas-served'> = {
         {
           fields: [
             {
+              name: 'general',
+              type: 'group',
+              label: 'General',
+              fields: [
+                {
+                  name: 'alternativeTitle',
+                  type: 'textarea',
+                  label: 'Alternative Title',
+                },
+{
+                  name: 'shortDescription',
+                  type: 'textarea',
+                  label: 'Short Description',
+                  required: true,
+                },
+              ],
+            },
+            {
+              name: 'contentSection',
+              type: 'group',
+              label: 'Content',
+              fields: PracticeAreaContentBlock.fields,
+            },
+            {
               name: 'layout',
               type: 'blocks',
               blocks: [
@@ -83,8 +113,14 @@ export const AreasServed: CollectionConfig<'areas-served'> = {
                 MediaBlock,
                 Archive,
                 FormBlock,
+                Awards,
                 CompleteContent,
+                PracticeAreasSection,
+                PracticeAreaContentBlock,
+                FAQContentBlock,
                 CaseQuestionnaireCTABlock,
+                FAQSection,
+                ArticlesSection,
                 ContactSectionBlock,
               ],
               required: true,
@@ -94,6 +130,22 @@ export const AreasServed: CollectionConfig<'areas-served'> = {
             },
           ],
           label: 'Content',
+        },
+        {
+          label: 'Related Pages',
+          fields: [
+            {
+              name: 'relatedPages',
+              type: 'relationship',
+              relationTo: 'areas-served',
+              hasMany: true,
+              label: 'Related Pages',
+              admin: {
+                description:
+                  'Select areas served to display as related page links in the sidebar.',
+              },
+            },
+          ],
         },
         {
           name: 'meta',

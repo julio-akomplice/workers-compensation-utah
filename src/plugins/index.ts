@@ -107,7 +107,7 @@ export const plugins: Plugin[] = [
     },
   }),
   nestedDocsPlugin({
-    collections: ['pages', 'practice-areas', 'categories'],
+    collections: ['pages', 'practice-areas', 'categories', 'areas-served'],
     generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ''),
   }),
   seoPlugin({
