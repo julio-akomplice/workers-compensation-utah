@@ -41,7 +41,7 @@ export const plugins: Plugin[] = [
         enabled: { find: true },
       },
       'areas-served': {
-        enabled: { find: true },
+        enabled: { find: true, create: true, update: true },
       },
       'case-studies': {
         enabled: { find: true },
