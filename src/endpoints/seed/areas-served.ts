@@ -41,6 +41,7 @@ export const seedAreasServed = async (payload: Payload): Promise<void> => {
   for (const area of areas) {
     await payload.create({
       collection: 'areas-served',
+      draft: true,
       depth: 0,
       context: {
         disableRevalidate: true,
@@ -50,6 +51,21 @@ export const seedAreasServed = async (payload: Payload): Promise<void> => {
         title: area.title,
         slug: area.slug,
         _status: 'published',
+        general: {
+          shortDescription: `Workers' compensation attorney serving ${area.title}, Utah.`,
+        },
+        contentSection: {
+          content: {
+            root: {
+              type: 'root',
+              children: [],
+              direction: 'ltr',
+              format: '',
+              indent: 0,
+              version: 1,
+            },
+          },
+        },
         layout: [
           {
             blockType: 'content',
