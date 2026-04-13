@@ -6,6 +6,7 @@ import { BoldFeature, ParagraphFeature, lexicalEditor } from '@payloadcms/richte
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
+  trash: true,
   access: {
     create: authenticated,
     delete: authenticated,

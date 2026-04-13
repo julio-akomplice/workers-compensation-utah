@@ -225,6 +225,14 @@ export interface Page {
               | ({
                   relationTo: 'posts';
                   value: string | Post;
+                } | null)
+              | ({
+                  relationTo: 'practice-areas';
+                  value: string | PracticeArea;
+                } | null)
+              | ({
+                  relationTo: 'areas-served';
+                  value: string | AreasServed;
                 } | null);
             url?: string | null;
             label: string;
@@ -333,6 +341,7 @@ export interface Page {
     | null;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   _status?: ('draft' | 'published') | null;
 }
 /**
@@ -520,6 +529,7 @@ export interface Post {
   slug: string;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   _status?: ('draft' | 'published') | null;
 }
 /**
@@ -545,6 +555,7 @@ export interface Category {
     | null;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -555,6 +566,9 @@ export interface User {
   name?: string | null;
   updatedAt: string;
   createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
@@ -574,17 +588,297 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BreadcrumbBlock".
+ * via the `definition` "practice-areas".
  */
-export interface BreadcrumbBlock {
-  theme?: ('white' | 'offWhite') | null;
+export interface PracticeArea {
+  id: string;
+  title: string;
+  hero: {
+    type: 'none' | 'mediumImpact' | 'homeHero';
+    title?: string | null;
+    supportiveText?: string | null;
+    headlineImage?: (string | null) | Media;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: string | Post;
+                } | null)
+              | ({
+                  relationTo: 'practice-areas';
+                  value: string | PracticeArea;
+                } | null)
+              | ({
+                  relationTo: 'areas-served';
+                  value: string | AreasServed;
+                } | null);
+            url?: string | null;
+            label: string;
+            showArrow?: boolean | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: 'gradient' | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Optional video background. If provided, it will be used instead of the background image.
+     */
+    backgroundVideo?: {
+      video?: (string | null) | Media;
+      /**
+       * Poster image shown while the video loads.
+       */
+      poster?: (string | null) | Media;
+    };
+    background?: (string | null) | Media;
+  };
+  general: {
+    alternativeTitle?: string | null;
+    icon: string | Media;
+    shortDescription: string;
+  };
+  contentSection: {
+    /**
+     * Use H2 headings to create sections — they automatically populate the table of contents sidebar.
+     */
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | AwardsBlock
+    | CompleteContentBlock
+    | PracticeAreasSectionBlock
+    | PracticeAreaContentBlock
+    | FAQContentBlock
+    | CaseQuestionnaireCTABlock
+    | FAQSectionBlock
+    | ArticlesSectionBlock
+    | ContactSectionBlock
+  )[];
   /**
-   * Select the pages for the breadcrumb trail. Home is always included as the first item.
+   * Select practice areas to display as related page links in the sidebar.
    */
-  pages: (string | Page)[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'breadcrumb';
+  relatedPages?: (string | PracticeArea)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+    /**
+     * Add JSON-LD schema markup objects for this page.
+     */
+    schema?:
+      | {
+          data:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  categories?: (string | null) | PracticeAreaCategory;
+  publishedAt?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  parent?: (string | null) | PracticeArea;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | PracticeArea;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  deletedAt?: string | null;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "areas-served".
+ */
+export interface AreasServed {
+  id: string;
+  title: string;
+  hero: {
+    type: 'none' | 'mediumImpact' | 'homeHero';
+    title?: string | null;
+    supportiveText?: string | null;
+    headlineImage?: (string | null) | Media;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: string | Post;
+                } | null)
+              | ({
+                  relationTo: 'practice-areas';
+                  value: string | PracticeArea;
+                } | null)
+              | ({
+                  relationTo: 'areas-served';
+                  value: string | AreasServed;
+                } | null);
+            url?: string | null;
+            label: string;
+            showArrow?: boolean | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: 'gradient' | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Optional video background. If provided, it will be used instead of the background image.
+     */
+    backgroundVideo?: {
+      video?: (string | null) | Media;
+      /**
+       * Poster image shown while the video loads.
+       */
+      poster?: (string | null) | Media;
+    };
+    background?: (string | null) | Media;
+  };
+  general: {
+    alternativeTitle?: string | null;
+    shortDescription: string;
+  };
+  contentSection: {
+    /**
+     * Use H2 headings to create sections — they automatically populate the table of contents sidebar.
+     */
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | AwardsBlock
+    | CompleteContentBlock
+    | PracticeAreasSectionBlock
+    | PracticeAreaContentBlock
+    | FAQContentBlock
+    | CaseQuestionnaireCTABlock
+    | FAQSectionBlock
+    | ArticlesSectionBlock
+    | ContactSectionBlock
+  )[];
+  /**
+   * Select areas served to display as related page links in the sidebar.
+   */
+  relatedPages?: (string | AreasServed)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+    /**
+     * Add JSON-LD schema markup objects for this page.
+     */
+    schema?:
+      | {
+          data:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  publishedAt?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  parent?: (string | null) | AreasServed;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | AreasServed;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  deletedAt?: string | null;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -619,6 +913,14 @@ export interface CallToActionBlock {
             | ({
                 relationTo: 'posts';
                 value: string | Post;
+              } | null)
+            | ({
+                relationTo: 'practice-areas';
+                value: string | PracticeArea;
+              } | null)
+            | ({
+                relationTo: 'areas-served';
+                value: string | AreasServed;
               } | null);
           url?: string | null;
           label: string;
@@ -670,6 +972,14 @@ export interface ContentBlock {
             | ({
                 relationTo: 'posts';
                 value: string | Post;
+              } | null)
+            | ({
+                relationTo: 'practice-areas';
+                value: string | PracticeArea;
+              } | null)
+            | ({
+                relationTo: 'areas-served';
+                value: string | AreasServed;
               } | null);
           url?: string | null;
           label: string;
@@ -988,6 +1298,14 @@ export interface CompleteContentBlock {
             | ({
                 relationTo: 'posts';
                 value: string | Post;
+              } | null)
+            | ({
+                relationTo: 'practice-areas';
+                value: string | PracticeArea;
+              } | null)
+            | ({
+                relationTo: 'areas-served';
+                value: string | AreasServed;
               } | null);
           url?: string | null;
           label: string;
@@ -1038,6 +1356,14 @@ export interface PracticeAreasSectionBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -1050,145 +1376,6 @@ export interface PracticeAreasSectionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'practiceAreasSection';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "practice-areas".
- */
-export interface PracticeArea {
-  id: string;
-  title: string;
-  hero: {
-    type: 'none' | 'mediumImpact' | 'homeHero';
-    title?: string | null;
-    supportiveText?: string | null;
-    headlineImage?: (string | null) | Media;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: string | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: string | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            showArrow?: boolean | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?: 'gradient' | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    /**
-     * Optional video background. If provided, it will be used instead of the background image.
-     */
-    backgroundVideo?: {
-      video?: (string | null) | Media;
-      /**
-       * Poster image shown while the video loads.
-       */
-      poster?: (string | null) | Media;
-    };
-    background?: (string | null) | Media;
-  };
-  general: {
-    alternativeTitle?: string | null;
-    icon: string | Media;
-    shortDescription: string;
-  };
-  contentSection: {
-    /**
-     * Use H2 headings to create sections — they automatically populate the table of contents sidebar.
-     */
-    content: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-  };
-  layout: (
-    | CallToActionBlock
-    | ContentBlock
-    | MediaBlock
-    | ArchiveBlock
-    | FormBlock
-    | AwardsBlock
-    | CompleteContentBlock
-    | PracticeAreasSectionBlock
-    | PracticeAreaContentBlock
-    | FAQContentBlock
-    | CaseQuestionnaireCTABlock
-    | FAQSectionBlock
-    | ArticlesSectionBlock
-    | ContactSectionBlock
-  )[];
-  /**
-   * Select practice areas to display as related page links in the sidebar.
-   */
-  relatedPages?: (string | PracticeArea)[] | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-    description?: string | null;
-    /**
-     * Add JSON-LD schema markup objects for this page.
-     */
-    schema?:
-      | {
-          data:
-            | {
-                [k: string]: unknown;
-              }
-            | unknown[]
-            | string
-            | number
-            | boolean
-            | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  categories?: (string | null) | PracticeAreaCategory;
-  publishedAt?: string | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  parent?: (string | null) | PracticeArea;
-  breadcrumbs?:
-    | {
-        doc?: (string | null) | PracticeArea;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1269,6 +1456,14 @@ export interface FAQContentBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -1321,6 +1516,14 @@ export interface CaseQuestionnaireCTABlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -1375,6 +1578,14 @@ export interface FAQSectionBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -1445,6 +1656,7 @@ export interface Faq {
   slug: string;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   _status?: ('draft' | 'published') | null;
 }
 /**
@@ -1483,6 +1695,14 @@ export interface ArticlesSectionBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -1542,6 +1762,21 @@ export interface PracticeAreaCategory {
   slug: string;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BreadcrumbBlock".
+ */
+export interface BreadcrumbBlock {
+  theme?: ('white' | 'offWhite') | null;
+  /**
+   * Select the pages for the breadcrumb trail. Home is always included as the first item.
+   */
+  pages: (string | Page)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'breadcrumb';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1578,6 +1813,14 @@ export interface HomeTestimonialSectionBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -1626,6 +1869,7 @@ export interface Testimonial {
   avatar: string | Media;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1659,6 +1903,14 @@ export interface HomeAboutUsBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -1721,6 +1973,14 @@ export interface HomeCaseStudiesSectionBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -1756,6 +2016,7 @@ export interface CaseStudy {
   description: string;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1788,6 +2049,14 @@ export interface ContactPageBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -1842,6 +2111,14 @@ export interface AboutAboutFirmBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -1920,6 +2197,14 @@ export interface AboutOurAttorneyBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -1973,6 +2258,14 @@ export interface AboutGetStartedBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -2021,6 +2314,14 @@ export interface TestimonialsSectionBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -2169,6 +2470,14 @@ export interface PracticeAreaPageBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -2223,6 +2532,14 @@ export interface ResourcesPageBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -2273,6 +2590,14 @@ export interface AreasServedPageBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -2369,6 +2694,14 @@ export interface CaseStudyPageBlock {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -2402,143 +2735,6 @@ export interface AwardsSectionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'awardsSection';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "areas-served".
- */
-export interface AreasServed {
-  id: string;
-  title: string;
-  hero: {
-    type: 'none' | 'mediumImpact' | 'homeHero';
-    title?: string | null;
-    supportiveText?: string | null;
-    headlineImage?: (string | null) | Media;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: string | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: string | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            showArrow?: boolean | null;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?: 'gradient' | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    /**
-     * Optional video background. If provided, it will be used instead of the background image.
-     */
-    backgroundVideo?: {
-      video?: (string | null) | Media;
-      /**
-       * Poster image shown while the video loads.
-       */
-      poster?: (string | null) | Media;
-    };
-    background?: (string | null) | Media;
-  };
-  general: {
-    alternativeTitle?: string | null;
-    shortDescription: string;
-  };
-  contentSection: {
-    /**
-     * Use H2 headings to create sections — they automatically populate the table of contents sidebar.
-     */
-    content: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-  };
-  layout: (
-    | CallToActionBlock
-    | ContentBlock
-    | MediaBlock
-    | ArchiveBlock
-    | FormBlock
-    | AwardsBlock
-    | CompleteContentBlock
-    | PracticeAreasSectionBlock
-    | PracticeAreaContentBlock
-    | FAQContentBlock
-    | CaseQuestionnaireCTABlock
-    | FAQSectionBlock
-    | ArticlesSectionBlock
-    | ContactSectionBlock
-  )[];
-  /**
-   * Select areas served to display as related page links in the sidebar.
-   */
-  relatedPages?: (string | AreasServed)[] | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-    description?: string | null;
-    /**
-     * Add JSON-LD schema markup objects for this page.
-     */
-    schema?:
-      | {
-          data:
-            | {
-                [k: string]: unknown;
-              }
-            | unknown[]
-            | string
-            | number
-            | boolean
-            | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  publishedAt?: string | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  parent?: (string | null) | AreasServed;
-  breadcrumbs?:
-    | {
-        doc?: (string | null) | AreasServed;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2598,6 +2794,7 @@ export interface CtaBanner {
     | null;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2628,6 +2825,14 @@ export interface Template {
               | ({
                   relationTo: 'posts';
                   value: string | Post;
+                } | null)
+              | ({
+                  relationTo: 'practice-areas';
+                  value: string | PracticeArea;
+                } | null)
+              | ({
+                  relationTo: 'areas-served';
+                  value: string | AreasServed;
                 } | null);
             url?: string | null;
             label: string;
@@ -2664,6 +2869,14 @@ export interface Template {
         | ({
             relationTo: 'posts';
             value: string | Post;
+          } | null)
+        | ({
+            relationTo: 'practice-areas';
+            value: string | PracticeArea;
+          } | null)
+        | ({
+            relationTo: 'areas-served';
+            value: string | AreasServed;
           } | null);
       url?: string | null;
       label: string;
@@ -2691,6 +2904,7 @@ export interface Template {
   solidMenu?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   _status?: ('draft' | 'published') | null;
 }
 /**
@@ -2750,6 +2964,14 @@ export interface PayloadMcpApiKey {
      * Allow clients to find areas-served.
      */
     find?: boolean | null;
+    /**
+     * Allow clients to create areas-served.
+     */
+    create?: boolean | null;
+    /**
+     * Allow clients to update areas-served.
+     */
+    update?: boolean | null;
   };
   caseStudies?: {
     /**
@@ -3234,6 +3456,7 @@ export interface PagesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   _status?: T;
 }
 /**
@@ -3915,6 +4138,7 @@ export interface PostsSelect<T extends boolean = true> {
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   _status?: T;
 }
 /**
@@ -4013,6 +4237,7 @@ export interface PracticeAreasSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   _status?: T;
 }
 /**
@@ -4061,6 +4286,7 @@ export interface PracticeAreaCategoriesSelect<T extends boolean = true> {
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4156,6 +4382,7 @@ export interface AreasServedSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   _status?: T;
 }
 /**
@@ -4170,6 +4397,7 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   description?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4184,6 +4412,7 @@ export interface TestimonialsSelect<T extends boolean = true> {
   avatar?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4212,6 +4441,7 @@ export interface FaqSelect<T extends boolean = true> {
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   _status?: T;
 }
 /**
@@ -4328,6 +4558,7 @@ export interface CategoriesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4337,6 +4568,9 @@ export interface UsersSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
+  enableAPIKey?: T;
+  apiKey?: T;
+  apiKeyIndex?: T;
   email?: T;
   resetPasswordToken?: T;
   resetPasswordExpiration?: T;
@@ -4371,6 +4605,7 @@ export interface CtaBannersSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4435,6 +4670,7 @@ export interface TemplatesSelect<T extends boolean = true> {
   solidMenu?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   _status?: T;
 }
 /**
@@ -4471,6 +4707,8 @@ export interface PayloadMcpApiKeysSelect<T extends boolean = true> {
     | T
     | {
         find?: T;
+        create?: T;
+        update?: T;
       };
   caseStudies?:
     | T
@@ -4821,6 +5059,14 @@ export interface Header {
             | ({
                 relationTo: 'posts';
                 value: string | Post;
+              } | null)
+            | ({
+                relationTo: 'practice-areas';
+                value: string | PracticeArea;
+              } | null)
+            | ({
+                relationTo: 'areas-served';
+                value: string | AreasServed;
               } | null);
           url?: string | null;
           label: string;
@@ -4935,6 +5181,14 @@ export interface CaseQuestionnaireCta {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -5009,6 +5263,14 @@ export interface FaqSection {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;
@@ -5053,6 +5315,14 @@ export interface ArticlesSection {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
         } | null);
     url?: string | null;
     label: string;

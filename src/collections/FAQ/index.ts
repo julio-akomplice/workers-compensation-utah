@@ -15,6 +15,7 @@ import { schemaMarkup } from '../../fields/schemaMarkup'
 
 export const FAQ: CollectionConfig = {
   slug: 'faq',
+  trash: true,
   labels: {
     singular: 'FAQ',
     plural: 'FAQs',
