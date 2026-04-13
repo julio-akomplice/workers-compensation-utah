@@ -6,6 +6,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import path from 'path'
+import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
@@ -29,6 +30,25 @@ export const Media: CollectionConfig = {
       ({ data, req }) => {
         if (data?.mimeType?.includes('svg') && req.file) {
           data.svgContent = req.file.data.toString('utf-8')
+        }
+        return data
+      },
+      async ({ data, req }) => {
+        const file = req.file
+        if (!file) return data
+        const mimeType = file.mimetype || data?.mimeType
+        if (!mimeType?.startsWith('image/') || mimeType.includes('svg')) return data
+        try {
+          const input = file.tempFilePath || file.data
+          if (!input) return data
+          const buffer = await sharp(input)
+            .resize(32, 32, { fit: 'inside' })
+            .blur(1)
+            .webp({ quality: 30 })
+            .toBuffer()
+          data.blurDataURL = `data:image/webp;base64,${buffer.toString('base64')}`
+        } catch {
+          // Non-fatal — blur placeholder generation failed
         }
         return data
       },
@@ -59,10 +79,20 @@ export const Media: CollectionConfig = {
       //required: true,
     },
     {
+      name: 'blurDataURL',
+      label: 'Blur Placeholder',
+      type: 'text',
+      admin: {
+        hidden: true,
+        disableListColumn: true,
+      },
+    },
+    {
       name: 'svgContent',
       type: 'textarea',
       admin: {
         hidden: true,
+        disableListColumn: true,
       },
     },
     {

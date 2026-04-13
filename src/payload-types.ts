@@ -351,6 +351,7 @@ export interface Page {
 export interface Media {
   id: string;
   alt?: string | null;
+  blurDataURL?: string | null;
   svgContent?: string | null;
   caption?: {
     root: {
@@ -4452,6 +4453,7 @@ export interface FaqSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  blurDataURL?: T;
   svgContent?: T;
   caption?: T;
   folder?: T;

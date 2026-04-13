@@ -48,7 +48,7 @@ const placeholderBlur =
 export const ImageMedia: React.FC<MediaProps> = (props) => {
   const {
     alt: altFromProps,
-    blurDataURL,
+    blurDataURL: blurDataURLFromProps,
     fill,
     pictureClassName,
     imgClassName,
@@ -67,11 +67,12 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let height: number | undefined
   let alt = altFromProps
   let src: StaticImageData | string = srcFromProps || ''
+  let blurDataURL = blurDataURLFromProps
 
   let focalStyle: React.CSSProperties | undefined
 
   if (!src && resource && typeof resource === 'object') {
-    const { alt: altFromResource, height: fullHeight, url, width: fullWidth, focalX, focalY } = resource
+    const { alt: altFromResource, blurDataURL: blurFromResource, height: fullHeight, url, width: fullWidth, focalX, focalY } = resource
 
     width = fullWidth!
     height = fullHeight!
@@ -80,6 +81,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     const cacheTag = resource.updatedAt
 
     src = getMediaUrl(url, cacheTag)
+
+    if (!blurDataURL && blurFromResource) {
+      blurDataURL = blurFromResource
+    }
 
     if (focalX != null && focalY != null) {
       focalStyle = { objectPosition: `${focalX}% ${focalY}%` }
