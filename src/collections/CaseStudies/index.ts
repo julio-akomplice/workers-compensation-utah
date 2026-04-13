@@ -5,7 +5,6 @@ import { anyone } from '../../access/anyone'
 
 export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
-  trash: true,
   access: {
     create: authenticated,
     delete: authenticated,

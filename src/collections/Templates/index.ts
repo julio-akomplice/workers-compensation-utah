@@ -8,7 +8,6 @@ import { templateTypeOptions } from './templateTypes'
 
 export const Templates: CollectionConfig = {
   slug: 'templates',
-  trash: true,
   labels: {
     singular: 'Template',
     plural: 'Templates',

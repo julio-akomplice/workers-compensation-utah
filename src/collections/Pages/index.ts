@@ -51,7 +51,6 @@ import { schemaMarkup } from '../../fields/schemaMarkup'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
-  trash: true,
   access: {
     create: authenticated,
     delete: authenticated,

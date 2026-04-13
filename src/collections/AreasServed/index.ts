@@ -33,7 +33,6 @@ import { schemaMarkup } from '../../fields/schemaMarkup'
 
 export const AreasServed: CollectionConfig<'areas-served'> = {
   slug: 'areas-served',
-  trash: true,
   labels: {
     singular: 'Area Served',
     plural: 'Areas Served',

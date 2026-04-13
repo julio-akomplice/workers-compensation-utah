@@ -6,7 +6,6 @@ import { slugField } from 'payload'
 
 export const PracticeAreaCategories: CollectionConfig = {
   slug: 'practice-area-categories',
-  trash: true,
   access: {
     create: authenticated,
     delete: authenticated,

@@ -33,7 +33,6 @@ import { schemaMarkup } from '../../fields/schemaMarkup'
 
 export const PracticeAreas: CollectionConfig<'practice-areas'> = {
   slug: 'practice-areas',
-  trash: true,
   access: {
     create: authenticated,
     delete: authenticated,
