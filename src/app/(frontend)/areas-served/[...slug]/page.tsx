@@ -50,10 +50,9 @@ type Args = {
 export default async function AreaServedPage({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = [] } = await paramsPromise
-  const docSlug = decodeURIComponent(slug[slug.length - 1] ?? '')
   const url = '/areas-served/' + slug.map(decodeURIComponent).join('/')
 
-  const areaServed = await queryAreaServedBySlug({ slug: docSlug })
+  const areaServed = await queryAreaServedBySlug({ slugPath: slug.map(decodeURIComponent) })
 
   if (!areaServed) {
     return <PayloadRedirects url={url} />
@@ -65,10 +64,17 @@ export default async function AreaServedPage({ params: paramsPromise }: Args) {
   const relatedPageLinks = (relatedPages || [])
     .map((page) => (typeof page === 'object' ? page : null))
     .filter((page): page is NonNullable<typeof page> => page !== null)
-    .map((page) => ({
-      title: page.title,
-      href: `/areas-served/${page.slug}`,
-    }))
+    .map((page) => {
+      const breadcrumbs = page.breadcrumbs
+      const breadcrumbUrl =
+        Array.isArray(breadcrumbs) && breadcrumbs.length > 0
+          ? breadcrumbs[breadcrumbs.length - 1]?.url
+          : null
+      return {
+        title: page.title,
+        href: breadcrumbUrl ? `/areas-served${breadcrumbUrl}` : `/areas-served/${page.slug}`,
+      }
+    })
 
   return (
     <article>
@@ -107,16 +113,19 @@ export default async function AreaServedPage({ params: paramsPromise }: Args) {
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = [] } = await paramsPromise
-  const docSlug = decodeURIComponent(slug[slug.length - 1] ?? '')
-  const areaServed = await queryAreaServedBySlug({ slug: docSlug })
+  const areaServed = await queryAreaServedBySlug({ slugPath: slug.map(decodeURIComponent) })
 
   return generateMeta({ doc: areaServed })
 }
 
-const queryAreaServedBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryAreaServedBySlug = cache(async ({ slugPath }: { slugPath: string[] }) => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })
+
+  // Use the full breadcrumb URL to distinguish nested docs that share the same
+  // flat slug (e.g. /provo/provo-child vs /provo-child).
+  const breadcrumbUrl = '/' + slugPath.join('/')
 
   const result = await payload.find({
     collection: 'areas-served',
@@ -126,8 +135,8 @@ const queryAreaServedBySlug = cache(async ({ slug }: { slug: string }) => {
     overrideAccess: draft,
     pagination: false,
     where: {
-      slug: {
-        equals: slug,
+      'breadcrumbs.url': {
+        equals: breadcrumbUrl,
       },
     },
   })

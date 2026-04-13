@@ -370,6 +370,7 @@ export interface Media {
   folder?: (string | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -566,6 +567,7 @@ export interface User {
   name?: string | null;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   enableAPIKey?: boolean | null;
   apiKey?: string | null;
   apiKeyIndex?: string | null;
@@ -4455,6 +4457,7 @@ export interface MediaSelect<T extends boolean = true> {
   folder?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -4568,6 +4571,7 @@ export interface UsersSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   enableAPIKey?: T;
   apiKey?: T;
   apiKeyIndex?: T;

@@ -21,6 +21,7 @@ import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidateAreaServed } from './hooks/revalidateAreaServed'
+import { validateUniqueSlugPerParent } from '../../hooks/validateUniqueSlugPerParent'
 
 import {
   MetaDescriptionField,
@@ -47,23 +48,38 @@ export const AreasServed: CollectionConfig<'areas-served'> = {
   defaultPopulate: {
     title: true,
     slug: true,
+    breadcrumbs: true,
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data, req }) =>
-        generatePreviewPath({
+      url: ({ data, req }) => {
+        const breadcrumbs = data?.breadcrumbs
+        const breadcrumbUrl =
+          Array.isArray(breadcrumbs) && breadcrumbs.length > 0
+            ? (breadcrumbs[breadcrumbs.length - 1]?.url as string | undefined)
+            : undefined
+        return generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
           collection: 'areas-served',
           req,
-        }),
+          breadcrumbUrl,
+        })
+      },
     },
-    preview: (data, { req }) =>
-      generatePreviewPath({
+    preview: (data, { req }) => {
+      const breadcrumbs = data?.breadcrumbs
+      const breadcrumbUrl =
+        Array.isArray(breadcrumbs) && breadcrumbs.length > 0
+          ? (breadcrumbs[breadcrumbs.length - 1]?.url as string | undefined)
+          : undefined
+      return generatePreviewPath({
         slug: typeof data?.slug === 'string' ? data.slug : '',
         collection: 'areas-served',
         req,
-      }),
+        breadcrumbUrl,
+      })
+    },
     useAsTitle: 'title',
   },
   fields: [
@@ -181,11 +197,11 @@ export const AreasServed: CollectionConfig<'areas-served'> = {
         position: 'sidebar',
       },
     },
-    slugField(),
+    slugField({ disableUnique: true }),
   ],
   hooks: {
     afterChange: [revalidateAreaServed],
-    beforeChange: [populatePublishedAt],
+    beforeChange: [populatePublishedAt, validateUniqueSlugPerParent({ collection: 'areas-served' })],
     afterDelete: [revalidateDelete],
   },
   versions: {
