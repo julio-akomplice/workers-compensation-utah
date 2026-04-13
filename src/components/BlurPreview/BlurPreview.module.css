@@ -1,0 +1,7 @@
+.success {
+  color: var(--color-success-500) !important;
+}
+
+.warning {
+  color: var(--color-warning-500) !important;
+}

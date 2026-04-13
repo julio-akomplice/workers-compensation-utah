@@ -24,6 +24,7 @@ import { HorizontalRuleFeatureClient as HorizontalRuleFeatureClient_e70f5e05f09f
 import { BlocksFeatureClient as BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { default as default_6aa45b5d070fe10f12680a82a9d8038e } from '@/blocks/CtaBanner/VariableNameSelect'
 import { default as default_2fd4ff39ccb96fea2ef27fd18be9185f } from '@/blocks/CtaBanner/VariablesArray'
+import { BlurPreview as BlurPreview_352fb979cd450399812ab8782c490d74 } from '@/components/BlurPreview'
 import { FolderTableCell as FolderTableCell_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 import { FolderField as FolderField_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
@@ -62,6 +63,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#BlocksFeatureClient": BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/blocks/CtaBanner/VariableNameSelect#default": default_6aa45b5d070fe10f12680a82a9d8038e,
   "@/blocks/CtaBanner/VariablesArray#default": default_2fd4ff39ccb96fea2ef27fd18be9185f,
+  "@/components/BlurPreview#BlurPreview": BlurPreview_352fb979cd450399812ab8782c490d74,
   "@payloadcms/next/rsc#FolderTableCell": FolderTableCell_f9c02e79a4aed9a3924487c0cd4cafb1,
   "@payloadcms/next/rsc#FolderField": FolderField_f9c02e79a4aed9a3924487c0cd4cafb1,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,

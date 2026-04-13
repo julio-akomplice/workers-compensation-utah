@@ -104,6 +104,16 @@ export const Media: CollectionConfig = {
         },
       }),
     },
+    {
+      name: 'blurPreview',
+      type: 'ui',
+      admin: {
+        condition: (data) => Boolean(data?.id),
+        components: {
+          Field: '@/components/BlurPreview#BlurPreview',
+        },
+      },
+    },
   ],
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
