@@ -4,6 +4,7 @@ import { authenticated } from '../../access/authenticated'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  trash: true,
   access: {
     admin: authenticated,
     create: authenticated,

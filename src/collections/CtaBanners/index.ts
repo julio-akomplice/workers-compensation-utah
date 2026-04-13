@@ -14,6 +14,7 @@ import { anyone } from '../../access/anyone'
 
 export const CtaBanners: CollectionConfig = {
   slug: 'cta-banners',
+  trash: true,
   labels: {
     singular: 'CTA Banner',
     plural: 'CTA Banners',
