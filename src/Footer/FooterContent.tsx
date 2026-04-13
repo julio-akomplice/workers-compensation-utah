@@ -56,7 +56,7 @@ export const FooterContent: React.FC<Props> = ({
               {resolvedPracticeAreas.map((area) => (
                 <li key={area.id}>
                   <Link
-                    href={`/practice-areas/${area.slug}`}
+                    href={`/${area.slug}`}
                     className="text-body font-medium text-navy-200 tracking-[-0.34px] hover:text-white transition-colors"
                   >
                     {area.general?.alternativeTitle || area.title}
@@ -85,7 +85,7 @@ export const FooterContent: React.FC<Props> = ({
               {resolvedAreasServed.map((area) => (
                 <li key={area.id}>
                   <Link
-                    href={`/areas-served/${area.slug}`}
+                    href={`/${area.slug}`}
                     className="text-body font-medium text-navy-200 tracking-[-0.34px] hover:text-white transition-colors"
                   >
                     {area.title}

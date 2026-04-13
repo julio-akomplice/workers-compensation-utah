@@ -11,7 +11,7 @@ export const revalidatePracticeArea: CollectionAfterChangeHook<PracticeArea> = (
 }) => {
   if (!context.disableRevalidate) {
     if (doc._status === 'published') {
-      const path = `/practice-areas/${doc.slug}`
+      const path = `/${doc.slug}`
 
       payload.logger.info(`Revalidating practice area at path: ${path}`)
 
@@ -21,7 +21,7 @@ export const revalidatePracticeArea: CollectionAfterChangeHook<PracticeArea> = (
 
     // If the practice area was previously published, we need to revalidate the old path
     if (previousDoc?._status === 'published' && doc._status !== 'published') {
-      const oldPath = `/practice-areas/${previousDoc.slug}`
+      const oldPath = `/${previousDoc.slug}`
 
       payload.logger.info(`Revalidating old practice area at path: ${oldPath}`)
 
@@ -37,7 +37,7 @@ export const revalidateDelete: CollectionAfterDeleteHook<PracticeArea> = ({
   req: { context },
 }) => {
   if (!context.disableRevalidate) {
-    const path = `/practice-areas/${doc?.slug}`
+    const path = `/${doc?.slug}`
     revalidatePath(path)
     revalidateTag('practice-areas-sitemap')
   }

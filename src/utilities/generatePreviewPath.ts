@@ -3,8 +3,8 @@ import { PayloadRequest, CollectionSlug } from 'payload'
 const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
   posts: '/posts',
   pages: '',
-  'practice-areas': '/practice-areas',
-  'areas-served': '/areas-served',
+  'practice-areas': '',
+  'areas-served': '',
   faq: '/faq',
 }
 

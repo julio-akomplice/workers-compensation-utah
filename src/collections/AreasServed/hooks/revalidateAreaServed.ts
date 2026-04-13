@@ -4,6 +4,15 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 
 import type { AreasServed as AreasServedType } from '../../../payload-types'
 
+const getPath = (doc: Partial<AreasServedType>): string => {
+  const breadcrumbs = doc.breadcrumbs
+  if (Array.isArray(breadcrumbs) && breadcrumbs.length > 0) {
+    const url = breadcrumbs[breadcrumbs.length - 1]?.url
+    if (url) return url
+  }
+  return `/${doc.slug}`
+}
+
 export const revalidateAreaServed: CollectionAfterChangeHook<AreasServedType> = ({
   doc,
   previousDoc,
@@ -11,7 +20,7 @@ export const revalidateAreaServed: CollectionAfterChangeHook<AreasServedType> = 
 }) => {
   if (!context.disableRevalidate) {
     if (doc._status === 'published') {
-      const path = `/areas-served/${doc.slug}`
+      const path = getPath(doc)
 
       payload.logger.info(`Revalidating area served at path: ${path}`)
 
@@ -21,7 +30,7 @@ export const revalidateAreaServed: CollectionAfterChangeHook<AreasServedType> = 
 
     // If the area was previously published, we need to revalidate the old path
     if (previousDoc?._status === 'published' && doc._status !== 'published') {
-      const oldPath = `/areas-served/${previousDoc.slug}`
+      const oldPath = getPath(previousDoc)
 
       payload.logger.info(`Revalidating old area served at path: ${oldPath}`)
 
@@ -37,7 +46,7 @@ export const revalidateDelete: CollectionAfterDeleteHook<AreasServedType> = ({
   req: { context },
 }) => {
   if (!context.disableRevalidate) {
-    const path = `/areas-served/${doc?.slug}`
+    const path = getPath(doc)
     revalidatePath(path)
     revalidateTag('areas-served-sitemap')
   }
