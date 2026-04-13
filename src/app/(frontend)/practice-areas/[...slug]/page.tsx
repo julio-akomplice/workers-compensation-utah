@@ -25,27 +25,35 @@ export async function generateStaticParams() {
     limit: 1000,
     overrideAccess: false,
     pagination: false,
+    depth: 1,
     select: {
       slug: true,
+      breadcrumbs: true,
     },
   })
 
-  return practiceAreas.docs.map(({ slug }) => ({ slug }))
+  return practiceAreas.docs.map(({ breadcrumbs, slug }) => {
+    const urlSegments =
+      breadcrumbs && breadcrumbs.length > 0
+        ? breadcrumbs[breadcrumbs.length - 1]?.url?.split('/').filter(Boolean)
+        : [slug]
+    return { slug: urlSegments }
+  })
 }
 
 type Args = {
   params: Promise<{
-    slug?: string
+    slug?: string[]
   }>
 }
 
 export default async function PracticeAreaPage({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug = '' } = await paramsPromise
-  const decodedSlug = decodeURIComponent(slug)
-  const url = '/practice-areas/' + decodedSlug
+  const { slug = [] } = await paramsPromise
+  const docSlug = decodeURIComponent(slug[slug.length - 1] ?? '')
+  const url = '/practice-areas/' + slug.map(decodeURIComponent).join('/')
 
-  const practiceArea = await queryPracticeAreaBySlug({ slug: decodedSlug })
+  const practiceArea = await queryPracticeAreaBySlug({ slug: docSlug })
 
   if (!practiceArea) {
     return <PayloadRedirects url={url} />
@@ -98,9 +106,9 @@ export default async function PracticeAreaPage({ params: paramsPromise }: Args) 
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug = '' } = await paramsPromise
-  const decodedSlug = decodeURIComponent(slug)
-  const practiceArea = await queryPracticeAreaBySlug({ slug: decodedSlug })
+  const { slug = [] } = await paramsPromise
+  const docSlug = decodeURIComponent(slug[slug.length - 1] ?? '')
+  const practiceArea = await queryPracticeAreaBySlug({ slug: docSlug })
 
   return generateMeta({ doc: practiceArea })
 }
