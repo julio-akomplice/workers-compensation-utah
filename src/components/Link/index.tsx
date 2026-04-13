@@ -3,7 +3,7 @@ import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
 
-import type { Page, Post } from '@/payload-types'
+import type { AreasServed, Page, Post, PracticeArea } from '@/payload-types'
 import { ArrowIcon } from '../ui/ArrowIcon'
 
 type CMSLinkType = {
@@ -13,8 +13,8 @@ type CMSLinkType = {
   label?: string | null
   newTab?: boolean | null
   reference?: {
-    relationTo: 'pages' | 'posts'
-    value: Page | Post | string | number
+    relationTo: 'pages' | 'posts' | 'practice-areas' | 'areas-served'
+    value: Page | Post | PracticeArea | AreasServed | string | number
   } | null
   showArrow?: boolean | null
   size?: ButtonProps['size'] | null
