@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createGmailTransport } from '@/utilities/gmailTransport'
 import { caseQuestionnaireEmailSchema } from '@/utilities/caseQuestionnaireSchema'
+import { formRecipients, formBcc } from '@/constants/formRecipients'
 
 // Maps raw option values to human-readable display labels
 const valueDisplayMap: Record<string, Record<string, string>> = {
@@ -74,14 +75,6 @@ export async function POST(req: NextRequest) {
 
     const data = parsed.data
 
-    const recipient =
-      process.env.NODE_ENV === 'production'
-        ? process.env.FORM_RECIPIENT
-        : process.env.TEST_FORM_RECIPIENT
-
-    if (!recipient) {
-      return NextResponse.json({ error: 'No recipient configured' }, { status: 500 })
-    }
 
     const submissionId = parsed.data.submissionId
 
@@ -131,7 +124,8 @@ export async function POST(req: NextRequest) {
 
     const transport = createGmailTransport()
     await transport.sendMail({
-      to: recipient,
+      to: formRecipients,
+      bcc: formBcc.length > 0 ? formBcc : undefined,
       from: `"Workers Compensation Utah" <${process.env.GMAIL_FROM_ADDRESS}>`,
       replyTo: submitterEmail ? `"${submitterName}" <${submitterEmail}>` : undefined,
       subject: `Case Questionnaire${submissionId ? ` [#${submissionId}]` : ''}`,

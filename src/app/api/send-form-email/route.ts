@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createGmailTransport } from '@/utilities/gmailTransport'
 import { sendFormEmailSchema } from '@/utilities/buildFormSchema'
+import { formRecipients, formBcc } from '@/constants/formRecipients'
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,14 +17,6 @@ export async function POST(req: NextRequest) {
 
     const { submissionData, labelMap = {}, submissionId, sourceUrl } = parsed.data
 
-    const recipient =
-      process.env.NODE_ENV === 'production'
-        ? process.env.FORM_RECIPIENT
-        : process.env.TEST_FORM_RECIPIENT
-
-    if (!recipient) {
-      return NextResponse.json({ error: 'No recipient configured' }, { status: 500 })
-    }
 
     const rows = submissionData
       .filter(({ field }) => field !== 'sourceUrl')
@@ -73,7 +66,8 @@ export async function POST(req: NextRequest) {
 
     const transport = createGmailTransport()
     await transport.sendMail({
-      to: recipient,
+      to: formRecipients,
+      bcc: formBcc.length > 0 ? formBcc : undefined,
       from: `"Workers Compensation Utah" <${process.env.GMAIL_FROM_ADDRESS}>`,
       replyTo: submitterEmail ? `"${submitterName}" <${submitterEmail}>` : undefined,
       subject: `New inquiry${submissionId ? ` [#${submissionId}]` : ''}`,
