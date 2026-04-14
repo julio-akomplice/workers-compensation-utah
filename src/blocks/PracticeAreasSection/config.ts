@@ -68,7 +68,7 @@ export const PracticeAreasSection: Block = {
               limit: ids.length,
             })
 
-            return docs
+            return ids.map((id) => docs.find((doc) => doc.id === id)).filter((doc): doc is NonNullable<typeof doc> => doc != null)
           },
         ],
       },
