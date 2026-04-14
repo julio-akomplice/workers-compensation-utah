@@ -42,8 +42,13 @@ export const PracticeAreasSectionBlock: React.FC<Props> = async ({
     <section className="w-full bg-off-white py-16 md:py-24">
       <div className="container mx-auto px-4">
         {sectionHeader && 'root' in sectionHeader && (
-          <div className="mb-14.5 text-center section-header">
-            <RichText data={sectionHeader} enableGutter={false} enableProse={false} />
+          <div className="mb-14.5 ">
+            <RichText
+              data={sectionHeader}
+              enableGutter={false}
+              enableProse={false}
+              className="text-center section-header items-center *:mx-auto [&_p]:max-w-[55ch]"
+            />
           </div>
         )}
 
