@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
+import ReactDOM from 'react-dom'
 
 import type { Page } from '@/payload-types'
 
@@ -62,24 +63,35 @@ export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> =
     setHeaderTheme('dark')
   })
 
+  if (backgroundVideo?.video && typeof backgroundVideo.video === 'object' && backgroundVideo.video.url) {
+    ReactDOM.preload(backgroundVideo.video.url, { as: 'video', fetchPriority: 'high' })
+  }
+
   return (
     <section className="relative text-black h-screen overflow-hidden pb-12.5">
       {/* Background Video or Image */}
       {backgroundVideo?.video && typeof backgroundVideo.video === 'object' ? (
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover -z-10"
-          poster={
-            backgroundVideo.poster && typeof backgroundVideo.poster === 'object'
-              ? backgroundVideo.poster.url || undefined
-              : undefined
-          }
-        >
-          <source src={backgroundVideo.video.url || ''} />
-        </video>
+        <>
+          {backgroundVideo.poster && typeof backgroundVideo.poster === 'object' && (
+            <Media
+              resource={backgroundVideo.poster}
+              fill
+              imgClassName="object-cover -z-10"
+              priority
+              loading="eager"
+            />
+          )}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="absolute inset-0 w-full h-full object-cover -z-10"
+          >
+            <source src={backgroundVideo.video.url || ''} type={backgroundVideo.video.mimeType || undefined} />
+          </video>
+        </>
       ) : (
         background &&
         typeof background === 'object' && (
