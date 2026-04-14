@@ -83,6 +83,7 @@ const VideoThumbnail: React.FC<{
             className="h-full w-full object-cover aspect-369/655"
             controls={isPlaying}
             playsInline
+            preload="none"
             poster={poster || undefined}
             onPause={() => setIsPlaying(false)}
           />
