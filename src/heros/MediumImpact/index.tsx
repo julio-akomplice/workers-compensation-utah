@@ -15,14 +15,23 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({ title, background }) 
 
   return (
     <div
-      className="relative -mt-[10.4rem] flex items-center justify-center text-white"
+      className="relative -mt-[10.4rem] flex items-center justify-center text-white pt-header"
       data-theme="dark"
     >
       {background && typeof background === 'object' && (
         <Media fill imgClassName="object-cover -z-10" priority resource={background} />
       )}
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#00070f]/30 via-transparent to-transparent -z-[5]" />
+      {/* Bottom-to-top gradient at 30% opacity */}
+      <div
+        className="absolute inset-0 -z-5"
+        style={{ opacity: 0.3, background: 'linear-gradient(0deg, #00070F 0%, rgba(0, 7, 15, 0.00) 100%)' }}
+      />
+      {/* Full overlay tint at 15% opacity */}
+      <div
+        className="absolute inset-0 -z-5"
+        style={{ background: 'linear-gradient(0deg, rgba(0, 7, 15, 0.15) 0%, rgba(0, 7, 15, 0.15) 100%)' }}
+      />
 
       <div className="relative z-10 flex items-center justify-center w-full min-h-[300px] md:min-h-[350px] lg:min-h-[400px] pt-[10.4rem]">
         {title && (
