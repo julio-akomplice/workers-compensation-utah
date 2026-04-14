@@ -71,13 +71,7 @@ export const plugins: Plugin[] = [
   }),
   s3Storage({
     collections: {
-      media: {
-        generateFileURL: ({ filename, prefix }) => {
-          const base = process.env.S3_PUBLIC_URL || `${process.env.S3_ENDPOINT}/${process.env.S3_BUCKET}`
-          const key = prefix ? `${prefix}/${filename}` : filename
-          return `${base}/${key}`
-        },
-      },
+      media: true,
     },
     bucket: process.env.S3_BUCKET || '',
     config: {
