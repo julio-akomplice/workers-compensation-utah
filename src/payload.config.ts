@@ -45,7 +45,9 @@ export default buildConfig({
       beforeDashboard: ['@/components/BeforeDashboard'],
     },
     autoLogin:
-      process.env.NODE_ENV === 'development'
+      process.env.NODE_ENV === 'development' &&
+      process.env.USER_EMAIL &&
+      process.env.USER_PASSWORD
         ? {
             email: process.env.USER_EMAIL,
             password: process.env.USER_PASSWORD,

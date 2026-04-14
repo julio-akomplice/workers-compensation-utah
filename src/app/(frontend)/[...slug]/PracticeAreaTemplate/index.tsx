@@ -11,6 +11,7 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getShortSideForm } from '@/utilities/getShortSideForm'
+import { Breadcrumbs } from '@/components/Breadcrumbs'
 import PageClient from '../page.client'
 import { queryPracticeAreaBySlug } from './queries'
 
@@ -39,6 +40,12 @@ export const PracticeAreaTemplate: React.FC<Props> = ({ practiceArea, url, draft
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
       <RenderHero {...hero} />
+      <Breadcrumbs
+        items={[
+          { label: 'Practice Areas', href: '/practice-areas' },
+          { label: practiceArea.title },
+        ]}
+      />
       {contentSection?.content && (
         <section className="w-full bg-white">
           <div className="container mx-auto px-5 md:px-8 2xl:px-0">
