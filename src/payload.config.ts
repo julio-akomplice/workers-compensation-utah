@@ -1,8 +1,10 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
+import { createGmailTransport } from './utilities/gmailTransport'
 
 import { CaseStudies } from './collections/CaseStudies'
 import { FAQ } from './collections/FAQ'
@@ -110,6 +112,11 @@ export default buildConfig({
     ShortSideFormGlobal,
     AwardsSectionGlobal,
   ],
+  email: nodemailerAdapter({
+    defaultFromAddress: process.env.GMAIL_FROM_ADDRESS || '',
+    defaultFromName: 'Workers Compensation Utah',
+    transport: createGmailTransport(),
+  }),
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

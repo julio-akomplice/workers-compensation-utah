@@ -1,10 +1,14 @@
 'use client'
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { CancelIcon } from '@/components/ui/icons/CancelIcon'
+import { CheckCircleIcon } from '@/components/ui/icons/CheckCircleIcon'
 
 import type { Form as FormType, ShortSideForm as ShortSideFormType } from '@/payload-types'
+import { buildFormSchema } from '@/utilities/buildFormSchema'
 import RichText from '@/components/RichText'
 import { getClientSideURL } from '@/utilities/getURL'
 import { Input } from '@/components/ui/input'
@@ -12,6 +16,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { FormLabel } from '@/components/ui/FormLabel'
 import { FormError } from '@/components/ui/FormError'
 import { ButtonArrow } from '@/components/ui/ButtonArrow'
+import { PhoneInput } from '@/components/ui/PhoneInput'
 
 type Props = {
   form: FormType
@@ -28,11 +33,14 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
     redirect,
   } = form
 
+  const schema = useMemo(() => buildFormSchema(formFields), [formFields])
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm()
+  } = useForm({ resolver: zodResolver(schema) })
 
   const [isLoading, setIsLoading] = useState(false)
   const [hasSubmitted, setHasSubmitted] = useState(false)
@@ -45,10 +53,18 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
         setError(undefined)
         setIsLoading(true)
 
-        const dataToSend = Object.entries(data).map(([field, value]) => ({
-          field,
-          value,
-        }))
+        const sourceUrl = window.location.href
+
+        const dataToSend = [
+          ...Object.entries(data).map(([field, value]) => ({ field, value })),
+          { field: 'sourceUrl', value: sourceUrl },
+        ]
+
+        const labelMap = Object.fromEntries(
+          (formFields ?? [])
+            .filter((f): f is Extract<typeof f, { name: string }> => 'name' in f && 'label' in f)
+            .map((f) => [f.name, (f as { name: string; label?: string }).label ?? f.name]),
+        )
 
         try {
           const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
@@ -68,8 +84,15 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
             return
           }
 
+          await fetch(`${getClientSideURL()}/api/send-form-email`, {
+            body: JSON.stringify({ submissionData: dataToSend, labelMap, submissionId: res.doc?.id != null ? String(res.doc.id) : undefined, sourceUrl }),
+            headers: { 'Content-Type': 'application/json' },
+            method: 'POST',
+          })
+
           setIsLoading(false)
           setHasSubmitted(true)
+          reset()
 
           if (confirmationType === 'redirect' && redirect?.url) {
             router.push(redirect.url)
@@ -82,16 +105,8 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
 
       void submitForm()
     },
-    [formID, confirmationType, redirect, router],
+    [formID, confirmationType, redirect, router, reset],
   )
-
-  if (hasSubmitted && confirmationType === 'message' && confirmationMessage) {
-    return (
-      <div className="rounded-[15px] bg-deep-blue-1000 p-6">
-        <RichText data={confirmationMessage} enableGutter={false} />
-      </div>
-    )
-  }
 
   return (
     <div className="rounded-[15px] bg-deep-blue-1000 p-6 overflow-hidden">
@@ -130,45 +145,68 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
                     id={name}
                     placeholder={placeholder}
                     rows={4}
-                    {...register(name, { required })}
+                    minLength={10}
+                    maxLength={1000}
+                    {...register(name)}
                   />
                 ) : field.blockType === 'email' ? (
                   <Input
                     id={name}
                     type="email"
                     placeholder={placeholder}
-                    {...register(name, {
-                      required,
-                      pattern: /^\S[^\s@]*@\S+$/,
-                    })}
+                    maxLength={254}
+                    {...register(name)}
+                  />
+                ) : field.blockType === 'number' && name.toLowerCase().includes('phone') ? (
+                  <PhoneInput
+                    id={name}
+                    placeholder={placeholder}
+                    maxLength={14}
+                    {...register(name)}
                   />
                 ) : field.blockType === 'number' ? (
                   <Input
                     id={name}
                     type="number"
                     placeholder={placeholder}
-                    {...register(name, { required })}
+                    {...register(name)}
                   />
                 ) : (
                   <Input
                     id={name}
                     type="text"
                     placeholder={placeholder}
-                    {...register(name, { required })}
+                    minLength={2}
+                    maxLength={100}
+                    {...register(name)}
                   />
                 )}
 
-                {errors[name] && <FormError>This field is required</FormError>}
+                {errors[name] && <FormError>{errors[name]?.message as string}</FormError>}
               </div>
             )
           })}
         </div>
 
-        {error && <FormError className="mt-4 text-sm">{error}</FormError>}
-
         <ButtonArrow type="submit" disabled={isLoading} className="mt-5 w-full md:h-[54px]">
           {isLoading ? 'Submitting...' : submitButtonLabel || 'Send Request'}
         </ButtonArrow>
+
+        {error && (
+          <div className="mt-4 flex items-center gap-1.5">
+            <CancelIcon className="shrink-0" />
+            <p className="text-base tracking-[-0.32px] text-[#FF3C3C]">{error}</p>
+          </div>
+        )}
+
+        {hasSubmitted && !error && (
+          <div className="mt-4 flex items-center gap-1.5">
+            <CheckCircleIcon className="shrink-0" />
+            <p className="text-base tracking-[-0.32px] text-[#32C62F]">
+              Your consultation request has been submitted. We&apos;ll be in touch soon!
+            </p>
+          </div>
+        )}
       </form>
     </div>
   )
