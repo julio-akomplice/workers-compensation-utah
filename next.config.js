@@ -10,7 +10,7 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
 const nextConfig = {
   images: {
     remotePatterns: [
-      ...[
+...[
         NEXT_PUBLIC_SERVER_URL,
         'https://workers-compensation-utah-production.up.railway.app',
         'https://workers-compensation-utah-staging.up.railway.app',
