@@ -3,11 +3,13 @@ import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Phone, X } from 'lucide-react'
+import { X } from 'lucide-react'
 
 import type { Header, Page, Post } from '@/payload-types'
 
+import { PhoneIcon } from '@/assets/icons/PhoneIcon'
 import { Media } from '@/components/Media'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
 
 interface HeaderClientProps {
@@ -62,16 +64,13 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
   const logo = data?.logo
   const phone = data?.phone
 
-  const getHref = useCallback(
-    (link: (typeof navItems)[number]['link']) => {
-      return link.type === 'reference' &&
-        typeof link.reference?.value === 'object' &&
-        (link.reference.value as Page | Post).slug
-        ? `/${(link.reference.value as Page | Post).slug}`
-        : link.url || '#'
-    },
-    [],
-  )
+  const getHref = useCallback((link: (typeof navItems)[number]['link']) => {
+    return link.type === 'reference' &&
+      typeof link.reference?.value === 'object' &&
+      (link.reference.value as Page | Post).slug
+      ? `/${(link.reference.value as Page | Post).slug}`
+      : link.url || '#'
+  }, [])
 
   return (
     <header
@@ -124,12 +123,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
 
           {/* Desktop Phone CTA */}
           {phone?.label && phone?.url && (
-            <a
-              href={phone.url}
-              className="hidden lg:flex items-center gap-2.5 px-5 py-3 rounded-lg bg-gradient-brand text-white text-cta-secondary tracking-[-0.4px] shadow-[inset_0px_-3px_7px_0px_var(--gold)] hover:opacity-90 transition-opacity"
-            >
-              <Phone className="w-5 h-5 shrink-0" strokeWidth={2} />
-              <span>{phone.label}</span>
+            <a href={phone.url} className="hidden lg:flex">
+              <Button className="gap-2.5 px-5 py-3 rounded-lg text-white text-cta-secondary tracking-[-0.4px]">
+                <PhoneIcon className="w-5 h-5 shrink-0" />
+                <span>{phone.label}</span>
+              </Button>
             </a>
           )}
 
@@ -211,12 +209,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
 
         {/* Phone CTA at bottom */}
         {phone?.label && phone?.url && (
-          <a
-            href={phone.url}
-            className="absolute bottom-[40px] md:bottom-[88px] left-1/2 -translate-x-1/2 flex items-center justify-center gap-2.5 px-5 py-3 rounded-lg bg-gradient-brand text-white text-cta-secondary tracking-[-0.4px] shadow-[inset_0px_-3px_7px_0px_var(--gold)] hover:opacity-90 transition-opacity whitespace-nowrap"
-          >
-            <Phone className="w-5 h-5 shrink-0" strokeWidth={2} />
-            <span>{phone.label}</span>
+          <a href={phone.url} className="absolute bottom-10 md:bottom-22 left-1/2 -translate-x-1/2">
+            <Button className="gap-2.5 px-5 py-3 rounded-lg text-white text-cta-secondary tracking-[-0.4px] whitespace-nowrap">
+              <PhoneIcon className="w-5 h-5 shrink-0" />
+              <span>{phone.label}</span>
+            </Button>
           </a>
         )}
       </div>

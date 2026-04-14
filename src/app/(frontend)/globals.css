@@ -200,7 +200,7 @@
 
 @utility caption-heading {
   @apply text-[42px] leading-[46px] -tracking-[0.04em] font-normal;
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility pt-header {
@@ -222,82 +222,80 @@
 /* Caption */
 @utility text-caption {
   @apply text-[16px] font-medium tracking-[3px] uppercase;
-  font-family:
-    Geist Mono,
-    sans-serif;
+  font-family: var(--font-mono);
 }
 
 /* Headings */
 @utility text-h1-hero {
   @apply text-[75px] leading-[78px] font-medium;
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility text-h1-blog {
   @apply text-[60px] leading-[64px] font-medium;
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility text-h2 {
   @apply text-[50px] leading-[55px];
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility text-h3 {
   @apply text-[42px] leading-[46px];
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility text-h4 {
   @apply text-[32px] leading-[36px];
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility text-h5 {
   @apply text-[24px] leading-[28px];
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility text-h6 {
   @apply text-[20px] leading-[24px];
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* Body */
 @utility text-body-lg {
   @apply text-[18px] leading-[25px];
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility text-body {
   @apply text-[16px] leading-[24px];
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility text-body-spacious {
   @apply text-[16px] leading-[28px] font-normal;
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility text-body-sm {
   @apply text-[14px] leading-[22px];
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* CTA */
 @utility text-cta-primary {
   @apply text-[18px] font-medium;
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility text-cta-secondary {
   @apply text-[20px] font-medium;
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 @utility text-cta-tertiary {
   @apply text-[16px] font-medium;
-  font-family: Geist, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* Section Header */
@@ -354,7 +352,7 @@
 
   & h2 {
     @apply text-[45px] leading-[50px] font-semibold tracking-[-1.8px] text-dark-blue mb-[35px];
-    font-family: Geist, sans-serif;
+    font-family: var(--font-sans);
   }
 
   & p:not(.supportive-text) {
@@ -380,7 +378,7 @@
 
   & h2 {
     @apply text-[45px] leading-[50px] font-semibold tracking-[-1.8px] text-dark-blue mb-[35px];
-    font-family: Geist, sans-serif;
+    font-family: var(--font-sans);
   }
 
   & p:not(.supportive-text) {
@@ -498,17 +496,17 @@
 
   & h2 {
     @apply text-[32px] leading-[36px] font-semibold tracking-[-0.96px] text-dark-blue mt-[60px] mb-[35px];
-    font-family: Geist, sans-serif;
+    font-family: var(--font-sans);
   }
 
   & h3 {
     @apply text-[32px] leading-[36px] font-semibold tracking-[-0.96px] text-dark-blue mt-[60px] mb-[35px];
-    font-family: Geist, sans-serif;
+    font-family: var(--font-sans);
   }
 
   & h4 {
     @apply text-[24px] leading-[28px] font-semibold tracking-[-0.72px] text-dark-blue mt-[60px] mb-[35px];
-    font-family: Geist, sans-serif;
+    font-family: var(--font-sans);
   }
 
   & ul {

@@ -7,12 +7,14 @@ import React from 'react'
 const GeistSans = localFont({
   src: '../../fonts/Geist-VariableFont_wght.ttf',
   variable: '--font-geist-sans',
+  weight: '100 900',
   display: 'swap',
 })
 
 const GeistMono = localFont({
   src: '../../fonts/GeistMono-VariableFont_wght.ttf',
   variable: '--font-geist-mono',
+  weight: '100 900',
   display: 'swap',
 })
 
