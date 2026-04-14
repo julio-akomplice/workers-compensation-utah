@@ -9,3 +9,6 @@ export type { RadioGroupProps } from './RadioGroup'
 
 export { CheckboxGroup } from './CheckboxGroup'
 export type { CheckboxGroupProps } from './CheckboxGroup'
+
+export { PhoneField } from './PhoneField'
+export type { PhoneFieldProps } from './PhoneField'

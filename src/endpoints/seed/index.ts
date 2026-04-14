@@ -1,6 +1,7 @@
 import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
 
 import { contactForm as contactFormData } from './contact-form'
+import { caseQuestionnaireForm as caseQuestionnaireFormData } from './case-questionnaire-form'
 import { contact as contactPageData } from './contact-page'
 import { home } from './home'
 import { image1 } from './image-1'
@@ -192,11 +193,18 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding contact form...`)
 
-  const contactForm = await payload.create({
-    collection: 'forms',
-    depth: 0,
-    data: contactFormData,
-  })
+  const [contactForm] = await Promise.all([
+    payload.create({
+      collection: 'forms',
+      depth: 0,
+      data: contactFormData,
+    }),
+    payload.create({
+      collection: 'forms',
+      depth: 0,
+      data: caseQuestionnaireFormData,
+    }),
+  ])
 
   payload.logger.info(`— Seeding pages...`)
 

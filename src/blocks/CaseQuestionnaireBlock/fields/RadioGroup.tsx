@@ -11,6 +11,7 @@ export type RadioGroupProps = {
   onChange: (value: string) => void
   fullWidth?: boolean
   error?: boolean
+  errorMessage?: string
 }
 
 export const RadioGroup: React.FC<RadioGroupProps> = ({
@@ -22,6 +23,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   onChange,
   fullWidth,
   error,
+  errorMessage,
 }) => {
   return (
     <div className={fullWidth ? 'w-full' : 'w-full md:w-[calc(50%-10px)]'} data-field={name}>
@@ -59,7 +61,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
         ))}
       </div>
       {error && (
-        <p className="text-red-500 text-[13px] mt-1">Please select an option</p>
+        <p className="text-red-500 text-[13px] mt-1">{errorMessage ?? 'Please select an option'}</p>
       )}
     </div>
   )

@@ -1,8 +1,9 @@
 'use client'
 
 import React from 'react'
+import { PhoneInput } from '@/components/ui/PhoneInput'
 
-export type TextInputProps = {
+export type PhoneFieldProps = {
   label: string
   required?: boolean
   name: string
@@ -13,7 +14,7 @@ export type TextInputProps = {
   errorMessage?: string
 }
 
-export const TextInput: React.FC<TextInputProps> = ({
+export const PhoneField: React.FC<PhoneFieldProps> = ({
   label,
   required,
   name,
@@ -29,12 +30,12 @@ export const TextInput: React.FC<TextInputProps> = ({
         {label}
         {required && <span className="text-orange">*</span>}
       </label>
-      <input
-        type="text"
+      <PhoneInput
         name={name}
         value={value}
         onChange={onChange}
-        className={`w-full h-14 rounded-[6px] border bg-white px-3 text-body tracking-[-0.32px] text-off-black outline-none focus:border-navy-200 transition-colors ${error ? 'border-red-500' : 'border-navy-50'}`}
+        maxLength={14}
+        className={`h-14 bg-white py-0 tracking-[-0.32px] text-off-black placeholder:text-navy-200 focus:border-navy-200 focus:ring-0 ${error ? 'border-red-500' : 'border-navy-50'}`}
       />
       {error && (
         <p className="text-red-500 text-[13px] mt-1">{errorMessage ?? 'This field is required'}</p>

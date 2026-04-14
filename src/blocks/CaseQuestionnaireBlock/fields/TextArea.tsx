@@ -9,6 +9,7 @@ export type TextAreaProps = {
   value: string
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   error?: boolean
+  errorMessage?: string
 }
 
 export const TextArea: React.FC<TextAreaProps> = ({
@@ -18,6 +19,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
   value,
   onChange,
   error,
+  errorMessage,
 }) => {
   return (
     <div className="w-full">
@@ -32,7 +34,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
         className={`w-full h-[124px] rounded-[6px] border bg-white px-3 py-4 text-body tracking-[-0.32px] text-off-black outline-none focus:border-navy-200 transition-colors resize-none ${error ? 'border-red-500' : 'border-navy-50'}`}
       />
       {error && (
-        <p className="text-red-500 text-[13px] mt-1">This field is required</p>
+        <p className="text-red-500 text-[13px] mt-1">{errorMessage ?? 'This field is required'}</p>
       )}
     </div>
   )
