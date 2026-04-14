@@ -124,7 +124,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
           {/* Desktop Phone CTA */}
           {phone?.label && phone?.url && (
             <a href={phone.url} className="hidden lg:flex">
-              <Button className="gap-2.5 px-5 py-3 rounded-lg text-white text-cta-secondary tracking-[-0.4px]">
+              <Button className="">
                 <PhoneIcon className="w-5 h-5 shrink-0" />
                 <span>{phone.label}</span>
               </Button>
