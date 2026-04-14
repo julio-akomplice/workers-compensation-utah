@@ -42,7 +42,7 @@ export const AreaServedTemplate: React.FC<Props> = ({ areaServed, url, draft, fo
 
   return (
     <article>
-      <PageClient />
+      <PageClient docId={areaServed.id} collectionSlug="areas-served" />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
       <RenderHero {...hero} />

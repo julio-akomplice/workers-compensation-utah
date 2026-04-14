@@ -75,8 +75,9 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
 
   return (
     <header
+      style={{ top: 'var(--admin-bar-height, 0px)' }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-20',
+        'fixed left-0 right-0 z-20',
         // Tablet and below: always solid
         'bg-dark-blue lg:bg-transparent',
         // Desktop: solid when solidMenu or scrolled

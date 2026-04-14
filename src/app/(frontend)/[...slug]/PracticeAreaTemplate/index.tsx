@@ -35,7 +35,7 @@ export const PracticeAreaTemplate: React.FC<Props> = ({ practiceArea, url, draft
 
   return (
     <article>
-      <PageClient />
+      <PageClient docId={practiceArea.id} collectionSlug="practice-areas" />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
       <RenderHero {...hero} />

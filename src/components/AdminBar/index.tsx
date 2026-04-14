@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import './index.scss'
 
 import { getClientSideURL } from '@/utilities/getURL'
+import { usePageInfo } from '@/providers/PageInfo'
 
 const baseClass = 'admin-bar'
 
@@ -42,13 +43,30 @@ export const AdminBar: React.FC<{
   ) as keyof typeof collectionLabels
   const router = useRouter()
 
+  const { pageInfo } = usePageInfo()
+  const barRef = React.useRef<HTMLDivElement>(null)
+
   const onAuthChange = React.useCallback((user: PayloadMeUser) => {
     setShow(Boolean(user?.id))
   }, [])
 
+  React.useEffect(() => {
+    if (!show) {
+      document.documentElement.style.setProperty('--admin-bar-height', '0px')
+      return
+    }
+    // rAF ensures the element is painted at its final size before measuring
+    const raf = requestAnimationFrame(() => {
+      const height = barRef.current ? barRef.current.offsetHeight : 0
+      document.documentElement.style.setProperty('--admin-bar-height', `${height}px`)
+    })
+    return () => cancelAnimationFrame(raf)
+  }, [show])
+
   return (
     <div
-      className={cn(baseClass, 'py-2 bg-black text-white', {
+      ref={barRef}
+      className={cn(baseClass, 'sticky top-0 z-30 py-2 bg-black text-white', {
         block: show,
         hidden: !show,
       })}
@@ -63,10 +81,11 @@ export const AdminBar: React.FC<{
             user: 'text-white',
           }}
           cmsURL={getClientSideURL()}
-          collectionSlug={collection}
+          id={pageInfo.id ? String(pageInfo.id) : undefined}
+          collectionSlug={(pageInfo.collectionSlug ?? collection) as keyof typeof collectionLabels}
           collectionLabels={{
-            plural: collectionLabels[collection]?.plural || 'Pages',
-            singular: collectionLabels[collection]?.singular || 'Page',
+            plural: collectionLabels[(pageInfo.collectionSlug ?? collection) as keyof typeof collectionLabels]?.plural || 'Pages',
+            singular: collectionLabels[(pageInfo.collectionSlug ?? collection) as keyof typeof collectionLabels]?.singular || 'Page',
           }}
           logo={<Title />}
           onAuthChange={onAuthChange}

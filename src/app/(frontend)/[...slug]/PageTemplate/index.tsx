@@ -22,7 +22,7 @@ export const PageTemplate: React.FC<Props> = ({ page, url, draft }) => {
 
   return (
     <article className={solidMenu ? 'pt-header' : ''}>
-      <PageClient solidMenu={solidMenu ?? false} />
+      <PageClient solidMenu={solidMenu ?? false} docId={page.id} collectionSlug="pages" />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
       <RenderHero {...hero} />

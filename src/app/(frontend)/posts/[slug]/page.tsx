@@ -73,7 +73,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
   return (
     <article className="pt-header">
-      <PageClient />
+      <PageClient docId={post.id} collectionSlug="posts" />
 
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
