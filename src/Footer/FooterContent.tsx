@@ -162,7 +162,7 @@ export const FooterContent: React.FC<Props> = ({
                 {resolvedAreasServed.map((area) => (
                   <li key={area.id}>
                     <Link href={`/${area.slug}`} className={linkClass}>
-                      {area.title}
+                      {area.general?.alternativeTitle || area.title}
                     </Link>
                   </li>
                 ))}
@@ -176,7 +176,7 @@ export const FooterContent: React.FC<Props> = ({
                 {resolvedQuickLinks.map((page) => (
                   <li key={page.id}>
                     <Link href={`/${page.slug}`} className={linkClass}>
-                      {page.title}
+                      {page.general?.alternativeTitle || page.title}
                     </Link>
                   </li>
                 ))}
@@ -213,7 +213,7 @@ export const FooterContent: React.FC<Props> = ({
                 {resolvedQuickLinks.map((page) => (
                   <li key={page.id}>
                     <Link href={`/${page.slug}`} className={linkClass}>
-                      {page.title}
+                      {page.general?.alternativeTitle || page.title}
                     </Link>
                   </li>
                 ))}
@@ -248,7 +248,7 @@ export const FooterContent: React.FC<Props> = ({
               {resolvedAreasServed.map((area) => (
                 <li key={area.id}>
                   <Link href={`/${area.slug}`} className={linkClass}>
-                    {area.title}
+                    {area.general?.alternativeTitle || area.title}
                   </Link>
                 </li>
               ))}
@@ -289,7 +289,7 @@ export const FooterContent: React.FC<Props> = ({
               {resolvedQuickLinks.map((page) => (
                 <li key={page.id}>
                   <Link href={`/${page.slug}`} className={linkClass}>
-                    {page.title}
+                    {page.general?.alternativeTitle || page.title}
                   </Link>
                 </li>
               ))}
@@ -304,7 +304,7 @@ export const FooterContent: React.FC<Props> = ({
                 {areasServedLeft.map((area) => (
                   <li key={area.id}>
                     <Link href={`/${area.slug}`} className={linkClass}>
-                      {area.title}
+                      {area.general?.alternativeTitle || area.title}
                     </Link>
                   </li>
                 ))}
@@ -313,7 +313,7 @@ export const FooterContent: React.FC<Props> = ({
                 {areasServedRight.map((area) => (
                   <li key={area.id}>
                     <Link href={`/${area.slug}`} className={linkClass}>
-                      {area.title}
+                      {area.general?.alternativeTitle || area.title}
                     </Link>
                   </li>
                 ))}

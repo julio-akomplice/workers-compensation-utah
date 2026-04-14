@@ -257,6 +257,9 @@ export interface Page {
     };
     background?: (string | null) | Media;
   };
+  general?: {
+    alternativeTitle?: string | null;
+  };
   layout: (
     | BreadcrumbBlock
     | CallToActionBlock
@@ -3393,6 +3396,11 @@ export interface PagesSelect<T extends boolean = true> {
               poster?: T;
             };
         background?: T;
+      };
+  general?:
+    | T
+    | {
+        alternativeTitle?: T;
       };
   layout?:
     | T

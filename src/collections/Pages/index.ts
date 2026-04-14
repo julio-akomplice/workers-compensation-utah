@@ -64,6 +64,7 @@ export const Pages: CollectionConfig<'pages'> = {
   defaultPopulate: {
     title: true,
     slug: true,
+    general: true,
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
@@ -98,6 +99,18 @@ export const Pages: CollectionConfig<'pages'> = {
         },
         {
           fields: [
+            {
+              name: 'general',
+              type: 'group',
+              label: 'General',
+              fields: [
+                {
+                  name: 'alternativeTitle',
+                  type: 'textarea',
+                  label: 'Alternative Title',
+                },
+              ],
+            },
             {
               name: 'layout',
               type: 'blocks',
