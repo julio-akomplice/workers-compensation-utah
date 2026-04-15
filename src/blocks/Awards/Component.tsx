@@ -11,7 +11,7 @@ type Props = {
 
 export const AwardsBlock: React.FC<Props> = ({ headline, gallery }) => {
   return (
-    <section className="w-full border-t-4 border-navy-1000 bg-white py-4">
+    <section className="w-full bg-white py-4">
       <div className="container mx-auto flex flex-row items-center gap-4 px-4 md:gap-16 md:justify-center">
         <h2 className="hidden shrink-0 text-h5 font-medium text-navy-1000 whitespace-nowrap md:block">
           {headline}

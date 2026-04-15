@@ -105,7 +105,7 @@ export const PracticeAreaPageBlockComponent: React.FC<Props> = async ({
                       {section.practiceAreas.map((area) => (
                         <Link
                           key={area.id}
-                          href={`/practice-areas/${area.slug}`}
+                          href={`/${area.slug}`}
                           className="flex items-center gap-3 rounded-[10px] bg-off-white px-4 py-4 transition-colors hover:bg-navy-30 md:px-5 md:py-5"
                         >
                           {area.general?.icon && (
