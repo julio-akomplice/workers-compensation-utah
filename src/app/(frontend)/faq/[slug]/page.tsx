@@ -53,7 +53,7 @@ export default async function IndividualFAQPage({ params: paramsPromise }: Args)
   const { question, image, answer } = faq
 
   return (
-    <article className="lg:pt-header">
+    <article>
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
