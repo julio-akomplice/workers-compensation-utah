@@ -8,6 +8,7 @@ import { RenderHero } from '@/heros/RenderHero'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { generateMeta } from '@/utilities/generateMeta'
+import { SchemaMarkup } from '@/components/SchemaMarkup'
 import PageClient from '../page.client'
 import { queryPageBySlug } from './queries'
 
@@ -18,10 +19,11 @@ type Props = {
 }
 
 export const PageTemplate: React.FC<Props> = ({ page, url, draft }) => {
-  const { hero, layout, solidMenu } = page
+  const { hero, layout, solidMenu, meta } = page
 
   return (
     <article className={solidMenu ? 'pt-header' : ''}>
+      <SchemaMarkup schema={meta?.schema} />
       <PageClient solidMenu={solidMenu ?? false} docId={page.id} collectionSlug="pages" />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}

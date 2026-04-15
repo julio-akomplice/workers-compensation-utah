@@ -12,6 +12,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getShortSideForm } from '@/utilities/getShortSideForm'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
+import { SchemaMarkup } from '@/components/SchemaMarkup'
 import PageClient from '../page.client'
 import { queryAreaServedBySlug } from './queries'
 
@@ -24,7 +25,7 @@ type Props = {
 }
 
 export const AreaServedTemplate: React.FC<Props> = ({ areaServed, url, draft, form, header }) => {
-  const { hero, layout, contentSection, relatedPages } = areaServed
+  const { hero, layout, contentSection, relatedPages, meta } = areaServed
 
   const relatedPageLinks = (relatedPages || [])
     .map((p) => (typeof p === 'object' ? p : null))
@@ -43,6 +44,7 @@ export const AreaServedTemplate: React.FC<Props> = ({ areaServed, url, draft, fo
 
   return (
     <article>
+      <SchemaMarkup schema={meta?.schema} />
       <PageClient docId={areaServed.id} collectionSlug="areas-served" />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}

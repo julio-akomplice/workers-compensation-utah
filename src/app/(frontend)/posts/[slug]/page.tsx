@@ -13,6 +13,7 @@ import type { Post, Category } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { generateMeta } from '@/utilities/generateMeta'
+import { SchemaMarkup } from '@/components/SchemaMarkup'
 import PageClient from './page.client'
 import { ContentWithSidebar } from '@/components/ContentWithSidebar'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -73,6 +74,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
   return (
     <article className="pt-header">
+      <SchemaMarkup schema={post.meta?.schema} />
       <PageClient docId={post.id} collectionSlug="posts" />
 
       {/* Allows redirects for valid pages too */}

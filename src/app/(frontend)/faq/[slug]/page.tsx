@@ -13,6 +13,7 @@ import { Media } from '@/components/Media'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
+import { SchemaMarkup } from '@/components/SchemaMarkup'
 import RichText from '@/components/RichText'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -54,6 +55,7 @@ export default async function IndividualFAQPage({ params: paramsPromise }: Args)
 
   return (
     <article>
+      <SchemaMarkup schema={faq.meta?.schema} />
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}

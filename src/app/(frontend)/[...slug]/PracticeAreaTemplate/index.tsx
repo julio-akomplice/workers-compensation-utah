@@ -12,6 +12,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getShortSideForm } from '@/utilities/getShortSideForm'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
+import { SchemaMarkup } from '@/components/SchemaMarkup'
 import PageClient from '../page.client'
 import { queryPracticeAreaBySlug } from './queries'
 
@@ -24,7 +25,7 @@ type Props = {
 }
 
 export const PracticeAreaTemplate: React.FC<Props> = ({ practiceArea, url, draft, form, header }) => {
-  const { hero, layout, contentSection, relatedPages } = practiceArea
+  const { hero, layout, contentSection, relatedPages, meta } = practiceArea
 
   const relatedPageLinks = (relatedPages || [])
     .map((p) => (typeof p === 'object' ? p : null))
@@ -36,6 +37,7 @@ export const PracticeAreaTemplate: React.FC<Props> = ({ practiceArea, url, draft
 
   return (
     <article>
+      <SchemaMarkup schema={meta?.schema} />
       <PageClient docId={practiceArea.id} collectionSlug="practice-areas" />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
