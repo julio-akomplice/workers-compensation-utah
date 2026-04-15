@@ -63,13 +63,7 @@ export const FooterContent: React.FC<Props> = ({
       {phone?.label && phone?.url && (
         <a href={phone.url} className={`flex items-center gap-2.5 ${linkClass}`}>
           {typeof phone.image === 'object' && phone.image !== null && (
-            <span className="relative shrink-0 size-6">
-              <Media
-                resource={phone.image}
-                fill
-                className="object-contain [&_svg]:w-full [&_svg]:h-full"
-              />
-            </span>
+            <Media resource={phone.image} className="shrink-0 size-6 [&_svg]:w-6 [&_svg]:h-6" />
           )}
           {phone.label}
         </a>
@@ -77,13 +71,7 @@ export const FooterContent: React.FC<Props> = ({
       {fax?.label && fax?.url && (
         <a href={fax.url} className={`flex items-center gap-2.5 ${linkClass}`}>
           {typeof fax.image === 'object' && fax.image !== null && (
-            <span className="relative shrink-0 size-6">
-              <Media
-                resource={fax.image}
-                fill
-                className="object-contain [&_svg]:w-full [&_svg]:h-full"
-              />
-            </span>
+            <Media resource={fax.image} className="shrink-0 size-6 [&_svg]:w-6 [&_svg]:h-6" />
           )}
           {fax.label}
         </a>
@@ -197,7 +185,7 @@ export const FooterContent: React.FC<Props> = ({
         {/* ===== TABLET layout (768px–1023px) ===== */}
         <div className="hidden md:grid lg:hidden grid-cols-[2fr_1fr_1fr] gap-8">
           {/* Col 1: Logo + Contact + Social */}
-          <div className="flex flex-col gap-8 max-w-[230px]">
+          <div className="flex flex-col gap-8 max-w-57.5">
             {logoEl}
             <div className="flex flex-col gap-5">
               <h4 className={headingClass}>Contact</h4>
