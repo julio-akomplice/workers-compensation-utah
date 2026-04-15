@@ -16,11 +16,13 @@ import { BlogPageClient } from './Client'
 
 type Props = {
   className?: string
+  pageNumber?: number
 } & BlogPageBlockProps
 
 export const BlogPageBlockComponent: React.FC<Props> = async ({
   sectionHeader,
   postsPerPage,
+  pageNumber = 1,
 }) => {
   const payload = await getPayload({ config: configPromise })
   const limit = postsPerPage || 9
@@ -29,6 +31,7 @@ export const BlogPageBlockComponent: React.FC<Props> = async ({
     collection: 'posts',
     depth: 1,
     limit,
+    page: pageNumber,
     sort: '-publishedAt',
     where: {
       _status: { equals: 'published' },

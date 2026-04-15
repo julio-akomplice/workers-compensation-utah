@@ -78,8 +78,9 @@ const blockComponents = {
 
 export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
+  pageNumber?: number
 }> = (props) => {
-  const { blocks } = props
+  const { blocks, pageNumber } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
@@ -93,10 +94,11 @@ export const RenderBlocks: React.FC<{
             const Block = blockComponents[blockType]
 
             if (Block) {
+              const extraProps = blockType === 'blogPage' && pageNumber ? { pageNumber } : {}
               return (
                 <div className="" key={index}>
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
-                  <Block {...block} disableInnerContainer />
+                  <Block {...block} {...extraProps} disableInnerContainer />
                 </div>
               )
             }

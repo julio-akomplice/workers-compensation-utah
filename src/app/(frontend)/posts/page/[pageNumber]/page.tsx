@@ -28,7 +28,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const sanitizedPageNumber = Number(pageNumber)
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
-  const page = await queryPageBySlug({ slug: 'blog' })
+  const page = await queryPageBySlug({ slug: 'posts' })
 
   if (!page) {
     return <PayloadRedirects url="/posts" />
@@ -44,14 +44,14 @@ export default async function Page({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
 
       <RenderHero {...hero} />
-      <RenderBlocks blocks={layout} />
+      <RenderBlocks blocks={layout} pageNumber={sanitizedPageNumber} />
     </article>
   )
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { pageNumber } = await paramsPromise
-  const page = await queryPageBySlug({ slug: 'blog' })
+  const page = await queryPageBySlug({ slug: 'posts' })
   const meta = await generateMeta({ doc: page })
   return {
     ...meta,
