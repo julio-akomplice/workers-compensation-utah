@@ -152,7 +152,8 @@ export const ContactForm: React.FC<Props> = ({ form }) => {
                   maxLength={254}
                   {...register(name)}
                 />
-              ) : field.blockType === 'number' && name.toLowerCase().includes('phone') ? (
+              ) : (field.blockType === 'number' || field.blockType === 'text') &&
+                name.toLowerCase().includes('phone') ? (
                 <PhoneInput
                   id={name}
                   placeholder={placeholder}
