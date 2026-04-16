@@ -2,7 +2,7 @@ import React from 'react'
 
 import type { Metadata } from 'next'
 import type { RequiredDataFromCollectionSlug } from 'payload'
-import { homeStatic } from '@/endpoints/seed/home-static'
+import { homeStatic } from './homeStatic'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
@@ -41,6 +41,7 @@ export async function resolvePageComponent(
   let page: RequiredDataFromCollectionSlug<'pages'> | null = await queryPageBySlug({
     slug: flatSlug,
   })
+
 
   if (!page && flatSlug === 'home') {
     page = homeStatic as RequiredDataFromCollectionSlug<'pages'>
