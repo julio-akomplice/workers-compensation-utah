@@ -4,11 +4,12 @@ import type { Media, Page, Post, PracticeArea, Config } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
+import { SITE_NAME, SITE_DESCRIPTION } from '@/constants/site'
 
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL()
 
-  let url = serverUrl + '/website-template-OG.webp'
+  let url = serverUrl + '/wcu_logo.png'
 
   if (image && typeof image === 'object' && 'url' in image) {
     const ogUrl = image.sizes?.og?.url
@@ -27,13 +28,13 @@ export const generateMeta = async (args: {
   const ogImage = getImageURL(doc?.meta?.image)
 
   const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | Payload Website Template'
-    : 'Payload Website Template'
+    ? doc?.meta?.title
+    : SITE_NAME
 
   return {
-    description: doc?.meta?.description,
+    description: doc?.meta?.description || SITE_DESCRIPTION,
     openGraph: mergeOpenGraph({
-      description: doc?.meta?.description || '',
+      description: doc?.meta?.description || SITE_DESCRIPTION,
       images: ogImage
         ? [
             {
