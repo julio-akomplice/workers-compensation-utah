@@ -10,7 +10,7 @@ type Props = {
 }
 
 export const PostNavigation: React.FC<Props> = ({ previousPost, nextPost }) => {
-  if (!previousPost && !nextPost) return null
+if (!previousPost && !nextPost) return null
 
   return (
     <nav className="mt-16 flex items-start justify-between gap-4 border-t border-navy-30 pt-10">

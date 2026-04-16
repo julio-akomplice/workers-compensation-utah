@@ -225,9 +225,7 @@ const getAdjacentPosts = cache(
         select: { title: true, slug: true },
         where: {
           id: { not_equals: id },
-          ...(publishedAt
-            ? { publishedAt: { less_than: publishedAt } }
-            : {}),
+          ...(publishedAt ? { publishedAt: { less_than: publishedAt } } : {}),
         },
       }),
       payload.find({
@@ -239,9 +237,7 @@ const getAdjacentPosts = cache(
         select: { title: true, slug: true },
         where: {
           id: { not_equals: id },
-          ...(publishedAt
-            ? { publishedAt: { greater_than: publishedAt } }
-            : {}),
+          ...(publishedAt ? { publishedAt: { greater_than: publishedAt } } : {}),
         },
       }),
     ])
