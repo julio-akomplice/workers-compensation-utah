@@ -6,6 +6,7 @@ import { TextArea } from './fields/TextArea'
 import { RadioGroup } from './fields/RadioGroup'
 import { CheckboxGroup } from './fields/CheckboxGroup'
 import { PhoneField } from './fields/PhoneField'
+import { SingleCheckbox } from './fields/SingleCheckbox'
 import { getClientSideURL } from '@/utilities/getURL'
 import { caseQuestionnaireSchema, type CaseQuestionnaireData } from '@/utilities/caseQuestionnaireSchema'
 import { CheckCircleIcon } from '@/components/ui/icons/CheckCircleIcon'
@@ -51,6 +52,30 @@ const initialFormData: CaseQuestionnaireData = {
   currentDoctors: '',
   otherDoctors: '',
   hospitalizedOvernight: undefined as unknown as 'yes' | 'no',
+  // Insurance, Benefits & Medical History
+  wcInsuranceCompany: '',
+  wcInsurancePhone: '',
+  hasPrivateMedicalInsurance: undefined as unknown as 'yes' | 'no',
+  datesNotWorked: '',
+  appliedForSocialSecurity: undefined as unknown as 'yes' | 'no',
+  priorBodyPartInjury: undefined as unknown as 'yes' | 'no',
+  priorInjuryLocation: undefined as unknown as 'yes' | 'no',
+  otherJobInjuries: undefined as unknown as 'yes' | 'no',
+  priorWcClaims: undefined as unknown as 'yes' | 'no',
+  offJobInjuries: undefined as unknown as 'yes' | 'no',
+  filedClaimOrLawsuit: undefined as unknown as 'yes' | 'no',
+  agreementAccepted: false,
+  claimsAdjusterName: '',
+  claimsAdjusterPhone: '',
+  claimNumber: '',
+  claimDenied: '' as '' | 'yes' | 'no',
+  whoPayedTreatment: [],
+  unpaidMedicalBills: '',
+  wcBenefitsDates: '',
+  otherBenefits: '',
+  priorInjuryDoctors: '',
+  otherMedicalConditions: '',
+  otherConditionsDoctors: '',
 }
 
 const testDefaultValues: CaseQuestionnaireData = {
@@ -93,6 +118,30 @@ const testDefaultValues: CaseQuestionnaireData = {
   currentDoctors: 'Dr. Smith — 801-555-0150',
   otherDoctors: 'Salt Lake Regional Medical Center — 801-555-0100',
   hospitalizedOvernight: 'yes',
+  // Insurance, Benefits & Medical History
+  wcInsuranceCompany: 'Utah State Workers Compensation Fund',
+  wcInsurancePhone: '8015230400',
+  hasPrivateMedicalInsurance: 'yes',
+  datesNotWorked: '03/10/2024 – 04/15/2024',
+  appliedForSocialSecurity: 'no',
+  priorBodyPartInjury: 'no',
+  priorInjuryLocation: 'no',
+  otherJobInjuries: 'no',
+  priorWcClaims: 'no',
+  offJobInjuries: 'no',
+  filedClaimOrLawsuit: 'no',
+  agreementAccepted: true,
+  claimsAdjusterName: 'Jane Adams',
+  claimsAdjusterPhone: '8015550177',
+  claimNumber: 'WC-2024-00123',
+  claimDenied: 'no',
+  whoPayedTreatment: ['workers-comp-insurance'],
+  unpaidMedicalBills: 'Salt Lake Regional — $1,200.00\nDr. Smith Office Visit — $350.00',
+  wcBenefitsDates: '03/15/2024 – 04/15/2024',
+  otherBenefits: 'None',
+  priorInjuryDoctors: '',
+  otherMedicalConditions: '',
+  otherConditionsDoctors: '',
 }
 
 const yesNoOptions = [
@@ -154,6 +203,17 @@ export const CaseQuestionnaireForm: React.FC<{ formID: string }> = ({ formID }) 
       setErrors((prev) => {
         const next = { ...prev }
         delete next[name]
+        return next
+      })
+    }
+  }
+
+  const handleAgreementChange = (checked: boolean) => {
+    setFormData((prev) => ({ ...prev, agreementAccepted: checked }))
+    if (errors.agreementAccepted) {
+      setErrors((prev) => {
+        const next = { ...prev }
+        delete next.agreementAccepted
         return next
       })
     }
@@ -564,6 +624,254 @@ export const CaseQuestionnaireForm: React.FC<{ formID: string }> = ({ formID }) 
               error={!!errors.hospitalizedOvernight}
               errorMessage={errors.hospitalizedOvernight}
             />
+          </div>
+        </div>
+      </div>
+
+      {/* Insurance, Benefits & Medical History */}
+      <div className="flex flex-col items-center gap-[35px]">
+        <h2 className="text-h3 font-semibold tracking-[-0.04em] text-dark-blue text-center">
+          Insurance, Benefits &amp; Medical History
+        </h2>
+        <div className="w-full max-w-[810px] bg-off-white rounded-[10px] p-[30px]">
+          <div className="flex flex-wrap gap-y-5 justify-between">
+            <TextInput
+              label="Name of Workers' Compensation Insurance Company:"
+              required
+              name="wcInsuranceCompany"
+              value={formData.wcInsuranceCompany}
+              onChange={handleInputChange}
+              fullWidth
+              error={!!errors.wcInsuranceCompany}
+              errorMessage={errors.wcInsuranceCompany}
+            />
+            <PhoneField
+              label="Workers' Compensation Insurance Company Phone:"
+              required
+              name="wcInsurancePhone"
+              value={formData.wcInsurancePhone}
+              onChange={handleInputChange}
+              fullWidth
+              error={!!errors.wcInsurancePhone}
+              errorMessage={errors.wcInsurancePhone}
+            />
+            <TextInput
+              label="Name of Claims Adjuster:"
+              name="claimsAdjusterName"
+              value={formData.claimsAdjusterName ?? ''}
+              onChange={handleInputChange}
+              error={!!errors.claimsAdjusterName}
+              errorMessage={errors.claimsAdjusterName}
+            />
+            <PhoneField
+              label="Claim Adjuster Phone Number:"
+              name="claimsAdjusterPhone"
+              value={formData.claimsAdjusterPhone ?? ''}
+              onChange={handleInputChange}
+              error={!!errors.claimsAdjusterPhone}
+              errorMessage={errors.claimsAdjusterPhone}
+            />
+            <TextInput
+              label="Claim Number:"
+              name="claimNumber"
+              value={formData.claimNumber ?? ''}
+              onChange={handleInputChange}
+              error={!!errors.claimNumber}
+              errorMessage={errors.claimNumber}
+            />
+            <RadioGroup
+              label="Has your claim been denied?"
+              name="claimDenied"
+              options={yesNoOptions}
+              value={formData.claimDenied ?? ''}
+              onChange={(val) => handleRadioChange('claimDenied', val)}
+            />
+            <RadioGroup
+              label="Do you have private medical insurance?"
+              required
+              name="hasPrivateMedicalInsurance"
+              options={yesNoOptions}
+              value={formData.hasPrivateMedicalInsurance ?? ''}
+              onChange={(val) => handleRadioChange('hasPrivateMedicalInsurance', val)}
+              error={!!errors.hasPrivateMedicalInsurance}
+              errorMessage={errors.hasPrivateMedicalInsurance}
+            />
+            <div className="hidden md:block md:w-[calc(50%-10px)]" />
+            <CheckboxGroup
+              label="Who paid for your treatment?"
+              options={[
+                { label: "Workers' Compensation Insurance", value: 'workers-comp-insurance' },
+                { label: 'Private Medical Insurance', value: 'private-medical-insurance' },
+                { label: 'Medicaid (State)', value: 'medicaid' },
+                { label: 'Medicare (Federal)', value: 'medicare' },
+                { label: 'Yourself', value: 'yourself' },
+              ]}
+              values={formData.whoPayedTreatment ?? []}
+              onChange={(vals) => handleCheckboxChange('whoPayedTreatment', vals)}
+            />
+            <TextArea
+              label="Please list all unpaid medical bills and include amounts due:"
+              name="unpaidMedicalBills"
+              value={formData.unpaidMedicalBills ?? ''}
+              onChange={handleInputChange}
+            />
+            <TextArea
+              label="Please list the start and end dates you did not work due to injury or illness:"
+              required
+              name="datesNotWorked"
+              value={formData.datesNotWorked}
+              onChange={handleInputChange}
+              error={!!errors.datesNotWorked}
+              errorMessage={errors.datesNotWorked}
+            />
+            <TextArea
+              label="Please list the start and end dates you received Workers' Compensation Benefits:"
+              name="wcBenefitsDates"
+              value={formData.wcBenefitsDates ?? ''}
+              onChange={handleInputChange}
+            />
+            <RadioGroup
+              label="Have you applied for Social Security Disability?"
+              required
+              name="appliedForSocialSecurity"
+              options={yesNoOptions}
+              value={formData.appliedForSocialSecurity ?? ''}
+              onChange={(val) => handleRadioChange('appliedForSocialSecurity', val)}
+              fullWidth
+              error={!!errors.appliedForSocialSecurity}
+              errorMessage={errors.appliedForSocialSecurity}
+            />
+            <TextArea
+              label="Please list any type of benefits, amounts and dates received from other sources. Please include State Disability, Unemployment, Social Security, Long Term Disability, Retirement/Pension, or any other source of benefits."
+              name="otherBenefits"
+              value={formData.otherBenefits ?? ''}
+              onChange={handleInputChange}
+            />
+            <RadioGroup
+              label="Have you ever injured this body part before?"
+              required
+              name="priorBodyPartInjury"
+              options={yesNoOptions}
+              value={formData.priorBodyPartInjury ?? ''}
+              onChange={(val) => handleRadioChange('priorBodyPartInjury', val)}
+              fullWidth
+              error={!!errors.priorBodyPartInjury}
+              errorMessage={errors.priorBodyPartInjury}
+            />
+            <RadioGroup
+              label="If previous injury exists, did it occur at work or elsewhere?"
+              required
+              name="priorInjuryLocation"
+              options={yesNoOptions}
+              value={formData.priorInjuryLocation ?? ''}
+              onChange={(val) => handleRadioChange('priorInjuryLocation', val)}
+              fullWidth
+              error={!!errors.priorInjuryLocation}
+              errorMessage={errors.priorInjuryLocation}
+            />
+            <RadioGroup
+              label="Have you ever had any other on-the-job injuries/illnesses?"
+              required
+              name="otherJobInjuries"
+              options={yesNoOptions}
+              value={formData.otherJobInjuries ?? ''}
+              onChange={(val) => handleRadioChange('otherJobInjuries', val)}
+              fullWidth
+              error={!!errors.otherJobInjuries}
+              errorMessage={errors.otherJobInjuries}
+            />
+            <RadioGroup
+              label="Any prior workers' compensation claims?"
+              required
+              name="priorWcClaims"
+              options={yesNoOptions}
+              value={formData.priorWcClaims ?? ''}
+              onChange={(val) => handleRadioChange('priorWcClaims', val)}
+              fullWidth
+              error={!!errors.priorWcClaims}
+              errorMessage={errors.priorWcClaims}
+            />
+            <RadioGroup
+              label="Have you had any off-the-job injuries/illnesses?"
+              required
+              name="offJobInjuries"
+              options={yesNoOptions}
+              value={formData.offJobInjuries ?? ''}
+              onChange={(val) => handleRadioChange('offJobInjuries', val)}
+              fullWidth
+              error={!!errors.offJobInjuries}
+              errorMessage={errors.offJobInjuries}
+            />
+            <TextArea
+              label="Please list any doctors/hospitals you have seen due to the above listed injuries/illnesses or workers' compensation claims:"
+              name="priorInjuryDoctors"
+              value={formData.priorInjuryDoctors ?? ''}
+              onChange={handleInputChange}
+            />
+            <RadioGroup
+              label="Have you ever filed a claim or lawsuit for a work injury or personal injury?"
+              required
+              name="filedClaimOrLawsuit"
+              options={yesNoOptions}
+              value={formData.filedClaimOrLawsuit ?? ''}
+              onChange={(val) => handleRadioChange('filedClaimOrLawsuit', val)}
+              fullWidth
+              error={!!errors.filedClaimOrLawsuit}
+              errorMessage={errors.filedClaimOrLawsuit}
+            />
+            <TextArea
+              label="List other medical conditions that limit your ability to work and/or require ongoing medical care. This includes heart disease, arthritis, etc:"
+              name="otherMedicalConditions"
+              value={formData.otherMedicalConditions ?? ''}
+              onChange={handleInputChange}
+            />
+            <TextArea
+              label="Please list any doctors/hospitals you have seen for the above medical conditions:"
+              name="otherConditionsDoctors"
+              value={formData.otherConditionsDoctors ?? ''}
+              onChange={handleInputChange}
+            />
+
+            {/* Agreement */}
+            <div className="w-full flex flex-col gap-2.5" data-field="agreementAccepted">
+              <p className="text-body tracking-[-0.32px] text-off-black font-semibold">
+                Agreement<span className="text-orange">*</span>
+              </p>
+              <div className="bg-white border border-navy-50 rounded-md h-39.5 overflow-y-auto px-3 py-4 text-[14px] leading-5.5 tracking-[-0.28px] text-navy-900">
+                <p>
+                  By sending us your completed questionnaire, you will be asking us to look at your
+                  case and to consider representing you. Sending us a completed questionnaire does
+                  NOT mean that we will take your case. All communications from you to us will be
+                  kept strictly confidential regardless of whether we become your attorneys.
+                </p>
+                <br />
+                <p>
+                  Please also be aware that sending us a completed questionnaire does not mean that
+                  we will take any action to preserve your rights or to file a timely claim or
+                  lawsuit unless we accept your case and agree to represent you.
+                </p>
+                <br />
+                <p>
+                  All legal claims have time limits for filing. It is always wise to seek the
+                  opinion of a qualified, competent attorney as soon as possible after an injury
+                  occurs so that evidence may be gathered and preserved, and important deadlines can
+                  be met in order to hold all responsible parties accountable.
+                </p>
+                <br />
+                <p>
+                  By clicking &ldquo;I Accept,&rdquo; you confirm that you have read the terms and
+                  conditions stated above, and that you agree to be bound by them.
+                </p>
+              </div>
+              <SingleCheckbox
+                name="agreementAccepted"
+                label="I have read, understand and agree to the Terms and Conditions."
+                checked={formData.agreementAccepted}
+                onChange={handleAgreementChange}
+                error={!!errors.agreementAccepted}
+                errorMessage={errors.agreementAccepted}
+              />
+            </div>
           </div>
         </div>
       </div>

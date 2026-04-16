@@ -5,6 +5,16 @@ const phoneValidator = z.string().refine((val) => {
   return digits.length === 10 && !/^[01]/.test(digits)
 }, 'Please enter a valid 10-digit US phone number')
 
+const optionalPhoneValidator = z
+  .union([
+    z.literal(''),
+    z.string().refine((val) => {
+      const digits = val.replace(/\D/g, '')
+      return digits.length === 10 && !/^[01]/.test(digits)
+    }, 'Please enter a valid 10-digit US phone number'),
+  ])
+  .optional()
+
 export const caseQuestionnaireSchema = z.object({
   // ── Basic Information (required) ─────────────────────────────────────────
   firstName: z
@@ -166,6 +176,99 @@ export const caseQuestionnaireSchema = z.object({
     .optional()
     .or(z.literal('')),
   otherDoctors: z
+    .string()
+    .max(500, 'Must be 500 characters or less')
+    .optional()
+    .or(z.literal('')),
+
+  // ── Insurance, Benefits & Medical History (required) ─────────────────────
+  wcInsuranceCompany: z
+    .string()
+    .min(2, 'Insurance company name must be at least 2 characters')
+    .max(200, 'Insurance company name must be 200 characters or less'),
+  wcInsurancePhone: phoneValidator,
+  hasPrivateMedicalInsurance: z.enum(['yes', 'no'], {
+    errorMap: () => ({ message: 'Please select an option' }),
+  }),
+  datesNotWorked: z
+    .string()
+    .min(2, 'Please provide the dates you did not work')
+    .max(500, 'Must be 500 characters or less'),
+  appliedForSocialSecurity: z.enum(['yes', 'no'], {
+    errorMap: () => ({ message: 'Please select an option' }),
+  }),
+  priorBodyPartInjury: z.enum(['yes', 'no'], {
+    errorMap: () => ({ message: 'Please select an option' }),
+  }),
+  priorInjuryLocation: z.enum(['yes', 'no'], {
+    errorMap: () => ({ message: 'Please select an option' }),
+  }),
+  otherJobInjuries: z.enum(['yes', 'no'], {
+    errorMap: () => ({ message: 'Please select an option' }),
+  }),
+  priorWcClaims: z.enum(['yes', 'no'], {
+    errorMap: () => ({ message: 'Please select an option' }),
+  }),
+  offJobInjuries: z.enum(['yes', 'no'], {
+    errorMap: () => ({ message: 'Please select an option' }),
+  }),
+  filedClaimOrLawsuit: z.enum(['yes', 'no'], {
+    errorMap: () => ({ message: 'Please select an option' }),
+  }),
+  agreementAccepted: z
+    .boolean()
+    .refine((val) => val === true, { message: 'You must agree to the terms and conditions' }),
+
+  // ── Insurance, Benefits & Medical History (optional) ──────────────────────
+  claimsAdjusterName: z
+    .string()
+    .max(100, 'Must be 100 characters or less')
+    .optional()
+    .or(z.literal('')),
+  claimsAdjusterPhone: optionalPhoneValidator,
+  claimNumber: z
+    .string()
+    .max(50, 'Must be 50 characters or less')
+    .optional()
+    .or(z.literal('')),
+  claimDenied: z.enum(['yes', 'no', '']).optional(),
+  whoPayedTreatment: z
+    .array(
+      z.enum([
+        'workers-comp-insurance',
+        'private-medical-insurance',
+        'medicaid',
+        'medicare',
+        'yourself',
+      ]),
+    )
+    .optional(),
+  unpaidMedicalBills: z
+    .string()
+    .max(2000, 'Must be 2000 characters or less')
+    .optional()
+    .or(z.literal('')),
+  wcBenefitsDates: z
+    .string()
+    .max(500, 'Must be 500 characters or less')
+    .optional()
+    .or(z.literal('')),
+  otherBenefits: z
+    .string()
+    .max(2000, 'Must be 2000 characters or less')
+    .optional()
+    .or(z.literal('')),
+  priorInjuryDoctors: z
+    .string()
+    .max(500, 'Must be 500 characters or less')
+    .optional()
+    .or(z.literal('')),
+  otherMedicalConditions: z
+    .string()
+    .max(2000, 'Must be 2000 characters or less')
+    .optional()
+    .or(z.literal('')),
+  otherConditionsDoctors: z
     .string()
     .max(500, 'Must be 500 characters or less')
     .optional()

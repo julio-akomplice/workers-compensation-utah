@@ -12,3 +12,6 @@ export type { CheckboxGroupProps } from './CheckboxGroup'
 
 export { PhoneField } from './PhoneField'
 export type { PhoneFieldProps } from './PhoneField'
+
+export { SingleCheckbox } from './SingleCheckbox'
+export type { SingleCheckboxProps } from './SingleCheckbox'
