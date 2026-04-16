@@ -12,6 +12,7 @@ export type PhoneFieldProps = {
   fullWidth?: boolean
   error?: boolean
   errorMessage?: string
+  color?: 'white' | 'gray'
 }
 
 export const PhoneField: React.FC<PhoneFieldProps> = ({
@@ -23,6 +24,7 @@ export const PhoneField: React.FC<PhoneFieldProps> = ({
   fullWidth,
   error,
   errorMessage,
+  color = 'white',
 }) => {
   return (
     <div className={fullWidth ? 'w-full' : 'w-full md:w-[calc(50%-10px)]'}>
@@ -35,7 +37,8 @@ export const PhoneField: React.FC<PhoneFieldProps> = ({
         value={value}
         onChange={onChange}
         maxLength={14}
-        className={`h-14 bg-white py-0 tracking-[-0.32px] text-off-black placeholder:text-navy-200 focus:border-navy-200 focus:ring-0 ${error ? 'border-red-500' : 'border-navy-50'}`}
+        color={color}
+        className={`h-14 py-0 tracking-[-0.32px] text-off-black ${error ? 'border-red-500' : 'border-navy-50'}`}
       />
       {error && (
         <p className="text-red-500 text-[13px] mt-1">{errorMessage ?? 'This field is required'}</p>

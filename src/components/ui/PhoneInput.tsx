@@ -9,10 +9,12 @@ const formatUSPhone = (raw: string): string => {
   return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
 }
 
-type PhoneInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>
+type PhoneInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> & {
+  color?: 'white' | 'gray'
+}
 
 const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
-  ({ className, onChange, ...props }, ref) => {
+  ({ className, onChange, color = 'white', ...props }, ref) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.target.value = formatUSPhone(e.target.value)
       onChange?.(e)
@@ -24,7 +26,8 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
         type="tel"
         inputMode="numeric"
         className={cn(
-          'w-full rounded-[6px] border border-navy-50 bg-off-white md:bg-light-gray px-3 py-4 text-body text-dark-blue placeholder:text-navy-200 outline-none transition-colors focus:border-orange focus:ring-1 focus:ring-orange',
+          'w-full rounded-md border border-navy-50 px-3 py-4 text-body text-dark-blue placeholder:text-navy-200 outline-none transition-colors focus:border-orange focus:ring-1 focus:ring-orange',
+          color === 'gray' ? 'bg-light-gray' : 'bg-white',
           className,
         )}
         onChange={handleChange}
