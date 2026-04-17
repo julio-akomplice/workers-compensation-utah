@@ -5,7 +5,9 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 import { FooterContent } from './FooterContent'
 
 export async function Footer() {
-  const footerData = (await getCachedGlobal('footer', 2)()) as FooterType
+  const footerData = (await getCachedGlobal('footer', 2, {
+    'areas-served': { title: true, slug: true, breadcrumbs: true, general: true },
+  })()) as FooterType
 
   return <FooterContent {...footerData} />
 }
