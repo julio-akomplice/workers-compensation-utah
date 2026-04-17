@@ -49,7 +49,6 @@ const labelMap: Record<string, string> = {
   city: 'City',
   state: 'State',
   zipCode: 'ZIP Code',
-  workQuestion: 'Work Question',
   requireInterpreter: 'Requires Interpreter',
   employerName: 'Employer Name',
   employerPhone: "Employer's Phone",

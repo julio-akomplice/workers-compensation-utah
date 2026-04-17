@@ -25,7 +25,6 @@ const initialFormData: CaseQuestionnaireData = {
   city: '',
   state: '',
   zipCode: '',
-  workQuestion: '',
   requireInterpreter: undefined as unknown as 'yes' | 'no',
   employerName: '',
   employerPhone: '',
@@ -89,7 +88,6 @@ const testDefaultValues: CaseQuestionnaireData = {
   city: 'Salt Lake City',
   state: 'Utah',
   zipCode: '84101',
-  workQuestion: 'I was injured while operating heavy machinery at my workplace.',
   requireInterpreter: 'no',
   employerName: 'Acme Corporation',
   employerPhone: '8015550199',
@@ -384,16 +382,6 @@ export const CaseQuestionnaireForm: React.FC<{ formID: string }> = ({ formID }) 
               onChange={handleInputChange}
               error={!!errors.zipCode}
               errorMessage={errors.zipCode}
-            />
-            <TextInput
-              label="Work Question"
-              required
-              name="workQuestion"
-              value={formData.workQuestion}
-              onChange={handleInputChange}
-              fullWidth
-              error={!!errors.workQuestion}
-              errorMessage={errors.workQuestion}
             />
           </div>
         </div>

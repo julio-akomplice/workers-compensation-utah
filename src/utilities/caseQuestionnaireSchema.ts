@@ -45,10 +45,6 @@ export const caseQuestionnaireSchema = z.object({
   zipCode: z
     .string()
     .regex(/^\d{5}(-\d{4})?$/, 'Please enter a valid ZIP code (e.g. 84101)'),
-  workQuestion: z
-    .string()
-    .min(2, 'This field must be at least 2 characters')
-    .max(500, 'This field must be 500 characters or less'),
 
   // ── Basic Information (optional) ─────────────────────────────────────────
   spouseFirstName: z
