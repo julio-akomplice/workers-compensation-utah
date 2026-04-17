@@ -73,7 +73,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       : []
 
   return (
-    <article className="pt-header">
+    <article className="desktop:pt-header">
       <SchemaMarkup schema={post.meta?.schema} />
       <PageClient docId={post.id} collectionSlug="posts" />
 
@@ -87,10 +87,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       {/* Breadcrumbs */}
       <Breadcrumbs
-        items={[
-          { label: 'Legal Insights & Case Updates', href: '/posts' },
-          { label: title },
-        ]}
+        items={[{ label: 'Legal Insights & Case Updates', href: '/posts' }, { label: title }]}
       />
 
       {/* Content Section */}
@@ -127,10 +124,7 @@ export default async function Post({ params: paramsPromise }: Args) {
               {/* Featured Image */}
               {heroImage && typeof heroImage !== 'string' && (
                 <div className="aspect-[16/9] overflow-hidden rounded-[10px]">
-                  <Media
-                    resource={heroImage}
-                    imgClassName="h-full w-full object-cover"
-                  />
+                  <Media resource={heroImage} imgClassName="h-full w-full object-cover" />
                 </div>
               )}
 
@@ -138,7 +132,12 @@ export default async function Post({ params: paramsPromise }: Args) {
               <div className="mt-5 mb-8 flex flex-col gap-[25px] md:mb-10">
                 {publishedAt && (
                   <p className="text-[16px] font-normal leading-normal tracking-[-0.32px] text-deep-blue-900">
-                    Updated: {new Date(publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    Updated:{' '}
+                    {new Date(publishedAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
                   </p>
                 )}
                 <hr className="border-navy-30" />
