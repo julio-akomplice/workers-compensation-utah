@@ -42,6 +42,11 @@ export const FooterContent: React.FC<Props> = ({
   const resolvedPrivacyPage =
     typeof privacyPolicyPage === 'object' && privacyPolicyPage !== null ? privacyPolicyPage : null
 
+  const getUrl = (item: { slug?: string | null; breadcrumbs?: { url?: string | null }[] | null }) => {
+    const lastCrumb = item.breadcrumbs?.at(-1)
+    return lastCrumb?.url ?? `/${item.slug}`
+  }
+
   const logoEl =
     typeof logo === 'object' && logo !== null ? (
       <Link href="/" className="block shrink-0">
@@ -128,7 +133,7 @@ export const FooterContent: React.FC<Props> = ({
               <ul className="flex flex-col gap-3.75">
                 {resolvedPracticeAreas.map((area) => (
                   <li key={area.id}>
-                    <Link href={`/${area.slug}`} className={linkClass}>
+                    <Link href={getUrl(area)} className={linkClass}>
                       {area.general?.alternativeTitle || area.title}
                     </Link>
                   </li>
@@ -149,7 +154,7 @@ export const FooterContent: React.FC<Props> = ({
               <ul className="flex flex-col gap-3.75">
                 {resolvedAreasServed.map((area) => (
                   <li key={area.id}>
-                    <Link href={`/${area.slug}`} className={linkClass}>
+                    <Link href={getUrl(area)} className={linkClass}>
                       {area.general?.alternativeTitle || area.title}
                     </Link>
                   </li>
@@ -163,7 +168,7 @@ export const FooterContent: React.FC<Props> = ({
               <ul className="flex flex-col gap-3.75">
                 {resolvedQuickLinks.map((page) => (
                   <li key={page.id}>
-                    <Link href={`/${page.slug}`} className={linkClass}>
+                    <Link href={getUrl(page)} className={linkClass}>
                       {page.general?.alternativeTitle || page.title}
                     </Link>
                   </li>
@@ -200,7 +205,7 @@ export const FooterContent: React.FC<Props> = ({
               <ul className="flex flex-col gap-2.5">
                 {resolvedQuickLinks.map((page) => (
                   <li key={page.id}>
-                    <Link href={`/${page.slug}`} className={linkClass}>
+                    <Link href={getUrl(page)} className={linkClass}>
                       {page.general?.alternativeTitle || page.title}
                     </Link>
                   </li>
@@ -213,7 +218,7 @@ export const FooterContent: React.FC<Props> = ({
               <ul className="flex flex-col gap-2.5">
                 {resolvedPracticeAreas.map((area) => (
                   <li key={area.id}>
-                    <Link href={`/${area.slug}`} className={linkClass}>
+                    <Link href={getUrl(area)} className={linkClass}>
                       {area.general?.alternativeTitle || area.title}
                     </Link>
                   </li>
@@ -235,7 +240,7 @@ export const FooterContent: React.FC<Props> = ({
             <ul className="flex flex-col gap-2.5">
               {resolvedAreasServed.map((area) => (
                 <li key={area.id}>
-                  <Link href={`/${area.slug}`} className={linkClass}>
+                  <Link href={getUrl(area)} className={linkClass}>
                     {area.general?.alternativeTitle || area.title}
                   </Link>
                 </li>
@@ -255,7 +260,7 @@ export const FooterContent: React.FC<Props> = ({
             <ul className="flex flex-col gap-3.75">
               {resolvedPracticeAreas.map((area) => (
                 <li key={area.id}>
-                  <Link href={`/${area.slug}`} className={linkClass}>
+                  <Link href={getUrl(area)} className={linkClass}>
                     {area.general?.alternativeTitle || area.title}
                   </Link>
                 </li>
@@ -276,7 +281,7 @@ export const FooterContent: React.FC<Props> = ({
             <ul className="flex flex-col gap-3.75">
               {resolvedQuickLinks.map((page) => (
                 <li key={page.id}>
-                  <Link href={`/${page.slug}`} className={linkClass}>
+                  <Link href={getUrl(page)} className={linkClass}>
                     {page.general?.alternativeTitle || page.title}
                   </Link>
                 </li>
@@ -291,7 +296,7 @@ export const FooterContent: React.FC<Props> = ({
               <ul className="flex flex-col gap-3.75">
                 {areasServedLeft.map((area) => (
                   <li key={area.id}>
-                    <Link href={`/${area.slug}`} className={linkClass}>
+                    <Link href={getUrl(area)} className={linkClass}>
                       {area.general?.alternativeTitle || area.title}
                     </Link>
                   </li>
@@ -300,7 +305,7 @@ export const FooterContent: React.FC<Props> = ({
               <ul className="flex flex-col gap-3.75">
                 {areasServedRight.map((area) => (
                   <li key={area.id}>
-                    <Link href={`/${area.slug}`} className={linkClass}>
+                    <Link href={getUrl(area)} className={linkClass}>
                       {area.general?.alternativeTitle || area.title}
                     </Link>
                   </li>
@@ -331,7 +336,7 @@ export const FooterContent: React.FC<Props> = ({
                 <>
                   {' | '}
                   <Link
-                    href={`/${resolvedPrivacyPage.slug}`}
+                    href={getUrl(resolvedPrivacyPage)}
                     className="underline hover:text-white transition-colors"
                   >
                     {privacyPolicyLabel}
