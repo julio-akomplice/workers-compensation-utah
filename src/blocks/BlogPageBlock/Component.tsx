@@ -73,7 +73,7 @@ export const BlogPageBlockComponent: React.FC<Props> = async ({
             return (
               <a
                 key={post.id}
-                href={`/posts/${post.slug}`}
+                href={`/blogs/${post.slug}`}
                 className="group flex flex-col"
               >
                 {/* Image */}

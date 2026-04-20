@@ -93,7 +93,7 @@ export const ArticlesSlider: React.FC<ArticlesSliderProps> = ({ posts, link }) =
             return (
               <a
                 key={post.id}
-                href={`/posts/${post.slug}`}
+                href={`/blogs/${post.slug}`}
                 className="articles-card snap-start shrink-0 w-[350px] md:w-[calc(50%-7.5px)] lg:w-[calc(33.333%-16.667px)] flex flex-col group"
               >
                 {/* Image */}

@@ -14,7 +14,7 @@ module.exports = {
     '/practice-areas-sitemap.xml',
     '/faq-sitemap.xml',
     '/*',
-    '/posts/*',
+    '/blogs/*',
   ],
   robotsTxtOptions: {
     policies: [

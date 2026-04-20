@@ -52,7 +52,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
   const decodedSlug = decodeURIComponent(slug)
-  const url = '/posts/' + decodedSlug
+  const url = '/blogs/' + decodedSlug
   const post = await queryPostBySlug({ slug: decodedSlug })
 
   if (!post) return <PayloadRedirects url={url} />
@@ -87,7 +87,7 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       {/* Breadcrumbs */}
       <Breadcrumbs
-        items={[{ label: 'Legal Insights & Case Updates', href: '/posts' }, { label: title }]}
+        items={[{ label: 'Legal Insights & Case Updates', href: '/blogs' }, { label: title }]}
       />
 
       {/* Content Section */}
