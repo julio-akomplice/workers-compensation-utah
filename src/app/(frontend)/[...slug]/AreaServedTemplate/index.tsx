@@ -1,7 +1,7 @@
 import React from 'react'
 
 import type { Metadata } from 'next'
-import type { AreasServed, Form as FormType, Page, ShortSideForm as ShortSideFormType } from '@/payload-types'
+import type { AreasServed, Form as FormType, Page, PracticeArea, ShortSideForm as ShortSideFormType } from '@/payload-types'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import RichText from '@/components/RichText'
@@ -28,19 +28,23 @@ export const AreaServedTemplate: React.FC<Props> = ({ areaServed, url, draft, fo
   const { hero, layout, contentSection, relatedPages, meta } = areaServed
 
   const relatedPageLinks = (relatedPages || [])
-    .map((p) => (typeof p === 'object' ? p : null))
-    .filter((p): p is NonNullable<typeof p> => p !== null)
     .map((p) => {
-      const breadcrumbs = p.breadcrumbs
-      const breadcrumbUrl =
-        Array.isArray(breadcrumbs) && breadcrumbs.length > 0
-          ? breadcrumbs[breadcrumbs.length - 1]?.url
-          : null
-      return {
-        title: p.title,
-        href: breadcrumbUrl ?? `/${p.slug}`,
+      if (typeof p !== 'object' || !p) return null
+      const doc = p.value
+      if (typeof doc !== 'object' || !doc) return null
+      if (p.relationTo === 'areas-served') {
+        const areaDoc = doc as AreasServed
+        const breadcrumbs = areaDoc.breadcrumbs
+        const breadcrumbUrl =
+          Array.isArray(breadcrumbs) && breadcrumbs.length > 0
+            ? breadcrumbs[breadcrumbs.length - 1]?.url
+            : null
+        return { title: areaDoc.title, href: breadcrumbUrl ?? `/${areaDoc.slug}` }
       }
+      const practiceDoc = doc as PracticeArea
+      return { title: practiceDoc.title, href: `/${practiceDoc.slug}` }
     })
+    .filter((p): p is NonNullable<typeof p> => p !== null)
 
   return (
     <article>

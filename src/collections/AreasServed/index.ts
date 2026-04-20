@@ -154,12 +154,12 @@ export const AreasServed: CollectionConfig<'areas-served'> = {
             {
               name: 'relatedPages',
               type: 'relationship',
-              relationTo: 'areas-served',
+              relationTo: ['areas-served', 'practice-areas'],
               hasMany: true,
               label: 'Related Pages',
               admin: {
                 description:
-                  'Select areas served to display as related page links in the sidebar.',
+                  'Select areas served or practice areas to display as related page links in the sidebar.',
               },
             },
           ],

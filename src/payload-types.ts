@@ -838,9 +838,20 @@ export interface AreasServed {
     | ContactSectionBlock
   )[];
   /**
-   * Select areas served to display as related page links in the sidebar.
+   * Select areas served or practice areas to display as related page links in the sidebar.
    */
-  relatedPages?: (string | AreasServed)[] | null;
+  relatedPages?:
+    | (
+        | {
+            relationTo: 'areas-served';
+            value: string | AreasServed;
+          }
+        | {
+            relationTo: 'practice-areas';
+            value: string | PracticeArea;
+          }
+      )[]
+    | null;
   meta?: {
     title?: string | null;
     /**
