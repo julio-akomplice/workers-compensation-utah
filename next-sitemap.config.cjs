@@ -12,6 +12,7 @@ module.exports = {
     '/pages-sitemap.xml',
     '/areas-served-sitemap.xml',
     '/practice-areas-sitemap.xml',
+    '/faq-sitemap.xml',
     '/*',
     '/posts/*',
   ],
@@ -27,6 +28,7 @@ module.exports = {
       `${SITE_URL}/posts-sitemap.xml`,
       `${SITE_URL}/areas-served-sitemap.xml`,
       `${SITE_URL}/practice-areas-sitemap.xml`,
+      `${SITE_URL}/faq-sitemap.xml`,
     ],
   },
 }
