@@ -9,13 +9,14 @@ import React, { cache } from 'react'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
+import { postsSlug } from '@/utilities/constants'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
 
-const postSlug = 'posts'
+const postSlug = postsSlug
 
 export default async function Page() {
   const { isEnabled: draft } = await draftMode()

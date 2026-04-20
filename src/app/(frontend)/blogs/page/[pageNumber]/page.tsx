@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
+import { postsSlug } from '@/utilities/constants'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
@@ -28,10 +29,10 @@ export default async function Page({ params: paramsPromise }: Args) {
   const sanitizedPageNumber = Number(pageNumber)
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
-  const page = await queryPageBySlug({ slug: 'posts' })
+  const page = await queryPageBySlug({ slug: postsSlug })
 
   if (!page) {
-    return <PayloadRedirects url="/posts" />
+    return <PayloadRedirects url={`/${postsSlug}`} />
   }
 
   const { hero, layout, solidMenu } = page
@@ -39,7 +40,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   return (
     <article className={solidMenu ? 'pt-header' : ''}>
       <PageClient solidMenu={solidMenu ?? false} />
-      <PayloadRedirects disableNotFound url={`/posts/page/${pageNumber}`} />
+      <PayloadRedirects disableNotFound url={`/${postsSlug}/page/${pageNumber}`} />
 
       {draft && <LivePreviewListener />}
 
@@ -51,7 +52,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { pageNumber } = await paramsPromise
-  const page = await queryPageBySlug({ slug: 'posts' })
+  const page = await queryPageBySlug({ slug: postsSlug })
   const meta = await generateMeta({ doc: page })
   return {
     ...meta,

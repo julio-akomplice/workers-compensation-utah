@@ -39,6 +39,7 @@ import { ManualCtaBannerBlockComponent } from '@/blocks/ManualCtaBanner/Componen
 import { PhoneInlineBlockComponent } from '@/blocks/PhoneInlineBlock/Component'
 import { PhoneWorkInlineBlockComponent } from '@/blocks/PhoneWorkInlineBlock/Component'
 import { cn } from '@/utilities/ui'
+import { postsSlug } from '@/utilities/constants'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -52,7 +53,7 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
     throw new Error('Expected value to be an object')
   }
   const slug = value.slug
-  return relationTo === 'posts' ? `/posts/${slug}` : `/${slug}`
+  return relationTo === 'posts' ? `/${postsSlug}/${slug}` : `/${slug}`
 }
 
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({

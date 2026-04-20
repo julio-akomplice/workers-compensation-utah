@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import { postsSlug } from '@/utilities/constants'
 
 type Props = {
   page: number
@@ -28,7 +29,7 @@ export const BlogPageClient: React.FC<Props> = ({ page, totalPages }) => {
     <div className="mt-[60px] flex items-center justify-center gap-[10px]">
       {/* Previous Arrow */}
       <button
-        onClick={() => hasPrevPage && router.push(`/posts/page/${page - 1}`)}
+        onClick={() => hasPrevPage && router.push(`/${postsSlug}/page/${page - 1}`)}
         disabled={!hasPrevPage}
         className={`flex h-[44px] w-[44px] items-center justify-center rounded-full border border-navy-100 transition-colors ${
           hasPrevPage
@@ -71,7 +72,7 @@ export const BlogPageClient: React.FC<Props> = ({ page, totalPages }) => {
         return (
           <button
             key={pageNum}
-            onClick={() => router.push(`/posts/page/${pageNum}`)}
+            onClick={() => router.push(`/${postsSlug}/page/${pageNum}`)}
             className={`flex h-[44px] w-[20px] items-center justify-center text-[16px] font-medium tracking-[-0.32px] transition-colors ${
               isActive ? 'text-dark-blue' : 'cursor-pointer text-navy-200 hover:text-navy-400'
             }`}
@@ -85,7 +86,7 @@ export const BlogPageClient: React.FC<Props> = ({ page, totalPages }) => {
 
       {/* Next Arrow */}
       <button
-        onClick={() => hasNextPage && router.push(`/posts/page/${page + 1}`)}
+        onClick={() => hasNextPage && router.push(`/${postsSlug}/page/${page + 1}`)}
         disabled={!hasNextPage}
         className={`flex h-[44px] w-[44px] items-center justify-center rounded-full border border-navy-100 transition-colors ${
           hasNextPage
