@@ -1,8 +1,27 @@
 import type { CollectionConfig } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
+import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
+import {
+  BlocksFeature,
+  FixedToolbarFeature,
+  HeadingFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+  UnorderedListFeature,
+  OrderedListFeature,
+  BoldFeature,
+  ItalicFeature,
+  LinkFeature,
+} from '@payloadcms/richtext-lexical'
+import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { CtaBanner } from '../../blocks/CtaBanner/config'
+import { VideoBlock } from '../../blocks/VideoBlock/config'
+import { ContactCtaBlock } from '../../blocks/ContactCtaBlock/config'
+import { PhoneButtonBlock } from '../../blocks/PhoneButtonBlock/config'
+import { ManualCtaBanner } from '../../blocks/ManualCtaBanner/config'
 
 import {
   MetaDescriptionField,
@@ -54,6 +73,10 @@ export const FAQ: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
+          label: 'Hero',
+          fields: [hero],
+        },
+        {
           label: 'Content',
           fields: [
             {
@@ -70,6 +93,22 @@ export const FAQ: CollectionConfig = {
               name: 'answer',
               type: 'richText',
               required: true,
+              admin: {
+                description: 'Use H2 headings to create sections — they automatically populate the table of contents sidebar.',
+              },
+              editor: lexicalEditor({
+                features: [
+                  HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+                  BoldFeature(),
+                  ItalicFeature(),
+                  UnorderedListFeature(),
+                  OrderedListFeature(),
+                  LinkFeature(),
+                  BlocksFeature({ blocks: [MediaBlock, CtaBanner, ManualCtaBanner, VideoBlock, ContactCtaBlock, PhoneButtonBlock] }),
+                  FixedToolbarFeature(),
+                  InlineToolbarFeature(),
+                ],
+              }),
             },
           ],
         },

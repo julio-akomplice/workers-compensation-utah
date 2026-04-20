@@ -1623,8 +1623,61 @@ export interface FAQSectionBlock {
 export interface Faq {
   id: string;
   question: string;
+  hero: {
+    type: 'none' | 'mediumImpact' | 'homeHero';
+    title?: string | null;
+    supportiveText?: string | null;
+    headlineImage?: (string | null) | Media;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: string | Post;
+                } | null)
+              | ({
+                  relationTo: 'practice-areas';
+                  value: string | PracticeArea;
+                } | null)
+              | ({
+                  relationTo: 'areas-served';
+                  value: string | AreasServed;
+                } | null);
+            url?: string | null;
+            label: string;
+            showArrow?: boolean | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: 'gradient' | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Optional video background. If provided, it will be used instead of the background image.
+     */
+    backgroundVideo?: {
+      video?: (string | null) | Media;
+      /**
+       * Poster image shown while the video loads.
+       */
+      poster?: (string | null) | Media;
+    };
+    background?: (string | null) | Media;
+  };
   image?: (string | null) | Media;
   shortAnswer: string;
+  /**
+   * Use H2 headings to create sections — they automatically populate the table of contents sidebar.
+   */
   answer: {
     root: {
       type: string;
@@ -4442,6 +4495,37 @@ export interface TestimonialsSelect<T extends boolean = true> {
  */
 export interface FaqSelect<T extends boolean = true> {
   question?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        title?: T;
+        supportiveText?: T;
+        headlineImage?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    showArrow?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+        backgroundVideo?:
+          | T
+          | {
+              video?: T;
+              poster?: T;
+            };
+        background?: T;
+      };
   image?: T;
   shortAnswer?: T;
   answer?: T;
