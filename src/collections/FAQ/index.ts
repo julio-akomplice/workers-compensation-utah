@@ -1,7 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import {
@@ -72,10 +71,6 @@ export const FAQ: CollectionConfig = {
     {
       type: 'tabs',
       tabs: [
-        {
-          label: 'Hero',
-          fields: [hero],
-        },
         {
           label: 'Content',
           fields: [

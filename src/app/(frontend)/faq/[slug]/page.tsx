@@ -6,7 +6,7 @@ import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 
-import type { Faq } from '@/payload-types'
+import type { Faq, Template } from '@/payload-types'
 
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { RenderHero } from '@/heros/RenderHero'
@@ -50,8 +50,9 @@ export default async function IndividualFAQPage({ params: paramsPromise }: Args)
   if (!faq) return <PayloadRedirects url={url} />
 
   const { form, header } = await getShortSideForm()
+  const template = await queryTemplate({ templateType: 'faq' })
 
-  const { question, answer, hero } = faq
+  const { question, answer } = faq
 
   return (
     <article>
@@ -60,7 +61,7 @@ export default async function IndividualFAQPage({ params: paramsPromise }: Args)
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
 
-      {hero && <RenderHero {...hero} />}
+      {template?.hero && <RenderHero {...template.hero} />}
 
       <Breadcrumbs
         items={[
@@ -117,6 +118,24 @@ const queryFAQBySlug = cache(async ({ slug }: { slug: string }) => {
     where: {
       slug: {
         equals: slug,
+      },
+    },
+  })
+
+  return result.docs?.[0] || null
+})
+
+const queryTemplate = cache(async ({ templateType }: { templateType: string }) => {
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'templates',
+    depth: 2,
+    limit: 1,
+    pagination: false,
+    where: {
+      templateType: {
+        equals: templateType,
       },
     },
   })
