@@ -51,7 +51,7 @@ export const plugins: Plugin[] = [
         enabled: { find: true },
       },
       faq: {
-        enabled: { find: true },
+        enabled: { find: true, create: true, update: true },
       },
       media: {
         enabled: { find: true, create: true, update: true, delete: false },
