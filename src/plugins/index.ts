@@ -33,7 +33,7 @@ export const plugins: Plugin[] = [
         enabled: { find: true },
       },
       posts: {
-        enabled: { find: true },
+        enabled: { find: true, create: true, update: true },
       },
       'practice-areas': {
         enabled: { find: true, create: true, update: true, delete: false },
