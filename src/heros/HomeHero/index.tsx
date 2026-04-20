@@ -11,7 +11,14 @@ import { useHeaderTheme } from '@/providers/HeaderTheme'
 import { cn } from '@/utilities/ui'
 
 const ScrollIndicator: React.FC = () => (
-  <div className="row-start-3 w-fit h-fit mx-auto">
+  <button
+    className="row-start-3 w-fit h-fit mx-auto cursor-pointer"
+    aria-label="Scroll to next section"
+    onClick={() => {
+      const next = document.getElementById('home-hero')?.nextElementSibling
+      if (next) window.scrollTo({ top: next.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' })
+    }}
+  >
     <svg width={44} height={44} viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle
         cx={21.9818}
@@ -46,7 +53,7 @@ const ScrollIndicator: React.FC = () => (
         />
       </g>
     </svg>
-  </div>
+  </button>
 )
 
 export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> = ({
@@ -68,7 +75,7 @@ export const HomeHero: React.FC<Page['hero'] & { svgContent?: string | null }> =
   }
 
   return (
-    <section className="relative text-black h-screen overflow-hidden pb-12.5">
+    <section id="home-hero" className="relative text-black h-screen overflow-hidden pb-12.5">
       {/* Background Video or Image */}
       {backgroundVideo?.video && typeof backgroundVideo.video === 'object' ? (
         <>

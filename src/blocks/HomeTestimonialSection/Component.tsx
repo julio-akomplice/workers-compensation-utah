@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import ReactDOM from 'react-dom'
 
 import type { HomeTestimonialSectionBlock as HomeTestimonialSectionBlockProps } from 'src/payload-types'
 import type { Testimonial, Media as MediaType } from 'src/payload-types'
@@ -121,6 +122,20 @@ export const HomeTestimonialSectionBlock: React.FC<Props> = ({
 
   // Mobile: scroll-snap video slider
   const videoSlider = useScrollSnap(videos?.length ?? 0)
+
+  useEffect(() => {
+    const preloadVideos = () => {
+      videos?.forEach((videoItem) => {
+        const media = typeof videoItem.media === 'object' ? videoItem.media : null
+        if (media?.url) ReactDOM.preload(media.url, { as: 'video' })
+      })
+    }
+    if (document.readyState === 'complete') {
+      preloadVideos()
+    } else {
+      window.addEventListener('load', preloadVideos, { once: true })
+    }
+  }, [])
 
   return (
     <section
