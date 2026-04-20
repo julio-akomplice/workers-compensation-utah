@@ -86,21 +86,35 @@ export const plugins: Plugin[] = [
     },
   }),
   redirectsPlugin({
-    collections: ['pages', 'posts'],
+    collections: ['pages', 'posts', 'areas-served', 'practice-areas'],
     overrides: {
       // @ts-expect-error - This is a valid override, mapped fields don't resolve to the same type
       fields: ({ defaultFields }) => {
-        return defaultFields.map((field) => {
-          if ('name' in field && field.name === 'from') {
-            return {
-              ...field,
-              admin: {
-                description: 'You will need to rebuild the website when changing this field.',
-              },
+        return [
+          ...defaultFields.map((field) => {
+            if ('name' in field && field.name === 'from') {
+              return {
+                ...field,
+                admin: {
+                  description: 'You will need to rebuild the website when changing this field.',
+                },
+              }
             }
-          }
-          return field
-        })
+            return field
+          }),
+          {
+            name: 'redirectType',
+            type: 'select',
+            defaultValue: '301',
+            options: [
+              { label: '301 — Permanent', value: '301' },
+              { label: '302 — Temporary', value: '302' },
+            ],
+            admin: {
+              description: 'Permanent redirects are cached by browsers and search engines. Use temporary for short-term redirects.',
+            },
+          },
+        ]
       },
       hooks: {
         afterChange: [revalidateRedirects],

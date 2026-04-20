@@ -3010,6 +3010,14 @@ export interface PayloadMcpApiKey {
      * Allow clients to find faq.
      */
     find?: boolean | null;
+    /**
+     * Allow clients to create faq.
+     */
+    create?: boolean | null;
+    /**
+     * Allow clients to update faq.
+     */
+    update?: boolean | null;
   };
   media?: {
     /**
@@ -3076,9 +3084,21 @@ export interface Redirect {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
         } | null);
     url?: string | null;
   };
+  /**
+   * Permanent redirects are cached by browsers and search engines. Use temporary for short-term redirects.
+   */
+  redirectType?: ('301' | '302') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -4752,6 +4772,8 @@ export interface PayloadMcpApiKeysSelect<T extends boolean = true> {
     | T
     | {
         find?: T;
+        create?: T;
+        update?: T;
       };
   media?:
     | T
@@ -4799,6 +4821,7 @@ export interface RedirectsSelect<T extends boolean = true> {
         reference?: T;
         url?: T;
       };
+  redirectType?: T;
   updatedAt?: T;
   createdAt?: T;
 }

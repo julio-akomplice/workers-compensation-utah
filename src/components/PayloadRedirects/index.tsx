@@ -3,7 +3,7 @@ import type { Page, Post } from '@/payload-types'
 
 import { getCachedDocument } from '@/utilities/getDocument'
 import { getCachedRedirects } from '@/utilities/getRedirects'
-import { notFound, redirect } from 'next/navigation'
+import { notFound, permanentRedirect, redirect } from 'next/navigation'
 
 interface Props {
   disableNotFound?: boolean
@@ -17,8 +17,12 @@ export const PayloadRedirects: React.FC<Props> = async ({ disableNotFound, url }
   const redirectItem = redirects.find((redirect) => redirect.from === url)
 
   if (redirectItem) {
+    const isPermanent = (redirectItem as any).redirectType !== '302'
+    const doRedirect = (url: string) =>
+      isPermanent ? permanentRedirect(url) : redirect(url)
+
     if (redirectItem.to?.url) {
-      redirect(redirectItem.to.url)
+      doRedirect(redirectItem.to.url)
     }
 
     let redirectUrl: string
@@ -39,7 +43,7 @@ export const PayloadRedirects: React.FC<Props> = async ({ disableNotFound, url }
       }`
     }
 
-    if (redirectUrl) redirect(redirectUrl)
+    if (redirectUrl) doRedirect(redirectUrl)
   }
 
   if (disableNotFound) return null

@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
-import ReactDOM from 'react-dom'
 
 import type { HomeTestimonialSectionBlock as HomeTestimonialSectionBlockProps } from 'src/payload-types'
 import type { Testimonial, Media as MediaType } from 'src/payload-types'
@@ -62,10 +61,29 @@ const VideoThumbnail: React.FC<{
   className?: string
 }> = ({ videoItem, className }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
 
   const media = typeof videoItem.media === 'object' ? videoItem.media : null
   const poster = typeof videoItem.poster === 'object' ? videoItem.poster?.url : undefined
+
+  useEffect(() => {
+    const video = videoRef.current
+    const container = containerRef.current
+    if (!video || !container) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.preload = 'auto'
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '400px' },
+    )
+    observer.observe(container)
+    return () => observer.disconnect()
+  }, [])
 
   const handlePlay = () => {
     if (videoRef.current) {
@@ -75,7 +93,7 @@ const VideoThumbnail: React.FC<{
   }
 
   return (
-    <div className={cn('relative overflow-hidden rounded-[10px] lg:rounded-[15px]', className)}>
+    <div ref={containerRef} className={cn('relative overflow-hidden rounded-[10px] lg:rounded-[15px]', className)}>
       {media && (
         <>
           <video
@@ -122,20 +140,6 @@ export const HomeTestimonialSectionBlock: React.FC<Props> = ({
 
   // Mobile: scroll-snap video slider
   const videoSlider = useScrollSnap(videos?.length ?? 0)
-
-  useEffect(() => {
-    const preloadVideos = () => {
-      videos?.forEach((videoItem) => {
-        const media = typeof videoItem.media === 'object' ? videoItem.media : null
-        if (media?.url) ReactDOM.preload(media.url, { as: 'video' })
-      })
-    }
-    if (document.readyState === 'complete') {
-      preloadVideos()
-    } else {
-      window.addEventListener('load', preloadVideos, { once: true })
-    }
-  }, [])
 
   return (
     <section
