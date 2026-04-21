@@ -24,7 +24,7 @@ export const RelatedPages: React.FC<Props> = ({ title = 'Related Pages', pages }
           <React.Fragment key={page.href}>
             <Link
               href={page.href}
-              className="py-2 text-center text-[16px] font-medium leading-normal tracking-[-0.32px] text-navy-100 transition-colors hover:text-white"
+              className="py-2 text-center text-[16px] font-normal leading-normal tracking-[-0.32px] text-navy-100 transition-colors hover:text-white"
             >
               {page.title}
             </Link>
