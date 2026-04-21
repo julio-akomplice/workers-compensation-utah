@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import type { HomeTestimonialSectionBlock as HomeTestimonialSectionBlockProps } from 'src/payload-types'
 import type { Testimonial, Media as MediaType } from 'src/payload-types'
@@ -140,6 +140,27 @@ export const HomeTestimonialSectionBlock: React.FC<Props> = ({
   // Mobile: scroll-snap video slider
   const videoSlider = useScrollSnap(videos?.length ?? 0)
 
+  // Autoplay
+  const autoplayPausedRef = useRef(false)
+  const pauseAutoplay = useCallback(() => { autoplayPausedRef.current = true }, [])
+  const resumeAutoplay = useCallback(() => { autoplayPausedRef.current = false }, [])
+  const resumeAfterDelay = useCallback(() => {
+    setTimeout(() => { autoplayPausedRef.current = false }, 3000)
+  }, [])
+
+  useEffect(() => {
+    if (resolvedTestimonials.length <= 1) return
+    const interval = setInterval(() => {
+      if (autoplayPausedRef.current) return
+      setDesktopTestimonialIndex(prev => {
+        const next = (prev + 1) % resolvedTestimonials.length
+        testimonialSlider.scrollTo(next)
+        return next
+      })
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [resolvedTestimonials.length, testimonialSlider.scrollTo])
+
   return (
     <section
       className="w-full py-15 md:py-20 lg:py-24"
@@ -169,11 +190,13 @@ export const HomeTestimonialSectionBlock: React.FC<Props> = ({
                 ref={testimonialSlider.scrollRef}
                 className="flex gap-3.75 overflow-x-auto snap-x snap-mandatory scrollbar-hide pr-4"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                onTouchStart={pauseAutoplay}
+                onTouchEnd={resumeAfterDelay}
               >
                 {resolvedTestimonials.map((testimonial, index) => (
                   <div
                     key={index}
-                    className="snap-start shrink-0 w-82 rounded-[15px]"
+                    className="snap-start shrink-0 w-82 rounded-[15px] flex flex-col"
                   >
                     {/* Avatar + Name + Rating */}
                     <div className="flex items-center justify-between bg-navy-900 p-5 rounded-t-[15px]">
@@ -196,7 +219,7 @@ export const HomeTestimonialSectionBlock: React.FC<Props> = ({
                     </div>
                     {/* Testimonial Text */}
                     {testimonial.testimonial && 'root' in testimonial.testimonial && (
-                      <div className="text-body text-navy-50 p-5 bg-navy-1000 rounded-b-[15px]">
+                      <div className="flex-1 text-body text-navy-50 p-5 bg-navy-1000 rounded-b-[15px]">
                         <RichText
                           data={testimonial.testimonial}
                           enableGutter={false}
@@ -217,13 +240,17 @@ export const HomeTestimonialSectionBlock: React.FC<Props> = ({
             </div>
 
             {/* Tablet/Desktop: Single testimonial card with dot navigation */}
-            <div className="hidden md:block">
+            <div
+              className="hidden md:block"
+              onMouseEnter={pauseAutoplay}
+              onMouseLeave={resumeAutoplay}
+            >
               <div className="grid">
                 {resolvedTestimonials.map((testimonial, index) => (
                   <div
                     key={index}
                     className={cn(
-                      'col-start-1 row-start-1 rounded-lg bg-dark-blue-800 transition-opacity duration-500',
+                      'col-start-1 row-start-1 rounded-lg bg-dark-blue-800 transition-opacity duration-500 flex flex-col',
                       index === desktopTestimonialIndex ? 'opacity-100' : 'opacity-0 pointer-events-none',
                     )}
                   >
@@ -249,7 +276,7 @@ export const HomeTestimonialSectionBlock: React.FC<Props> = ({
 
                     {/* Testimonial Text */}
                     {testimonial.testimonial && 'root' in testimonial.testimonial && (
-                      <div className="text-body text-navy-50 p-5 bg-navy-1000 rounded-b-[15px]">
+                      <div className="flex-1 text-body text-navy-50 p-5 bg-navy-1000 rounded-b-[15px]">
                         <RichText
                           data={testimonial.testimonial}
                           enableGutter={false}
