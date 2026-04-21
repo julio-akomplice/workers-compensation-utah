@@ -52,8 +52,15 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   if (typeof value !== 'object') {
     throw new Error('Expected value to be an object')
   }
-  const slug = value.slug
-  return relationTo === 'posts' ? `/${postsSlug}/${slug}` : `/${slug}`
+  if (relationTo === 'posts') {
+    return `/${postsSlug}/${value.slug}`
+  }
+  const breadcrumbs = value.breadcrumbs
+  const breadcrumbUrl =
+    Array.isArray(breadcrumbs) && breadcrumbs.length > 0
+      ? (breadcrumbs[breadcrumbs.length - 1]?.url as string | undefined)
+      : undefined
+  return breadcrumbUrl ?? `/${value.slug}`
 }
 
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({

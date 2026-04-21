@@ -49,13 +49,27 @@
   --font-sans: var(--font-geist-sans);
 
   --radius: 0.5rem;
+
+  --spacing-header: 92px;
+}
+/* 
+@media (width >= theme(--breakpoint-md)) {
+  :root {
+    --spacing-header: 92px;
+  }
 }
 
+@media (width >= theme(--breakpoint-lg)) {
+  :root {
+    --spacing-header: 4rem;
+  }
+}
+ */
 @layer utilities {
   .container {
     width: 100%;
     margin-inline: auto;
-    padding-inline: 1rem;
+    padding-inline: 1.25rem;
   }
 
   @variant sm {
@@ -199,7 +213,7 @@
 }
 
 @utility caption-heading {
-  @apply text-[42px] leading-[46px] -tracking-[0.04em] font-normal;
+  @apply text-[26px] leading-[28px] tablet:text-[42px] tablet:leading-[46px] -tracking-[0.04em] font-normal;
   font-family: var(--font-sans);
 }
 
@@ -227,7 +241,7 @@
 
 /* Headings */
 @utility text-h1-hero {
-  @apply text-[75px] leading-[78px] font-medium;
+  @apply text-[55px] leading-[58px] tablet:text-[75px] tablet:leading-[78px] font-medium;
   font-family: var(--font-sans);
 }
 
@@ -237,7 +251,7 @@
 }
 
 @utility text-h2 {
-  @apply text-[50px] leading-[55px];
+  @apply text-[45px] leading-[50px] tablet:text-[50px] tablet:leading-[55px];
   font-family: var(--font-sans);
 }
 
@@ -284,7 +298,7 @@
 
 /* CTA */
 @utility text-cta-primary {
-  @apply text-[18px] font-medium;
+  @apply text-[16px] md:text-[18px] font-medium;
   font-family: var(--font-sans);
 }
 

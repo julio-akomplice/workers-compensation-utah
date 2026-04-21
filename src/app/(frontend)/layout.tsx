@@ -49,7 +49,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
           <div className="flex min-h-screen flex-col">
             <Header />
-            <main className="flex-1 mt-[88px] md:mt-[92px] lg:mt-0">{children}</main>
+            <main className="flex-1 mt-header navbar:mt-0">{children}</main>
             <Footer />
           </div>
         </Providers>

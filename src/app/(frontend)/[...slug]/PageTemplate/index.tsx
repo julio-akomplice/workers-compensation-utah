@@ -22,7 +22,7 @@ export const PageTemplate: React.FC<Props> = ({ page, url, draft }) => {
   const { hero, layout, solidMenu, meta } = page
 
   return (
-    <article className={solidMenu ? 'pt-header' : ''}>
+    <article className={solidMenu ? 'navbar:pt-header' : ''}>
       <SchemaMarkup schema={meta?.schema} />
       <PageClient solidMenu={solidMenu ?? false} docId={page.id} collectionSlug="pages" />
       <PayloadRedirects disableNotFound url={url} />

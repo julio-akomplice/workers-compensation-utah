@@ -111,7 +111,7 @@ export const LawyerBioBlock: React.FC<Props> = ({
 
       {/* ===== DESKTOP: 2-column layout ===== */}
       <div className="hidden lg:block">
-        <div className="mx-auto flex max-w-[1320px] items-start gap-18.5 pb-25 pt-15">
+        <div className="container mx-auto flex items-start gap-18.5 pb-25 pt-15">
           {/* Left Column: Profile Card (sticky, aligned to content end) */}
           <div className="sticky top-25 w-119 shrink-0 self-start">
             <div className="overflow-hidden rounded-[10px] bg-white">
