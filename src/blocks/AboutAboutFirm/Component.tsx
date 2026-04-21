@@ -66,6 +66,7 @@ export const AboutAboutFirmBlock: React.FC<Props> = ({
               <Media
                 resource={image}
                 imgClassName="w-full h-full object-cover"
+                priority
               />
             </div>
           </div>
