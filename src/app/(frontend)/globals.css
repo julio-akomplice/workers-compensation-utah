@@ -305,7 +305,7 @@
     @apply text-dark-blue;
   }
   & h2 {
-    @apply mt-5 text-h2 font-semibold;
+    @apply mt-5 text-h2 font-semibold -tracking-[0.04em];
   }
 
   & h3 {
