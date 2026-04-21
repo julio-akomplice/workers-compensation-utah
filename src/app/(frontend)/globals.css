@@ -415,11 +415,11 @@
   }
 
   & h2 {
-    @apply text-h4 font-medium tracking-[-0.96px] text-dark-blue mt-[50px] mb-[25px];
+    @apply text-h4 font-semibold tracking-[-0.96px] text-dark-blue mt-[50px] mb-[25px];
   }
 
   & h3 {
-    @apply text-h4 font-medium tracking-[-0.96px] text-dark-blue mt-[50px] mb-[25px];
+    @apply text-h4 font-semibold tracking-[-0.96px] text-dark-blue mt-[50px] mb-[25px];
   }
 
   & h4 {
