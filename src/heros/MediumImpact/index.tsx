@@ -38,7 +38,7 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({ title, background }) 
         }}
       />
 
-      <div className="relative z-10 flex items-center justify-center w-full min-h-[220px] navbar:min-h-[350px] desktop:min-h-[300px]">
+      <div className="container relative z-10 flex items-center justify-center w-full min-h-[220px] navbar:min-h-[350px] desktop:min-h-[300px]">
         {title && (
           <h1 className="font-medium text-[40px] md:text-[55px] lg:text-[75px] leading-[1.04] tracking-[-0.04em] text-center text-white drop-shadow-[0_2px_4px_rgba(0,7,15,0.1)]">
             {title}
