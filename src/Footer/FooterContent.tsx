@@ -54,10 +54,6 @@ export const FooterContent: React.FC<Props> = ({
       </Link>
     ) : null
 
-  // Split areas served into two halves for the desktop 2-column layout
-  const areasServedMid = Math.ceil(resolvedAreasServed.length / 2)
-  const areasServedLeft = resolvedAreasServed.slice(0, areasServedMid)
-  const areasServedRight = resolvedAreasServed.slice(areasServedMid)
 
   const linkClass =
     'text-body font-medium text-navy-200 tracking-[-0.34px] hover:text-white transition-colors'
@@ -289,29 +285,18 @@ export const FooterContent: React.FC<Props> = ({
             </ul>
           </div>
 
-          {/* Areas Served — 2 sub-columns */}
+          {/* Areas Served */}
           <div className="flex flex-col gap-5">
             <h4 className={headingClass}>Areas Served</h4>
-            <div className="grid grid-cols-2 gap-x-6">
-              <ul className="flex flex-col gap-3.75">
-                {areasServedLeft.map((area) => (
-                  <li key={area.id}>
-                    <Link href={getUrl(area)} className={linkClass}>
-                      {area.general?.alternativeTitle || area.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <ul className="flex flex-col gap-3.75">
-                {areasServedRight.map((area) => (
-                  <li key={area.id}>
-                    <Link href={getUrl(area)} className={linkClass}>
-                      {area.general?.alternativeTitle || area.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ul className="flex flex-col gap-3.75">
+              {resolvedAreasServed.map((area) => (
+                <li key={area.id}>
+                  <Link href={getUrl(area)} className={linkClass}>
+                    {area.general?.alternativeTitle || area.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Contact */}
