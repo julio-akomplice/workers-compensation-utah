@@ -50,21 +50,21 @@
 
   --radius: 0.5rem;
 
-  --spacing-header: 92px;
+  --spacing-header: 88px;
 }
-/* 
+
 @media (width >= theme(--breakpoint-md)) {
   :root {
     --spacing-header: 92px;
   }
 }
 
-@media (width >= theme(--breakpoint-lg)) {
+/* @media (width >= theme(--breakpoint-lg)) {
   :root {
     --spacing-header: 4rem;
   }
-}
- */
+} */
+
 @layer utilities {
   .container {
     width: 100%;
