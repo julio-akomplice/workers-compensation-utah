@@ -142,7 +142,7 @@ export const ArticlesSlider: React.FC<ArticlesSliderProps> = ({ posts, link }) =
                     </h3>
                     {/* Description - hidden on mobile */}
                     {metaDescription && (
-                      <p className="hidden md:block line-clamp-3 text-body text-deep-blue-800 tracking-[-0.32px]">
+                      <p className="hidden md:line-clamp-3 text-body text-deep-blue-800 tracking-[-0.32px]">
                         {metaDescription}
                       </p>
                     )}
