@@ -12,7 +12,7 @@ import { cn } from '@/utilities/ui'
 
 const ScrollIndicator: React.FC = () => (
   <button
-    className="row-start-3 w-fit h-fit mx-auto cursor-pointer"
+    className="row-start-3 w-fit h-fit mx-auto cursor-pointer opacity-50 hover:opacity-70 transition-opacity"
     aria-label="Scroll to next section"
     onClick={() => {
       const next = document.getElementById('home-hero')?.nextElementSibling
