@@ -106,17 +106,17 @@ export const PracticeAreaPageBlockComponent: React.FC<Props> = async ({
                         <Link
                           key={area.id}
                           href={`/${area.slug}`}
-                          className="flex items-center gap-3 rounded-[10px] bg-off-white px-4 py-4 transition-colors hover:bg-navy-30 md:px-5 md:py-5"
+                          className="group flex items-center gap-3 rounded-[10px] bg-off-white px-4 py-4 md:px-5 md:py-5"
                         >
                           {area.general?.icon && (
                             <div className="h-6 w-6 shrink-0 [&_img]:h-full [&_img]:w-full [&_img]:object-contain [&_svg]:h-full [&_svg]:w-full">
                               <Media resource={area.general.icon} />
                             </div>
                           )}
-                          <span className="flex-1 text-body font-semibold tracking-[-0.32px] text-navy-800">
+                          <span className="flex-1 text-body font-semibold tracking-[-0.32px] text-navy-800 group-hover:underline">
                             {area.general?.alternativeTitle || area.title}
                           </span>
-                          <ArrowIcon className="h-6 w-6 shrink-0 text-navy-50" />
+                          <ArrowIcon className="h-6 w-6 shrink-0 text-navy-50 transition-transform group-hover:translate-x-0.75" />
                         </Link>
                       ))}
                     </div>
