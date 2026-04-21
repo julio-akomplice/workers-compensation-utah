@@ -263,22 +263,22 @@
 
 /* Body */
 @utility text-body-lg {
-  @apply text-[18px] leading-[25px];
+  @apply text-[18px] leading-[25px] font-light;
   font-family: var(--font-sans);
 }
 
 @utility text-body {
-  @apply text-[16px] leading-[24px];
+  @apply text-[16px] leading-[24px] font-light;
   font-family: var(--font-sans);
 }
 
 @utility text-body-spacious {
-  @apply text-[16px] leading-[28px] font-normal;
+  @apply text-[16px] leading-[28px] font-light;
   font-family: var(--font-sans);
 }
 
 @utility text-body-sm {
-  @apply text-[14px] leading-[22px];
+  @apply text-[14px] leading-[22px] font-light;
   font-family: var(--font-sans);
 }
 
@@ -305,15 +305,19 @@
     @apply text-dark-blue;
   }
   & h2 {
-    @apply mt-5 text-h2 font-medium;
+    @apply mt-5 text-h2 font-semibold;
   }
 
   & h3 {
-    @apply text-h3 font-medium;
+    @apply text-h3;
   }
 
   & p:not(.supportive-text) {
     @apply mt-4 text-body text-deep-blue-800;
+  }
+
+  & p:not(.supportive-text):not(p:not(.supportive-text) ~ p:not(.supportive-text)) {
+    @apply mt-5;
   }
 
   & p.supportive-text {
