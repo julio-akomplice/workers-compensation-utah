@@ -2,6 +2,9 @@
 const config = {
   theme: {
     extend: {
+      screens: {
+        navbar: '1300px',
+      },
       typography: () => ({
         DEFAULT: {
           css: [

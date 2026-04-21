@@ -78,17 +78,17 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
       className={cn(
         'fixed left-0 right-0 z-20',
         // Tablet and below: always solid
-        'bg-dark-blue lg:bg-transparent',
+        'bg-dark-blue navbar:bg-transparent',
         // Desktop: solid when solidMenu or scrolled
-        solidMenu && 'lg:bg-dark-blue',
-        !solidMenu && 'lg:transition-colors lg:duration-300',
-        !solidMenu && scrolled && 'lg:bg-dark-blue',
+        solidMenu && 'navbar:bg-dark-blue',
+        !solidMenu && 'navbar:transition-colors navbar:duration-300',
+        !solidMenu && scrolled && 'navbar:bg-dark-blue',
       )}
       {...(theme ? { 'data-theme': theme } : {})}
     >
       {/* Dark gradient overlay — only on desktop when not scrolled and not solid menu */}
       {!scrolled && !solidMenu && (
-        <div className="hidden lg:block absolute inset-0 h-[92px] bg-gradient-to-b from-off-black/40 to-transparent pointer-events-none" />
+        <div className="hidden navbar:block absolute inset-0 h-23 bg-linear-to-b from-off-black/40 to-transparent pointer-events-none" />
       )}
 
       <div className="container relative">
@@ -109,21 +109,22 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden navbar:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
             {navItems.map(({ link }, i) => (
               <Link
                 key={i}
                 href={getHref(link)}
-                className="text-white text-body-lg tracking-[-0.36px] hover:opacity-80 transition-opacity"
+                className="group relative text-white text-body-lg tracking-[-0.36px]"
               >
                 {link.label}
+                <span className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-gold transition-transform duration-300 group-hover:scale-x-100" />
               </Link>
             ))}
           </nav>
 
           {/* Desktop Phone CTA */}
           {phone?.label && phone?.url && (
-            <a href={phone.url} className="hidden lg:flex">
+            <a href={phone.url} className="hidden navbar:flex">
               <Button className="">
                 <PhoneIcon className="w-5 h-5 shrink-0" />
                 <span>{phone.label}</span>
@@ -133,7 +134,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
 
           {/* Mobile/Tablet Hamburger */}
           <button
-            className="relative z-10 lg:hidden flex items-center justify-center size-11 cursor-pointer"
+            className="relative z-10 navbar:hidden flex items-center justify-center size-11 cursor-pointer"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
           >
@@ -172,7 +173,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
       {/* Mobile/Tablet Slide-out Drawer */}
       {/* Backdrop */}
       <div
-        className={`lg:hidden fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 ${
+        className={`navbar:hidden fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 ${
           mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setMobileMenuOpen(false)}
@@ -180,7 +181,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
 
       {/* Drawer Panel */}
       <div
-        className={`lg:hidden fixed top-0 right-0 bottom-0 z-50 bg-white transition-transform duration-300 ease-in-out w-[370px] max-w-[95vw] md:w-[474px] ${
+        className={`navbar:hidden fixed top-0 right-0 bottom-0 z-50 bg-white transition-transform duration-300 ease-in-out w-92.5 max-w-[95vw] md:w-118.5 ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -200,7 +201,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, initialSolidMe
               key={i}
               href={getHref(link)}
               onClick={() => setMobileMenuOpen(false)}
-              className="text-off-black font-medium text-[32px] leading-[36px] tracking-[-0.96px] md:text-[50px] md:leading-[55px] md:tracking-[-2px] hover:opacity-70 transition-opacity"
+              className="text-off-black font-medium text-[32px] leading-[36px] tracking-[-0.96px] md:text-[50px] md:leading-[55px] md:tracking-[-2px] hover:underline hover:decoration-gold underline-offset-2"
             >
               {link.label}
             </Link>
