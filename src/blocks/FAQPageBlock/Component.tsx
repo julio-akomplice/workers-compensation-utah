@@ -7,6 +7,7 @@ import type { FAQPageBlock as FAQPageBlockProps, Faq, Media as MediaType } from 
 import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
 import { ArrowIcon } from '@/components/ui/ArrowIcon'
+import { PlaceholderImage } from '@/components/PlaceholderImage'
 
 type Props = {
   className?: string
@@ -49,14 +50,16 @@ export const FAQPageBlockComponent: React.FC<Props> = async ({ sectionHeader }) 
                 className="group flex flex-col"
               >
                 {/* Image */}
-                {image && (
-                  <div className="aspect-[4/3] overflow-hidden rounded-[10px]">
+                <div className="aspect-4/3 overflow-hidden rounded-[10px]">
+                  {image ? (
                     <Media
                       resource={image}
                       imgClassName="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                  </div>
-                )}
+                  ) : (
+                    <PlaceholderImage className="transition-transform duration-300 group-hover:scale-105" />
+                  )}
+                </div>
 
                 {/* Content */}
                 <div className="mt-[16px] flex flex-col gap-3 md:mt-[20px]">

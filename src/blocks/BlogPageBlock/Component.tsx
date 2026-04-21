@@ -13,6 +13,7 @@ import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
 import { ArrowIcon } from '@/components/ui/ArrowIcon'
 import { BlogPageClient } from './Client'
+import { PlaceholderImage } from '@/components/PlaceholderImage'
 
 type Props = {
   className?: string
@@ -84,9 +85,7 @@ export const BlogPageBlockComponent: React.FC<Props> = async ({
                       imgClassName="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-dark-blue">
-                      <span className="text-white opacity-50">No image</span>
-                    </div>
+                    <PlaceholderImage />
                   )}
                 </div>
 
@@ -122,8 +121,8 @@ export const BlogPageBlockComponent: React.FC<Props> = async ({
 
                   {/* Read More */}
                   <div className="flex items-center gap-1 text-[16px] font-medium tracking-[-0.32px] text-navy-500">
-                    <span>Read More</span>
-                    <ArrowIcon className="h-6 w-6 text-gold" />
+                    <span className="group-hover:underline">Read More</span>
+                    <ArrowIcon className="h-6 w-6 text-gold transition-transform group-hover:translate-x-0.75" />
                   </div>
                 </div>
               </a>

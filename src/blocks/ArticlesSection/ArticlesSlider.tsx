@@ -5,7 +5,7 @@ import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
 import type { Post, Category, Media as MediaType } from '@/payload-types'
 import { ArrowIcon } from '@/components/ui/ArrowIcon'
-import placeholderImage from '@/assets/placeholder/image-wcu-placeholder-cards.webp'
+import { PlaceholderImage } from '@/components/PlaceholderImage'
 
 type ArticlesSliderProps = {
   posts: Post[]
@@ -111,11 +111,7 @@ export const ArticlesSlider: React.FC<ArticlesSliderProps> = ({ posts, link }) =
                       imgClassName="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (
-                    <img
-                      src={placeholderImage.src}
-                      alt=""
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
+                    <PlaceholderImage className="transition-transform duration-300 group-hover:scale-105" />
                   )}
                 </div>
 
