@@ -58,10 +58,10 @@ export const PracticeAreasSectionBlock: React.FC<Props> = async ({
               return (
                 <div key={index} className="flex flex-col border-b-[1.5px] border-navy-50 pb-3.75">
                   {practiceArea.general?.icon && (
-                    <div className="mb-4">
+                    <div className="mb-4 [&_svg]:h-10 [&_svg]:w-10">
                       <Media
                         resource={practiceArea.general.icon}
-                        className="h-10 w-10 object-contain"
+                        className="object-contain"
                       />
                     </div>
                   )}
