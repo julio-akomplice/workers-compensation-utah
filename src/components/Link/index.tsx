@@ -47,12 +47,14 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
 
   const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
-  const arrow = showArrow ? <ArrowIcon /> : null
+  const arrow = showArrow ? (
+    <ArrowIcon className="transition-all duration-200 group-hover/cta-button:translate-x-0.75" />
+  ) : null
 
   /* Ensure we don't break any styles set by richText */
   if (appearance === 'inline') {
     return (
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+      <Link className={cn('group/cta-button', className)} href={href || url || ''} {...newTabProps}>
         {label && label}
         {children && children}
         {arrow}

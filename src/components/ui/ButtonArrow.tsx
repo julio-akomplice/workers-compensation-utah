@@ -9,9 +9,9 @@ export interface ButtonArrowProps extends ButtonProps {}
 
 export const ButtonArrow: React.FC<ButtonArrowProps> = ({ children, className, ...props }) => {
   return (
-    <Button className={cn('', className)} {...props}>
+    <Button className={cn('group', className)} {...props}>
       {children}
-      <ArrowIcon className="w-6 h-6" />
+      <ArrowIcon className="w-6 h-6 transition-all duration-200 group-hover:translate-x-0.75" />
     </Button>
   )
 }
