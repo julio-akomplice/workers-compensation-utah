@@ -17,7 +17,7 @@ export const CtaBannerDisplay: React.FC<Props> = ({ className, data }) => {
           data={data}
           enableGutter={false}
           enableProse={false}
-          className="cta-banner-richtext [&_p]:text-[24px] [&_p]:font-medium [&_p]:leading-7 [&_p]:tracking-[-0.72px] [&_p]:text-white [&_a]:text-[#ffb94a] [&_a]:hover:text-[#ffc96e] [&_a]:hover:underline"
+          className="cta-banner-richtext [&_p]:text-[24px] [&_p]:font-normal [&_p]:leading-7 [&_p]:tracking-[-0.72px] [&_p]:text-white [&_a]:text-[#ffb94a] [&_a]:hover:text-[#ffc96e] [&_a]:hover:underline"
         />
       </div>
     </div>

@@ -266,7 +266,7 @@
 }
 
 @utility text-h5 {
-  @apply text-[24px] leading-[28px];
+  @apply text-[24px] leading-[28px] -tracking-[0.03em];
   font-family: var(--font-sans);
 }
 
