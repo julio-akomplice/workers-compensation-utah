@@ -76,7 +76,7 @@ export const ContentWithSidebar: React.FC<Props> = ({
       {/* Right Sidebar - Desktop only */}
       {(form || sidebarExtra) && (
         <div className="hidden lg:block lg:w-[316px] lg:shrink-0">
-          <div className="sticky top-[120px] flex flex-col gap-5">
+          <div className="flex flex-col gap-5">
             {form && <ShortSideForm form={form} header={header} />}
             {sidebarExtra}
           </div>
