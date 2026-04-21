@@ -5,6 +5,7 @@ import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
 import type { Post, Category, Media as MediaType } from '@/payload-types'
 import { ArrowIcon } from '@/components/ui/ArrowIcon'
+import placeholderImage from '@/assets/placeholder/image-wcu-placeholder-cards.webp'
 
 type ArticlesSliderProps = {
   posts: Post[]
@@ -97,14 +98,20 @@ export const ArticlesSlider: React.FC<ArticlesSliderProps> = ({ posts, link }) =
                 className="articles-card snap-start shrink-0 w-[350px] md:w-[calc(50%-7.5px)] lg:w-[calc(33.333%-16.667px)] flex flex-col group"
               >
                 {/* Image */}
-                {heroImage && (
-                  <div className="aspect-[378/213] rounded-[10px] overflow-hidden">
+                <div className="aspect-378/213 rounded-[10px] overflow-hidden">
+                  {heroImage ? (
                     <Media
                       resource={heroImage}
                       imgClassName="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                  </div>
-                )}
+                  ) : (
+                    <img
+                      src={placeholderImage.src}
+                      alt=""
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  )}
+                </div>
 
                 {/* Content */}
                 <div className="flex flex-col gap-4 mt-[16px] md:mt-[18px]">
