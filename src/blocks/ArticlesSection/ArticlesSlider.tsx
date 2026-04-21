@@ -88,7 +88,13 @@ export const ArticlesSlider: React.FC<ArticlesSliderProps> = ({ posts, link }) =
         >
           {posts.map((post, index) => {
             const categories = getCategories(post)
-            const heroImage = typeof post.heroImage === 'object' ? post.heroImage : null
+            const metaImage =
+              post.meta?.image && typeof post.meta.image === 'object'
+                ? (post.meta.image as MediaType)
+                : null
+            const heroImage =
+              typeof post.heroImage === 'object' ? (post.heroImage as MediaType) : null
+            const image = metaImage || heroImage
             const metaDescription = post.meta?.description || ''
 
             return (
@@ -99,9 +105,9 @@ export const ArticlesSlider: React.FC<ArticlesSliderProps> = ({ posts, link }) =
               >
                 {/* Image */}
                 <div className="aspect-378/213 rounded-[10px] overflow-hidden">
-                  {heroImage ? (
+                  {image ? (
                     <Media
-                      resource={heroImage}
+                      resource={image}
                       imgClassName="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (
@@ -136,7 +142,7 @@ export const ArticlesSlider: React.FC<ArticlesSliderProps> = ({ posts, link }) =
                     </h3>
                     {/* Description - hidden on mobile */}
                     {metaDescription && (
-                      <p className="hidden md:block text-body text-deep-blue-800 tracking-[-0.32px]">
+                      <p className="hidden md:block line-clamp-3 text-body text-deep-blue-800 tracking-[-0.32px]">
                         {metaDescription}
                       </p>
                     )}
