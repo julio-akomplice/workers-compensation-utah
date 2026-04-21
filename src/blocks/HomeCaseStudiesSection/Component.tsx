@@ -42,7 +42,7 @@ export const HomeCaseStudiesSectionBlock: React.FC<Props> = ({
         {hasDesktop && (
           <div className={cn('mb-14.5', hasBoth && 'hidden md:block')}>
             <RichText
-              className={cn('text-center section-header [&_h2]:max-w-[30ch] *:mx-auto')}
+              className={cn('text-center section-header [&_h2]:max-w-[24ch] *:mx-auto')}
               data={sectionHeader}
               enableGutter={false}
               enableProse={false}
