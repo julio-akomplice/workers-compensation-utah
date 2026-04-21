@@ -133,7 +133,6 @@ export const HomeTestimonialSectionBlock: React.FC<Props> = ({
 
   // Desktop/tablet: click-to-change testimonials
   const [desktopTestimonialIndex, setDesktopTestimonialIndex] = useState(0)
-  const activeTestimonial = resolvedTestimonials[desktopTestimonialIndex]
 
   // Mobile: scroll-snap testimonial slider
   const testimonialSlider = useScrollSnap(resolvedTestimonials.length)
@@ -219,42 +218,48 @@ export const HomeTestimonialSectionBlock: React.FC<Props> = ({
 
             {/* Tablet/Desktop: Single testimonial card with dot navigation */}
             <div className="hidden md:block">
-              {activeTestimonial && (
-                <div className="rounded-lg bg-dark-blue-800">
-                  {/* Avatar + Name + Rating */}
-                  <div className="flex items-center justify-between bg-navy-900 p-5 rounded-t-[15px]">
-                    <div className="flex items-center gap-3">
-                      {activeTestimonial.avatar && (
-                        <div className="h-12 w-12 overflow-hidden rounded-full">
-                          <Media
-                            resource={activeTestimonial.avatar}
-                            pictureClassName="block h-12 w-12 object-cover"
-                            imgClassName="w-full h-full"
-                          />
+              <div className="grid">
+                {resolvedTestimonials.map((testimonial, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      'col-start-1 row-start-1 rounded-lg bg-dark-blue-800 transition-opacity duration-500',
+                      index === desktopTestimonialIndex ? 'opacity-100' : 'opacity-0 pointer-events-none',
+                    )}
+                  >
+                    {/* Avatar + Name + Rating */}
+                    <div className="flex items-center justify-between bg-navy-900 p-5 rounded-t-[15px]">
+                      <div className="flex items-center gap-3">
+                        {testimonial.avatar && (
+                          <div className="h-12 w-12 overflow-hidden rounded-full">
+                            <Media
+                              resource={testimonial.avatar}
+                              pictureClassName="block h-12 w-12 object-cover"
+                              imgClassName="w-full h-full"
+                            />
+                          </div>
+                        )}
+                        <div>
+                          <p className="text-h6 font-semibold text-white">{testimonial.name}</p>
+                          <p className="text-sm text-gray-300">{testimonial.title}</p>
                         </div>
-                      )}
-                      <div>
-                        <p className="text-h6 font-semibold text-white">
-                          {activeTestimonial.name}
-                        </p>
-                        <p className="text-sm text-gray-300">{activeTestimonial.title}</p>
                       </div>
+                      <StarRating rating={testimonial.rating} />
                     </div>
-                    <StarRating rating={activeTestimonial.rating} />
-                  </div>
 
-                  {/* Testimonial Text */}
-                  {activeTestimonial.testimonial && 'root' in activeTestimonial.testimonial && (
-                    <div className="text-body text-navy-50 p-5 bg-navy-1000 rounded-b-[15px]">
-                      <RichText
-                        data={activeTestimonial.testimonial}
-                        enableGutter={false}
-                        enableProse={false}
-                      />
-                    </div>
-                  )}
-                </div>
-              )}
+                    {/* Testimonial Text */}
+                    {testimonial.testimonial && 'root' in testimonial.testimonial && (
+                      <div className="text-body text-navy-50 p-5 bg-navy-1000 rounded-b-[15px]">
+                        <RichText
+                          data={testimonial.testimonial}
+                          enableGutter={false}
+                          enableProse={false}
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
 
               {/* Dot Navigation */}
               <DotNavigation
