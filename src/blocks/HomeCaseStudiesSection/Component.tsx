@@ -29,16 +29,24 @@ export const HomeCaseStudiesSectionBlock: React.FC<Props> = ({
     <section className="w-full bg-white py-16 md:py-25">
       <div className="container mx-auto px-4">
         {hasMobile && (
-          <div className={cn('mb-14.5 text-center section-header', hasBoth && 'md:hidden')}>
-            <RichText data={sectionHeaderMobile} enableGutter={false} enableProse={false} />
+          <div className={cn('mb-14.5', hasBoth && 'md:hidden')}>
+            <RichText
+              className={cn('text-center section-header [&_h2]:max-w-[30ch] *:mx-auto')}
+              data={sectionHeaderMobile}
+              enableGutter={false}
+              enableProse={false}
+            />
           </div>
         )}
 
         {hasDesktop && (
-          <div
-            className={cn('mb-14.5 text-center section-header', hasBoth && 'hidden md:block')}
-          >
-            <RichText data={sectionHeader} enableGutter={false} enableProse={false} />
+          <div className={cn('mb-14.5', hasBoth && 'hidden md:block')}>
+            <RichText
+              className={cn('text-center section-header [&_h2]:max-w-[30ch] *:mx-auto')}
+              data={sectionHeader}
+              enableGutter={false}
+              enableProse={false}
+            />
           </div>
         )}
 
