@@ -78,10 +78,10 @@ export const PracticeAreasSectionBlock: React.FC<Props> = async ({
 
                   <Link
                     href={`${practiceArea.slug}`}
-                    className="mt-4 inline-flex items-center gap-1 text-cta-tertiary text-navy-500 hover:text-orange"
+                    className="group mt-4 inline-flex items-center gap-1 text-cta-tertiary text-navy-500"
                   >
-                    Learn More
-                    <ArrowIcon className="w-6 h-6 text-gold" />
+                    <span className="group-hover:underline">Learn More</span>
+                    <ArrowIcon className="w-6 h-6 text-gold transition-transform group-hover:translate-x-0.75" />
                   </Link>
                 </div>
               )
