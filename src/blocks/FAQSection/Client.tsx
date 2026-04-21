@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import type { Faq } from 'src/payload-types'
 
@@ -32,26 +32,42 @@ const FAQItem: React.FC<{ faq: Faq; isOpen: boolean; onToggle: () => void }> = (
   isOpen,
   onToggle,
 }) => {
+  const contentRef = useRef<HTMLDivElement>(null)
+  const [height, setHeight] = useState(0)
+
+  useEffect(() => {
+    const el = contentRef.current
+    if (!el) return
+    if (isOpen) {
+      setHeight(el.scrollHeight)
+      const onResize = () => setHeight(el.scrollHeight)
+      window.addEventListener('resize', onResize)
+      return () => window.removeEventListener('resize', onResize)
+    } else {
+      setHeight(0)
+    }
+  }, [isOpen])
+
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col">
       <button
         onClick={onToggle}
-        className="flex w-full cursor-pointer items-center justify-between text-left"
+        className="flex w-full cursor-pointer items-center justify-between py-5 text-left"
       >
         <p className="pr-4 text-[16px] font-medium leading-normal tracking-[-0.32px] text-off-white md:text-[17px] md:tracking-[-0.34px]">
           {faq.question}
         </p>
-        <div className="flex size-[38px] shrink-0 items-center justify-center">
+        <div className="flex size-[38px] shrink-0 items-center justify-center [&_svg]:size-5">
           <PlusIcon isOpen={isOpen} />
         </div>
       </button>
 
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        ref={contentRef}
+        className="overflow-hidden transition-[height] duration-300 ease-in-out"
+        style={{ height }}
       >
-        <p className="pb-2 text-[15px] leading-[24px] tracking-[-0.3px] text-navy-200 md:text-[16px] md:leading-[25px]">
+        <p className="pb-5 text-[15px] leading-[24px] tracking-[-0.3px] text-navy-200 md:text-[16px] md:leading-[25px]">
           {faq.shortAnswer}
         </p>
       </div>
@@ -82,7 +98,7 @@ export const FAQSectionClient: React.FC<Props> = ({ sectionHeader, faqs, link })
         )}
 
         {/* FAQ Items */}
-        <div className="mx-auto flex max-w-[793px] flex-col gap-5">
+        <div className="mx-auto flex max-w-[793px] flex-col">
           {resolvedFaqs.map((faq, index) => (
             <FAQItem
               key={faq.id}
