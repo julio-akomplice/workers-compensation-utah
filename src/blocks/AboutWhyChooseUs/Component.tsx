@@ -12,17 +12,27 @@ type Props = {
 export const AboutWhyChooseUsBlock: React.FC<Props> = ({
   sectionHeader,
   backgroundImage,
+  mobileBackgroundImage,
   items,
 }) => {
   return (
     <section className="w-full relative overflow-hidden py-[100px] md:py-20 lg:py-25">
       {/* Background image + overlay */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-        <Media
-          resource={backgroundImage}
-          imgClassName="w-full h-full object-cover"
-          className="absolute inset-0 h-full w-full"
-        />
+        {mobileBackgroundImage && (
+          <div className="absolute inset-0 md:hidden">
+            <Media
+              resource={mobileBackgroundImage}
+              imgClassName="w-full h-full object-cover"
+            />
+          </div>
+        )}
+        <div className={`absolute inset-0 ${mobileBackgroundImage ? 'hidden md:block' : ''}`}>
+          <Media
+            resource={backgroundImage}
+            imgClassName="w-full h-full object-cover"
+          />
+        </div>
         <div className="absolute inset-0 bg-deep-blue-1000/80" />
       </div>
 

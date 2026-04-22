@@ -2173,6 +2173,7 @@ export interface AboutWhyChooseUsBlock {
     [k: string]: unknown;
   } | null;
   backgroundImage: string | Media;
+  mobileBackgroundImage?: (string | null) | Media;
   items?:
     | {
         icon: string | Media;
@@ -3843,6 +3844,7 @@ export interface AboutAboutFirmBlockSelect<T extends boolean = true> {
 export interface AboutWhyChooseUsBlockSelect<T extends boolean = true> {
   sectionHeader?: T;
   backgroundImage?: T;
+  mobileBackgroundImage?: T;
   items?:
     | T
     | {

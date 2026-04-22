@@ -18,6 +18,12 @@ export const AboutWhyChooseUs: Block = {
       required: true,
     },
     {
+      name: 'mobileBackgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+    },
+    {
       name: 'items',
       type: 'array',
       label: 'Items',
