@@ -146,8 +146,8 @@ export const ArticlesSlider: React.FC<ArticlesSliderProps> = ({ posts, link }) =
 
                   {/* Read More */}
                   <div className="flex items-center gap-1 text-navy-500 font-medium text-body tracking-[-0.32px]">
-                    <span>Read More</span>
-                    <ArrowIcon className="w-6 h-6 text-gold" />
+                    <span className="group-hover:underline">Read More</span>
+                    <ArrowIcon className="w-6 h-6 text-gold transition-transform duration-200 group-hover:translate-x-[3px]" />
                   </div>
                 </div>
               </a>
