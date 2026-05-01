@@ -19,6 +19,9 @@ import { CaseQuestionnaireCTABlock } from '../../blocks/CaseQuestionnaireCTABloc
 import { Code } from '../../blocks/Code/config'
 import { CtaBanner } from '../../blocks/CtaBanner/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { PhoneInlineBlock } from '../../blocks/PhoneInlineBlock/config'
+import { PhoneWorkInlineBlock } from '../../blocks/PhoneWorkInlineBlock/config'
+import { VideoBlock } from '../../blocks/VideoBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
@@ -98,7 +101,10 @@ export const Posts: CollectionConfig<'posts'> = {
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
                     UnorderedListFeature(),
                     OrderedListFeature(),
-                    BlocksFeature({ blocks: [Banner, Blockquote, CaseQuestionnaireCTABlock, Code, CtaBanner, MediaBlock] }),
+                    BlocksFeature({
+                      blocks: [Banner, Blockquote, CaseQuestionnaireCTABlock, Code, CtaBanner, MediaBlock, VideoBlock],
+                      inlineBlocks: [PhoneInlineBlock, PhoneWorkInlineBlock],
+                    }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
