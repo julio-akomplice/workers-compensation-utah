@@ -1,6 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
+import NextImage from 'next/image'
 import { Phone } from 'lucide-react'
+
+import wcuLogo from './wcu-logo.webp'
 
 /**
  * Static, frontend-only footer for landing pages.
@@ -30,12 +33,10 @@ const valueClass = 'text-body font-medium text-navy-200 tracking-[-0.32px] leadi
 export const LandingFooter: React.FC = () => {
   const logoEl = (
     <Link href="/" className="block h-17.25 w-51.75 shrink-0" aria-label="Workers Compensation Utah — home">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/media/wcu-logo.png"
+      <NextImage
+        src={wcuLogo}
         alt="Workers Compensation Utah"
-        width={207}
-        height={69}
+        sizes="207px"
         className="h-17.25 w-51.75 object-contain object-left"
       />
     </Link>
