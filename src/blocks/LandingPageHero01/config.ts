@@ -12,8 +12,8 @@ export const LandingPageHero01: Block = {
   slug: 'landingPageHero01',
   interfaceName: 'LandingPageHero01Block',
   labels: {
-    singular: 'Hero 01',
-    plural: 'Hero 01 Blocks',
+    singular: 'LP Hero 01',
+    plural: 'LP Hero 01 Blocks',
   },
   fields: [
     {

@@ -23,8 +23,8 @@ export const LandingPageFooter: Block = {
   slug: 'landingPageFooter',
   interfaceName: 'LandingPageFooterBlock',
   labels: {
-    singular: 'Footer',
-    plural: 'Footers',
+    singular: 'LP Footer',
+    plural: 'LP Footers',
   },
   fields: [
     {

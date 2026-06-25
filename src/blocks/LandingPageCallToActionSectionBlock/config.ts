@@ -7,8 +7,8 @@ export const LandingPageCallToActionSection: Block = {
   slug: 'landingPageCallToActionSection',
   interfaceName: 'LandingPageCallToActionSectionBlock',
   labels: {
-    singular: 'Call To Action Section',
-    plural: 'Call To Action Sections',
+    singular: 'LP Call To Action Section',
+    plural: 'LP Call To Action Sections',
   },
   fields: [
     sectionHeader({
