@@ -17,6 +17,7 @@ import { SchemaMarkup } from '@/components/SchemaMarkup'
 import PageClient from './page.client'
 import { ContentWithSidebar } from '@/components/ContentWithSidebar'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { PageLayout } from '@/components/PageLayout'
 import { FactCheckedBy } from './FactCheckedBy'
 import { BlogPostCTA } from './BlogPostCTA'
 import { PostNavigation } from './PostNavigation'
@@ -73,6 +74,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       : []
 
   return (
+    <PageLayout>
     <article className="desktop:pt-header">
       <SchemaMarkup schema={post.meta?.schema} />
       <PageClient docId={post.id} collectionSlug="posts" />
@@ -159,6 +161,7 @@ export default async function Post({ params: paramsPromise }: Args) {
         </div>
       </section>
     </article>
+    </PageLayout>
   )
 }
 

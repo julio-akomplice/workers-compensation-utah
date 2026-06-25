@@ -15,6 +15,7 @@ import { SchemaMarkup } from '@/components/SchemaMarkup'
 import RichText from '@/components/RichText'
 import { ContentWithSidebar } from '@/components/ContentWithSidebar'
 import { getShortSideForm } from '@/utilities/getShortSideForm'
+import { PageLayout } from '@/components/PageLayout'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
@@ -55,6 +56,7 @@ export default async function IndividualFAQPage({ params: paramsPromise }: Args)
   const { question, answer } = faq
 
   return (
+    <PageLayout>
     <article>
       <SchemaMarkup schema={faq.meta?.schema} />
       <PageClient />
@@ -92,6 +94,7 @@ export default async function IndividualFAQPage({ params: paramsPromise }: Args)
         </section>
       )}
     </article>
+    </PageLayout>
   )
 }
 

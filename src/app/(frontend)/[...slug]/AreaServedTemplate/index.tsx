@@ -13,6 +13,7 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { getShortSideForm } from '@/utilities/getShortSideForm'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
+import { PageLayout } from '@/components/PageLayout'
 import PageClient from '../page.client'
 import { queryAreaServedBySlug } from './queries'
 
@@ -47,7 +48,8 @@ export const AreaServedTemplate: React.FC<Props> = ({ areaServed, url, draft, fo
     .filter((p): p is NonNullable<typeof p> => p !== null)
 
   return (
-    <article>
+    <PageLayout>
+      <article>
       <SchemaMarkup schema={meta?.schema} />
       <PageClient docId={areaServed.id} collectionSlug="areas-served" />
       <PayloadRedirects disableNotFound url={url} />
@@ -82,7 +84,8 @@ export const AreaServedTemplate: React.FC<Props> = ({ areaServed, url, draft, fo
         </section>
       )}
       <RenderBlocks blocks={layout as Page['layout'][0][]} />
-    </article>
+      </article>
+    </PageLayout>
   )
 }
 

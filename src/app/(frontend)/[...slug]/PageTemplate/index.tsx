@@ -9,6 +9,7 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { generateMeta } from '@/utilities/generateMeta'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
+import { PageLayout } from '@/components/PageLayout'
 import PageClient from '../page.client'
 import { queryPageBySlug } from './queries'
 
@@ -22,14 +23,16 @@ export const PageTemplate: React.FC<Props> = ({ page, url, draft }) => {
   const { hero, layout, solidMenu, meta } = page
 
   return (
-    <article className={solidMenu ? 'navbar:pt-header' : ''}>
-      <SchemaMarkup schema={meta?.schema} />
-      <PageClient solidMenu={solidMenu ?? false} docId={page.id} collectionSlug="pages" />
-      <PayloadRedirects disableNotFound url={url} />
-      {draft && <LivePreviewListener />}
-      <RenderHero {...hero} />
-      <RenderBlocks blocks={layout} />
-    </article>
+    <PageLayout>
+      <article className={solidMenu ? 'navbar:pt-header' : ''}>
+        <SchemaMarkup schema={meta?.schema} />
+        <PageClient solidMenu={solidMenu ?? false} docId={page.id} collectionSlug="pages" />
+        <PayloadRedirects disableNotFound url={url} />
+        {draft && <LivePreviewListener />}
+        <RenderHero {...hero} />
+        <RenderBlocks blocks={layout} />
+      </article>
+    </PageLayout>
   )
 }
 
