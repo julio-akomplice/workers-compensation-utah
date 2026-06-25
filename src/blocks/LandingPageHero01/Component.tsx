@@ -36,11 +36,11 @@ export const LandingPageHero01Block: React.FC<Props> = ({
       <div className="absolute inset-0 -z-10 bg-[#00152b]/40" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#00152b]/85 via-[#00152b]/35 to-transparent" />
 
-      <div className="mx-auto w-full max-w-none px-5 md:px-12 navbar:grid navbar:min-h-screen navbar:max-w-[1320px] navbar:grid-cols-[minmax(0,1fr)_454px] navbar:items-center navbar:gap-x-[62px] navbar:px-16 navbar:py-[120px]">
+      <div className="container mx-auto px-5 md:px-8 navbar:grid navbar:min-h-[calc(100vh-92px)] navbar:grid-cols-[minmax(0,1fr)_454px] navbar:items-center navbar:gap-x-[62px] navbar:py-16">
         {/* Left: headline + supportive text + bullets.
             On tablet and down it fills the viewport (minus the solid header) so it reads
             as a full screen before the form below; resets inside the grid on desktop. */}
-        <div className="flex min-h-[calc(100svh-var(--header-height))] flex-col justify-center gap-10 py-12 text-white navbar:min-h-0 navbar:justify-start navbar:gap-[50px] navbar:py-0">
+        <div className="flex min-h-[calc(100svh-92px)] flex-col justify-center gap-10 py-8 text-white navbar:min-h-0 navbar:justify-start navbar:gap-[50px] navbar:py-0">
           <div className="flex flex-col gap-8 navbar:gap-[50px]">
             <h1 className="sr-only">{headlineText}</h1>
             {headlineImage && typeof headlineImage === 'object' && (
@@ -77,7 +77,7 @@ export const LandingPageHero01Block: React.FC<Props> = ({
 
         {/* Right (desktop) / below (mobile + tablet): consultation form.
             Full-bleed white background below `navbar`, floating white card at/above it. */}
-        <div className="-mx-5 bg-white px-5 pb-12 pt-10 md:-mx-12 md:px-12 navbar:mx-0 navbar:bg-transparent navbar:px-0 navbar:pb-0 navbar:pt-0">
+        <div className="-mx-5 bg-white px-5 pb-12 pt-10 md:-mx-8 md:px-8 navbar:mx-0 navbar:bg-transparent navbar:px-0 navbar:pb-0 navbar:pt-0">
           <div className="mx-auto flex w-full max-w-[596px] flex-col gap-6 navbar:max-w-none navbar:rounded-[15px] navbar:bg-white navbar:px-8 navbar:pb-[34px] navbar:pt-[35px] navbar:shadow-xl">
             {(formHeading || formSubheading) && (
               <div className="flex flex-col gap-2 text-center">
