@@ -4,6 +4,7 @@ import { postsSlug } from './constants'
 const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
   posts: `/${postsSlug}`,
   pages: '',
+  'landing-pages': '',
   'practice-areas': '',
   'areas-served': '',
   faq: '/faq',
