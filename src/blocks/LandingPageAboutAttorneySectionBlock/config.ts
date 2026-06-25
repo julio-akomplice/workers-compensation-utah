@@ -13,8 +13,8 @@ export const LandingPageAboutAttorneySection: Block = {
   slug: 'landingPageAboutAttorneySection',
   interfaceName: 'LandingPageAboutAttorneySectionBlock',
   labels: {
-    singular: 'Landing Page About Attorney Section',
-    plural: 'Landing Page About Attorney Sections',
+    singular: 'About Attorney Section',
+    plural: 'About Attorney Sections',
   },
   fields: [
     {

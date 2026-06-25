@@ -6,8 +6,8 @@ export const LandingPageWhyUsSection: Block = {
   slug: 'landingPageWhyUsSection',
   interfaceName: 'LandingPageWhyUsSectionBlock',
   labels: {
-    singular: 'Landing Page Why Us Section',
-    plural: 'Landing Page Why Us Sections',
+    singular: 'Why Us Section',
+    plural: 'Why Us Sections',
   },
   fields: [
     sectionHeader(),

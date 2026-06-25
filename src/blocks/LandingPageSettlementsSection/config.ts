@@ -6,8 +6,8 @@ export const LandingPageSettlementsSection: Block = {
   slug: 'landingPageSettlementsSection',
   interfaceName: 'LandingPageSettlementsSectionBlock',
   labels: {
-    singular: 'Landing Page Settlements Section',
-    plural: 'Landing Page Settlements Sections',
+    singular: 'Settlements Section',
+    plural: 'Settlements Sections',
   },
   fields: [
     sectionHeader(),
