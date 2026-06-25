@@ -77,7 +77,7 @@ export const LandingPageHero01Block: React.FC<Props> = ({
 
         {/* Right (desktop) / below (mobile + tablet): consultation form.
             Full-bleed white background below `navbar`, floating white card at/above it. */}
-        <div className="-mx-5 bg-white px-5 pb-12 pt-10 md:-mx-8 md:px-8 navbar:mx-0 navbar:bg-transparent navbar:px-0 navbar:pb-0 navbar:pt-0">
+        <div className="mx-[calc(50%-50vw)] bg-white px-5 pb-12 pt-10 md:px-8 navbar:mx-0 navbar:bg-transparent navbar:px-0 navbar:pb-0 navbar:pt-0">
           <div className="mx-auto flex w-full max-w-[596px] flex-col gap-6 navbar:max-w-none navbar:rounded-[15px] navbar:bg-white navbar:px-8 navbar:pb-[34px] navbar:pt-[35px] navbar:shadow-xl">
             {(formHeading || formSubheading) && (
               <div className="flex flex-col gap-2 text-center">
