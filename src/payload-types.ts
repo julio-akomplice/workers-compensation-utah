@@ -2832,7 +2832,6 @@ export interface LandingPage {
     | LandingPageAboutAttorneySectionBlock
     | LandingPageTestimonialsSectionBlock
     | LandingPageCallToActionSectionBlock
-    | LandingPageFooterBlock
   )[];
   /**
    * Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.
@@ -3163,77 +3162,6 @@ export interface LandingPageCallToActionSectionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'landingPageCallToActionSection';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LandingPageFooterBlock".
- */
-export interface LandingPageFooterBlock {
-  link?: {
-    /**
-     * Footer logo (SVG recommended).
-     */
-    logo?: (string | null) | Media;
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null)
-      | ({
-          relationTo: 'practice-areas';
-          value: string | PracticeArea;
-        } | null)
-      | ({
-          relationTo: 'areas-served';
-          value: string | AreasServed;
-        } | null);
-    url?: string | null;
-    showArrow?: boolean | null;
-  };
-  phone: {
-    label: string;
-    value: string;
-    /**
-     * e.g. tel:8014249675
-     */
-    url: string;
-  };
-  office: {
-    label: string;
-    value: string;
-    /**
-     * Optional Google Maps link for the address.
-     */
-    mapUrl?: string | null;
-  };
-  serving: {
-    label: string;
-    value: string;
-  };
-  disclaimer?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'landingPageFooter';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4695,7 +4623,6 @@ export interface LandingPagesSelect<T extends boolean = true> {
         landingPageAboutAttorneySection?: T | LandingPageAboutAttorneySectionBlockSelect<T>;
         landingPageTestimonialsSection?: T | LandingPageTestimonialsSectionBlockSelect<T>;
         landingPageCallToActionSection?: T | LandingPageCallToActionSectionBlockSelect<T>;
-        landingPageFooter?: T | LandingPageFooterBlockSelect<T>;
       };
   solidMenu?: T;
   meta?:
@@ -4839,45 +4766,6 @@ export interface LandingPageCallToActionSectionBlockSelect<T extends boolean = t
         showArrow?: T;
         appearance?: T;
       };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LandingPageFooterBlock_select".
- */
-export interface LandingPageFooterBlockSelect<T extends boolean = true> {
-  link?:
-    | T
-    | {
-        logo?: T;
-        type?: T;
-        newTab?: T;
-        reference?: T;
-        url?: T;
-        showArrow?: T;
-      };
-  phone?:
-    | T
-    | {
-        label?: T;
-        value?: T;
-        url?: T;
-      };
-  office?:
-    | T
-    | {
-        label?: T;
-        value?: T;
-        mapUrl?: T;
-      };
-  serving?:
-    | T
-    | {
-        label?: T;
-        value?: T;
-      };
-  disclaimer?: T;
   id?: T;
   blockName?: T;
 }

@@ -44,7 +44,6 @@ import { LandingPageAboutAttorneySectionBlock } from '@/blocks/LandingPageAboutA
 import { LandingPageHero01Block } from '@/blocks/LandingPageHero01/Component'
 import { LandingPageTestimonialsSectionBlock } from '@/blocks/LandingPageTestimonialsSectionBlock/Component'
 import { LandingPageCallToActionSectionBlock } from '@/blocks/LandingPageCallToActionSectionBlock/Component'
-import { LandingPageFooterBlock } from '@/blocks/LandingPageFooterBlock/Component'
 
 const blockComponents = {
   awards: AwardsBlock,
@@ -89,7 +88,6 @@ const blockComponents = {
   landingPageHero01: LandingPageHero01Block,
   landingPageTestimonialsSection: LandingPageTestimonialsSectionBlock,
   landingPageCallToActionSection: LandingPageCallToActionSectionBlock,
-  landingPageFooter: LandingPageFooterBlock,
 }
 
 export const RenderBlocks: React.FC<{
