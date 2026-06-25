@@ -20,7 +20,7 @@ export const LandingPageCallToActionSectionBlock: React.FC<Props> = ({
     <section className="w-full bg-off-white py-15 md:py-20 lg:py-30">
       <div className="container mx-auto flex flex-col items-center gap-[50px] px-5 text-center md:px-8">
         {sectionHeader && 'root' in sectionHeader && (
-          <div className="section-header max-w-[806px]">
+          <div className="section-header max-w-[806px] text-balance">
             <RichText data={sectionHeader} enableGutter={false} enableProse={false} />
           </div>
         )}
