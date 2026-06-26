@@ -3083,24 +3083,9 @@ export interface LandingPageTestimonialsSectionBlock {
     [k: string]: unknown;
   } | null;
   /**
-   * Each card shows a client photo, name, rating and quote.
+   * Select testimonials to display.
    */
-  testimonials?:
-    | {
-        avatar: string | Media;
-        name: string;
-        /**
-         * Shown under the name, e.g. "WCU Client".
-         */
-        title: string;
-        /**
-         * Number of stars (0–5).
-         */
-        rating: number;
-        quote: string;
-        id?: string | null;
-      }[]
-    | null;
+  testimonials?: (string | Testimonial)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'landingPageTestimonialsSection';
@@ -4737,16 +4722,7 @@ export interface LandingPageAboutAttorneySectionBlockSelect<T extends boolean = 
  */
 export interface LandingPageTestimonialsSectionBlockSelect<T extends boolean = true> {
   sectionHeader?: T;
-  testimonials?:
-    | T
-    | {
-        avatar?: T;
-        name?: T;
-        title?: T;
-        rating?: T;
-        quote?: T;
-        id?: T;
-      };
+  testimonials?: T;
   id?: T;
   blockName?: T;
 }

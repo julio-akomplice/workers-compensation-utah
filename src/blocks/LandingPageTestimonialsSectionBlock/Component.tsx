@@ -3,6 +3,7 @@
 import React from 'react'
 
 import type { LandingPageTestimonialsSectionBlock as LandingPageTestimonialsSectionBlockProps } from 'src/payload-types'
+import type { Testimonial } from 'src/payload-types'
 
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
@@ -12,29 +13,6 @@ import { useScrollSnap, DotNavigation } from '@/components/ui/ScrollSlider'
 type Props = {
   className?: string
 } & LandingPageTestimonialsSectionBlockProps
-
-type TestimonialItem = NonNullable<LandingPageTestimonialsSectionBlockProps['testimonials']>[number]
-
-const GoogleIcon: React.FC = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M18.171 8.368h-.67v-.035H10v3.333h4.709A5.001 5.001 0 0 1 5 10a5 5 0 0 1 5-5c1.275 0 2.434.48 3.317 1.266l2.357-2.357A8.295 8.295 0 0 0 10 1.667a8.334 8.334 0 1 0 8.171 6.7z"
-      fill="#FFC107"
-    />
-    <path
-      d="M2.628 6.121l2.74 2.009A5.002 5.002 0 0 1 10 5c1.275 0 2.434.48 3.317 1.266l2.357-2.357A8.295 8.295 0 0 0 10 1.667 8.329 8.329 0 0 0 2.628 6.12z"
-      fill="#FF3D00"
-    />
-    <path
-      d="M10 18.333a8.294 8.294 0 0 0 5.587-2.163l-2.579-2.183A4.963 4.963 0 0 1 10 15a5.001 5.001 0 0 1-4.701-3.316l-2.72 2.095A8.326 8.326 0 0 0 10 18.333z"
-      fill="#4CAF50"
-    />
-    <path
-      d="M18.171 8.368H17.5v-.035H10v3.333h4.71a5.017 5.017 0 0 1-1.703 2.321l2.58 2.183c-.183.166 2.746-2.003 2.746-6.17 0-.559-.057-1.104-.163-1.632z"
-      fill="#1976D2"
-    />
-  </svg>
-)
 
 const StarRating: React.FC<{ rating: number }> = ({ rating }) => (
   <div className="flex gap-0.5 text-lg">
@@ -47,7 +25,7 @@ const StarRating: React.FC<{ rating: number }> = ({ rating }) => (
 )
 
 const TestimonialCard: React.FC<{
-  testimonial: TestimonialItem
+  testimonial: Testimonial
   className?: string
 }> = ({ testimonial, className }) => {
   return (
@@ -65,21 +43,16 @@ const TestimonialCard: React.FC<{
             </div>
           )}
           <div>
-            <div className="flex items-center gap-1.5">
-              <p className="text-h6 font-semibold tracking-[-0.6px] text-white">
-                {testimonial.name}
-              </p>
-              <GoogleIcon />
-            </div>
+            <p className="text-h6 font-semibold tracking-[-0.6px] text-white">{testimonial.name}</p>
             <p className="text-[16px] tracking-[-0.32px] text-navy-50">{testimonial.title}</p>
           </div>
         </div>
         <StarRating rating={testimonial.rating} />
       </div>
       {/* Body */}
-      {testimonial.quote && (
+      {testimonial.testimonial && 'root' in testimonial.testimonial && (
         <div className="bg-navy-1000 px-5 py-5 text-[16px] leading-[24px] tracking-[-0.32px] text-navy-50 lg:text-[17px] lg:leading-[25px] lg:tracking-[-0.34px]">
-          {testimonial.quote}
+          <RichText data={testimonial.testimonial} enableGutter={false} enableProse={false} />
         </div>
       )}
     </div>
@@ -90,7 +63,9 @@ export const LandingPageTestimonialsSectionBlock: React.FC<Props> = ({
   sectionHeader,
   testimonials,
 }) => {
-  const resolvedTestimonials = testimonials ?? []
+  const resolvedTestimonials = (testimonials ?? []).filter(
+    (t): t is Testimonial => typeof t !== 'string',
+  )
   const testimonialSlider = useScrollSnap(resolvedTestimonials.length)
 
   return (
