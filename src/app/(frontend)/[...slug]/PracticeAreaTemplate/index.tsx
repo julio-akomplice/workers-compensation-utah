@@ -13,6 +13,7 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { getShortSideForm } from '@/utilities/getShortSideForm'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
+import { PageLayout } from '@/components/PageLayout'
 import PageClient from '../page.client'
 import { queryPracticeAreaBySlug } from './queries'
 
@@ -36,7 +37,8 @@ export const PracticeAreaTemplate: React.FC<Props> = ({ practiceArea, url, draft
     }))
 
   return (
-    <article>
+    <PageLayout>
+      <article>
       <SchemaMarkup schema={meta?.schema} />
       <PageClient docId={practiceArea.id} collectionSlug="practice-areas" />
       <PayloadRedirects disableNotFound url={url} />
@@ -71,7 +73,8 @@ export const PracticeAreaTemplate: React.FC<Props> = ({ practiceArea, url, draft
         </section>
       )}
       <RenderBlocks blocks={layout as Page['layout'][0][]} />
-    </article>
+      </article>
+    </PageLayout>
   )
 }
 

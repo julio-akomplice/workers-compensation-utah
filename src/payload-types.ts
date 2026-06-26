@@ -69,6 +69,7 @@ export interface Config {
   blocks: {};
   collections: {
     pages: Page;
+    'landing-pages': LandingPage;
     posts: Post;
     'practice-areas': PracticeArea;
     'practice-area-categories': PracticeAreaCategory;
@@ -100,6 +101,7 @@ export interface Config {
   };
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
+    'landing-pages': LandingPagesSelect<false> | LandingPagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'practice-areas': PracticeAreasSelect<false> | PracticeAreasSelect<true>;
     'practice-area-categories': PracticeAreaCategoriesSelect<false> | PracticeAreaCategoriesSelect<true>;
@@ -2759,6 +2761,411 @@ export interface AwardsSectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-pages".
+ */
+export interface LandingPage {
+  id: string;
+  title: string;
+  hero: {
+    type: 'none' | 'mediumImpact' | 'homeHero';
+    title?: string | null;
+    supportiveText?: string | null;
+    headlineImage?: (string | null) | Media;
+    links?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: string | Post;
+                } | null)
+              | ({
+                  relationTo: 'practice-areas';
+                  value: string | PracticeArea;
+                } | null)
+              | ({
+                  relationTo: 'areas-served';
+                  value: string | AreasServed;
+                } | null);
+            url?: string | null;
+            label: string;
+            showArrow?: boolean | null;
+            /**
+             * Choose how the link should be rendered.
+             */
+            appearance?: 'gradient' | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Optional video background. If provided, it will be used instead of the background image.
+     */
+    backgroundVideo?: {
+      video?: (string | null) | Media;
+      /**
+       * Poster image shown while the video loads.
+       */
+      poster?: (string | null) | Media;
+    };
+    background?: (string | null) | Media;
+  };
+  layout: (
+    | LandingPageHero01Block
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | FormBlock
+    | TestimonialsSectionBlock
+    | FAQSectionBlock
+    | ContactSectionBlock
+    | CaseQuestionnaireCTABlock
+    | LandingPageResultsSectionBlock
+    | LandingPageSettlementsSectionBlock
+    | LandingPageWhyUsSectionBlock
+    | LandingPageAboutAttorneySectionBlock
+    | LandingPageTestimonialsSectionBlock
+    | LandingPageCallToActionSectionBlock
+    | AwardsSectionBlock
+  )[];
+  /**
+   * Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.
+   */
+  solidMenu?: boolean | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+    /**
+     * Add JSON-LD schema markup objects for this page.
+     */
+    schema?:
+      | {
+          data:
+            | {
+                [k: string]: unknown;
+              }
+            | unknown[]
+            | string
+            | number
+            | boolean
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  publishedAt?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  deletedAt?: string | null;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageHero01Block".
+ */
+export interface LandingPageHero01Block {
+  background: string | Media;
+  /**
+   * The visible headline graphic, e.g. "INJURED at Work in Utah?".
+   */
+  headlineImage: string | Media;
+  /**
+   * Visually hidden H1 for SEO and screen readers. Should match the headline image text, e.g. "Injured at Work in Utah?".
+   */
+  headlineText: string;
+  /**
+   * Bold, white lead-in for the supportive sentence.
+   */
+  supportiveLead?: string | null;
+  supportiveText?: string | null;
+  /**
+   * Use a bulleted list. Bold the lead-in of each point to render it in white (the rest is shown in light navy).
+   */
+  bullets?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  formHeading?: string | null;
+  formSubheading?: string | null;
+  form: string | Form;
+  formDisclaimer?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'landingPageHero01';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageResultsSectionBlock".
+ */
+export interface LandingPageResultsSectionBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  results?:
+    | {
+        icon: string | Media;
+        /**
+         * The headline figure, e.g. "$2M+" or "30 yrs".
+         */
+        stat: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'landingPageResultsSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageSettlementsSectionBlock".
+ */
+export interface LandingPageSettlementsSectionBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image: string | Media;
+  /**
+   * Each row shows a settlement amount and a short case description.
+   */
+  settlements?:
+    | {
+        /**
+         * e.g. "$2,000,000" or "$400,000+"
+         */
+        amount: string;
+        /**
+         * Bold lead-in, e.g. "Workers' comp" or "Personal injury settlement".
+         */
+        label: string;
+        /**
+         * Optional muted detail shown after the label, e.g. "wage loss & medical care after a chemical explosion". Leave empty to show only the label.
+         */
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  disclaimer?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'landingPageSettlementsSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageWhyUsSectionBlock".
+ */
+export interface LandingPageWhyUsSectionBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  backgroundImage: string | Media;
+  mobileBackgroundImage?: (string | null) | Media;
+  items?:
+    | {
+        icon: string | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'landingPageWhyUsSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageAboutAttorneySectionBlock".
+ */
+export interface LandingPageAboutAttorneySectionBlock {
+  /**
+   * Use Supportive Text for the gold eyebrow caption, an H2 for the heading, and paragraphs for the body copy.
+   */
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  image: string | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'landingPageAboutAttorneySection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageTestimonialsSectionBlock".
+ */
+export interface LandingPageTestimonialsSectionBlock {
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Each card shows a client photo, name, rating and quote.
+   */
+  testimonials?:
+    | {
+        avatar: string | Media;
+        name: string;
+        /**
+         * Shown under the name, e.g. "WCU Client".
+         */
+        title: string;
+        /**
+         * Number of stars (0–5).
+         */
+        rating: number;
+        quote: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'landingPageTestimonialsSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageCallToActionSectionBlock".
+ */
+export interface LandingPageCallToActionSectionBlock {
+  /**
+   * Use Supportive Text for the gold eyebrow caption, an H2 for the heading, and a paragraph for the body copy.
+   */
+  sectionHeader?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Label for the gradient phone button (e.g. "(801) 424-WORK (9675)").
+   */
+  phoneLabel: string;
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'practice-areas';
+          value: string | PracticeArea;
+        } | null)
+      | ({
+          relationTo: 'areas-served';
+          value: string | AreasServed;
+        } | null);
+    url?: string | null;
+    label: string;
+    showArrow?: boolean | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: 'outline' | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'landingPageCallToActionSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cta-banners".
  */
 export interface CtaBanner {
@@ -3278,6 +3685,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'landing-pages';
+        value: string | LandingPage;
       } | null)
     | ({
         relationTo: 'posts';
@@ -4154,6 +4565,208 @@ export interface AwardsSectionBlockSelect<T extends boolean = true> {
     | {
         image?: T;
         id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-pages_select".
+ */
+export interface LandingPagesSelect<T extends boolean = true> {
+  title?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        title?: T;
+        supportiveText?: T;
+        headlineImage?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    showArrow?: T;
+                    appearance?: T;
+                  };
+              id?: T;
+            };
+        backgroundVideo?:
+          | T
+          | {
+              video?: T;
+              poster?: T;
+            };
+        background?: T;
+      };
+  layout?:
+    | T
+    | {
+        landingPageHero01?: T | LandingPageHero01BlockSelect<T>;
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        testimonialsSection?: T | TestimonialsSectionBlockSelect<T>;
+        faqSection?: T | FAQSectionBlockSelect<T>;
+        contactSection?: T | ContactSectionBlockSelect<T>;
+        caseQuestionnaireCTA?: T | CaseQuestionnaireCTABlockSelect<T>;
+        landingPageResultsSection?: T | LandingPageResultsSectionBlockSelect<T>;
+        landingPageSettlementsSection?: T | LandingPageSettlementsSectionBlockSelect<T>;
+        landingPageWhyUsSection?: T | LandingPageWhyUsSectionBlockSelect<T>;
+        landingPageAboutAttorneySection?: T | LandingPageAboutAttorneySectionBlockSelect<T>;
+        landingPageTestimonialsSection?: T | LandingPageTestimonialsSectionBlockSelect<T>;
+        landingPageCallToActionSection?: T | LandingPageCallToActionSectionBlockSelect<T>;
+        awardsSection?: T | AwardsSectionBlockSelect<T>;
+      };
+  solidMenu?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+        schema?:
+          | T
+          | {
+              data?: T;
+              id?: T;
+            };
+      };
+  publishedAt?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  deletedAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageHero01Block_select".
+ */
+export interface LandingPageHero01BlockSelect<T extends boolean = true> {
+  background?: T;
+  headlineImage?: T;
+  headlineText?: T;
+  supportiveLead?: T;
+  supportiveText?: T;
+  bullets?: T;
+  formHeading?: T;
+  formSubheading?: T;
+  form?: T;
+  formDisclaimer?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageResultsSectionBlock_select".
+ */
+export interface LandingPageResultsSectionBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  results?:
+    | T
+    | {
+        icon?: T;
+        stat?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageSettlementsSectionBlock_select".
+ */
+export interface LandingPageSettlementsSectionBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  image?: T;
+  settlements?:
+    | T
+    | {
+        amount?: T;
+        label?: T;
+        description?: T;
+        id?: T;
+      };
+  disclaimer?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageWhyUsSectionBlock_select".
+ */
+export interface LandingPageWhyUsSectionBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  backgroundImage?: T;
+  mobileBackgroundImage?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageAboutAttorneySectionBlock_select".
+ */
+export interface LandingPageAboutAttorneySectionBlockSelect<T extends boolean = true> {
+  content?: T;
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageTestimonialsSectionBlock_select".
+ */
+export interface LandingPageTestimonialsSectionBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  testimonials?:
+    | T
+    | {
+        avatar?: T;
+        name?: T;
+        title?: T;
+        rating?: T;
+        quote?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LandingPageCallToActionSectionBlock_select".
+ */
+export interface LandingPageCallToActionSectionBlockSelect<T extends boolean = true> {
+  sectionHeader?: T;
+  phoneLabel?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        showArrow?: T;
+        appearance?: T;
       };
   id?: T;
   blockName?: T;
@@ -5644,6 +6257,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'pages';
           value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'landing-pages';
+          value: string | LandingPage;
         } | null)
       | ({
           relationTo: 'posts';

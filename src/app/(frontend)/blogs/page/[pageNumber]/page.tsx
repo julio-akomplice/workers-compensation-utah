@@ -11,6 +11,7 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import { postsSlug } from '@/utilities/constants'
+import { PageLayout } from '@/components/PageLayout'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
@@ -38,15 +39,17 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { hero, layout, solidMenu } = page
 
   return (
-    <article className={solidMenu ? 'pt-header' : ''}>
-      <PageClient solidMenu={solidMenu ?? false} />
-      <PayloadRedirects disableNotFound url={`/${postsSlug}/page/${pageNumber}`} />
+    <PageLayout>
+      <article className={solidMenu ? 'pt-header' : ''}>
+        <PageClient solidMenu={solidMenu ?? false} />
+        <PayloadRedirects disableNotFound url={`/${postsSlug}/page/${pageNumber}`} />
 
-      {draft && <LivePreviewListener />}
+        {draft && <LivePreviewListener />}
 
-      <RenderHero {...hero} />
-      <RenderBlocks blocks={layout} pageNumber={sanitizedPageNumber} />
-    </article>
+        <RenderHero {...hero} />
+        <RenderBlocks blocks={layout} pageNumber={sanitizedPageNumber} />
+      </article>
+    </PageLayout>
   )
 }
 

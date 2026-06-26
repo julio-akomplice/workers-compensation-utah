@@ -12,6 +12,7 @@ import { Categories } from './collections/Categories'
 import { PracticeAreaCategories } from './collections/PracticeAreaCategories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { LandingPages } from './collections/LandingPages'
 import { Posts } from './collections/Posts'
 import { PracticeAreas } from './collections/PracticeAreas'
 import { AreasServed } from './collections/AreasServed'
@@ -88,6 +89,7 @@ export default buildConfig({
   }),
   collections: [
     Pages,
+    LandingPages,
     Posts,
     PracticeAreas,
     PracticeAreaCategories,

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-import type { Page } from '@/payload-types'
+import type { LandingPage, Page } from '@/payload-types'
 
 import { AwardsBlock } from '@/blocks/Awards/Component'
 import { CompleteContentBlock } from '@/blocks/CompleteContent/Component'
@@ -37,6 +37,13 @@ import { AwardsSectionBlockComponent } from '@/blocks/AwardsSectionBlock/Compone
 import { PracticeAreaContentBlockComponent } from '@/blocks/PracticeAreaContentBlock/Component'
 import { FAQContentBlockComponent } from '@/blocks/FAQContentBlock/Component'
 import { ManualCtaBannerBlockComponent } from '@/blocks/ManualCtaBanner/Component'
+import { LandingPageResultsSectionBlock } from '@/blocks/LandingPageResultsSection/Component'
+import { LandingPageSettlementsSectionBlock } from '@/blocks/LandingPageSettlementsSection/Component'
+import { LandingPageWhyUsSectionBlock } from '@/blocks/LandingPageWhyUsSectionBlock/Component'
+import { LandingPageAboutAttorneySectionBlock } from '@/blocks/LandingPageAboutAttorneySectionBlock/Component'
+import { LandingPageHero01Block } from '@/blocks/LandingPageHero01/Component'
+import { LandingPageTestimonialsSectionBlock } from '@/blocks/LandingPageTestimonialsSectionBlock/Component'
+import { LandingPageCallToActionSectionBlock } from '@/blocks/LandingPageCallToActionSectionBlock/Component'
 
 const blockComponents = {
   awards: AwardsBlock,
@@ -74,10 +81,17 @@ const blockComponents = {
   practiceAreaContent: PracticeAreaContentBlockComponent,
   faqContent: FAQContentBlockComponent,
   manualCtaBanner: ManualCtaBannerBlockComponent,
+  landingPageResultsSection: LandingPageResultsSectionBlock,
+  landingPageSettlementsSection: LandingPageSettlementsSectionBlock,
+  landingPageWhyUsSection: LandingPageWhyUsSectionBlock,
+  landingPageAboutAttorneySection: LandingPageAboutAttorneySectionBlock,
+  landingPageHero01: LandingPageHero01Block,
+  landingPageTestimonialsSection: LandingPageTestimonialsSectionBlock,
+  landingPageCallToActionSection: LandingPageCallToActionSectionBlock,
 }
 
 export const RenderBlocks: React.FC<{
-  blocks: Page['layout'][0][]
+  blocks: (Page['layout'][0] | NonNullable<LandingPage['layout']>[0])[]
   pageNumber?: number
 }> = (props) => {
   const { blocks, pageNumber } = props

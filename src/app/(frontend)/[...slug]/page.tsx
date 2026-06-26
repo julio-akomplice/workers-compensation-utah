@@ -12,6 +12,7 @@ import { getPracticeAreaStaticParams } from './PracticeAreaTemplate/queries'
 import { resolvePracticeAreaComponent, resolvePracticeAreaMetadata } from './PracticeAreaTemplate'
 import { getAreaServedStaticParams } from './AreaServedTemplate/queries'
 import { resolveAreaServedComponent, resolveAreaServedMetadata } from './AreaServedTemplate'
+import { resolveLandingPageComponent, resolveLandingPageMetadata } from './LandingPageTemplate'
 
 export async function generateStaticParams() {
   const [pageParams, practiceAreaParams, areasServedParams] = await Promise.all([
@@ -37,6 +38,9 @@ export default async function Page({ params: paramsPromise }: Args) {
   if (decodedSlug.length === 1) {
     const flatSlug = decodedSlug[0]!
 
+    const landingResult = await resolveLandingPageComponent(flatSlug, url, draft)
+    if (landingResult) return landingResult
+
     const pageResult = await resolvePageComponent(flatSlug, url, draft)
     if (pageResult) return pageResult
 
@@ -56,6 +60,9 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 
   if (decodedSlug.length === 1) {
     const flatSlug = decodedSlug[0]!
+
+    const landingMeta = await resolveLandingPageMetadata(flatSlug)
+    if (landingMeta) return landingMeta
 
     const pageMeta = await resolvePageMetadata(flatSlug)
     if (pageMeta) return pageMeta
