@@ -38,7 +38,7 @@
 @source inline("bg-warning/30");
 
 @theme {
-  --breakpoint-tablet: 48rem;
+  --breakpoint-tablet: 46.4375rem; /* 743px — iPad Mini 6 portrait (744px) and up */
   --breakpoint-desktop-sm: 64rem;
   --breakpoint-desktop: 90rem;
   --breakpoint-sm: 40rem;
