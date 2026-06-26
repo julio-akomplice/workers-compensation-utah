@@ -26,7 +26,7 @@ export const LandingPageResultsSectionBlock: React.FC<Props> = ({ sectionHeader,
             {results.map((result, index) => (
               <div
                 key={index}
-                className="flex h-full min-h-[238px] w-full flex-col justify-end rounded-[15px] border-[1.5px] border-light-gray bg-white px-6 py-[30px]"
+                className="flex h-full min-h-[238px] w-full flex-col justify-start rounded-[15px] border-[1.5px] border-light-gray bg-white px-6 py-[30px]"
               >
                 <div className="size-[49px] mb-5">
                   <Media
