@@ -34,9 +34,9 @@ export const LandingPageHero01Block: React.FC<Props> = ({
       )}
       {/* Overlays for legibility */}
       <div className="absolute inset-0 -z-10 bg-[#00152b]/40" />
-      {/* Mobile & tablet: vertical gradient — transparent down to dark over the bottom 64.6% of the image (722/1117) */}
-      <div className="absolute inset-0 -z-10 navbar:hidden bg-linear-to-b from-[#00070f]/0 from-[35.36%] to-[#00070f]/80" />
-      {/* Desktop: horizontal gradient — dark from the left fading to transparent by 41.78% of the image width (722/1728) */}
+      {/* Bottom overlay (all breakpoints): vertical gradient — transparent down to dark over the bottom 64.6% of the image (722/1117) */}
+      <div className="absolute inset-0 -z-10 bg-linear-to-b from-[#00070f]/0 from-[35.36%] to-[#00070f]/80" />
+      {/* Left overlay (desktop only): horizontal gradient — dark from the left fading to transparent by 41.78% of the image width (722/1728) */}
       <div className="absolute inset-0 -z-10 hidden navbar:block bg-linear-to-r from-[#00070f]/80 to-[#00070f]/0 to-[41.78%]" />
 
       <div className="container mx-auto px-5 md:px-8 navbar:grid navbar:min-h-[calc(100vh-92px)] navbar:grid-cols-[minmax(0,1fr)_454px] navbar:items-center navbar:gap-x-[62px] navbar:py-16">
