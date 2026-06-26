@@ -220,7 +220,7 @@ export const LandingHeroForm: React.FC<Props> = ({ form }) => {
         disabled={isLoading}
         className={cn(
           'group mt-1 flex h-12 w-full items-center justify-center gap-1 rounded-md bg-gradient-brand text-cta-secondary text-white',
-          'shadow-[inset_0px_-3px_7px_0px_#ffb94a] transition-opacity hover:opacity-95 disabled:opacity-70 navbar:h-[54px]',
+          'shadow-[inset_0px_-3px_7px_0px_#ffb94a] transition-opacity hover:opacity-95 disabled:opacity-70 desktop:h-[54px]',
         )}
       >
         {isLoading ? 'Submitting...' : submitButtonLabel || 'Get My Free Consultation'}

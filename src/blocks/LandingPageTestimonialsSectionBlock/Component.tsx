@@ -51,7 +51,7 @@ const TestimonialCard: React.FC<{
       </div>
       {/* Body */}
       {testimonial.testimonial && 'root' in testimonial.testimonial && (
-        <div className="grow bg-navy-1000 px-5 py-5 text-[16px] leading-[24px] tracking-[-0.32px] text-navy-50 lg:text-[17px] lg:leading-[25px] lg:tracking-[-0.34px]">
+        <div className="grow bg-navy-1000 px-5 py-5 text-[16px] leading-[24px] tracking-[-0.32px] text-navy-50 desktop:text-[17px] desktop:leading-[25px] desktop:tracking-[-0.34px]">
           <RichText data={testimonial.testimonial} enableGutter={false} enableProse={false} />
         </div>
       )}
@@ -70,35 +70,35 @@ export const LandingPageTestimonialsSectionBlock: React.FC<Props> = ({
 
   return (
     <section
-      className="w-full py-[60px] md:py-20 lg:py-[120px]"
+      className="w-full py-[60px] tablet:py-20 desktop:py-[120px]"
       style={{
         background: 'linear-gradient(180deg, #001F3E 0%, #00172D 100%)',
       }}
     >
-      <div className="container mx-auto px-5 md:px-8">
+      <div className="container mx-auto px-5 tablet:px-8">
         {/* Section Header */}
         {sectionHeader && 'root' in sectionHeader && (
-          <div className="section-header section-header--dark text-center mb-10 md:mb-[50px] lg:mb-[60px]">
+          <div className="section-header section-header--dark text-center mb-10 tablet:mb-[50px] desktop:mb-[60px]">
             <RichText data={sectionHeader} enableGutter={false} enableProse={false} />
           </div>
         )}
 
         {/* Desktop: 3-column grid */}
-        <div className="hidden lg:grid lg:grid-cols-3 lg:gap-5">
+        <div className="hidden desktop:grid desktop:grid-cols-3 desktop:gap-5">
           {resolvedTestimonials.map((testimonial, index) => (
             <TestimonialCard key={index} testimonial={testimonial} />
           ))}
         </div>
 
         {/* Tablet: single centered column */}
-        <div className="hidden md:flex md:flex-col md:items-center md:gap-5 lg:hidden">
+        <div className="hidden tablet:flex tablet:flex-col tablet:items-center tablet:gap-5 desktop:hidden">
           {resolvedTestimonials.map((testimonial, index) => (
             <TestimonialCard key={index} testimonial={testimonial} className="w-full max-w-[520px]" />
           ))}
         </div>
 
         {/* Mobile: Horizontal slider */}
-        <div className="md:hidden -mr-5">
+        <div className="tablet:hidden -mr-5">
           <div
             ref={testimonialSlider.scrollRef}
             className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pr-5"
