@@ -1,8 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
+import NextImage from 'next/image'
 
 import { Button } from '@/components/ui/button'
 import { PhoneIcon } from '@/assets/icons/PhoneIcon'
+import wcuLogo from '@/components/LandingFooter/wcu-logo.webp'
 
 /**
  * Static, frontend-only navbar for landing pages.
@@ -29,13 +31,11 @@ export const LandingNavbar: React.FC = () => {
             aria-label="Workers Compensation Utah — home"
           >
             <span className="block h-12 w-12 overflow-hidden md:w-auto md:overflow-visible">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/media/Layer_1.svg"
+              <NextImage
+                src={wcuLogo}
                 alt="Workers Compensation Utah"
-                width={147}
-                height={48}
-                className="h-12 w-auto max-w-none"
+                sizes="147px"
+                className="h-12 w-auto max-w-none object-contain object-left"
               />
             </span>
           </Link>

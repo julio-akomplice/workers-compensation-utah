@@ -18,14 +18,14 @@ export const LandingPageSettlementsSectionBlock: React.FC<Props> = ({
   return (
     <section className="w-full bg-white py-[60px] md:py-[100px] lg:py-[120px]">
       <div className="container mx-auto px-5 md:px-8">
-        <div className="flex flex-col gap-10 md:gap-[66px] lg:flex-row lg:items-center lg:justify-center">
+        <div className="flex flex-col gap-10 md:gap-[66px] lg:grid lg:grid-cols-[500fr_730fr] lg:items-stretch">
           {/* Image */}
-          <div className="order-2 h-[366px] w-full shrink-0 overflow-hidden rounded-xl md:order-1 md:h-[630px] lg:w-[524px]">
-            <Media resource={image} imgClassName="h-full w-full object-cover" />
+          <div className="relative order-2 h-[366px] w-full overflow-hidden rounded-xl md:order-1 md:h-[630px] lg:h-auto">
+            <Media resource={image} fill imgClassName="object-cover" />
           </div>
 
           {/* Content */}
-          <div className="order-1 flex w-full flex-col gap-[30px] md:order-2 lg:w-[730px] lg:shrink-0">
+          <div className="order-1 flex w-full flex-col gap-[30px] md:order-2">
             <div className="flex flex-col gap-5">
               {sectionHeader && 'root' in sectionHeader && (
                 <div className="section-header">

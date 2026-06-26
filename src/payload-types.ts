@@ -2833,6 +2833,7 @@ export interface LandingPage {
     | LandingPageTestimonialsSectionBlock
     | LandingPageCallToActionSectionBlock
     | AwardsSectionBlock
+    | AwardsBlock
   )[];
   /**
    * Enable this when the page has no hero image. The navigation bar will have a solid dark background instead of being transparent.
@@ -4610,6 +4611,7 @@ export interface LandingPagesSelect<T extends boolean = true> {
         landingPageTestimonialsSection?: T | LandingPageTestimonialsSectionBlockSelect<T>;
         landingPageCallToActionSection?: T | LandingPageCallToActionSectionBlockSelect<T>;
         awardsSection?: T | AwardsSectionBlockSelect<T>;
+        awards?: T | AwardsBlockSelect<T>;
       };
   solidMenu?: T;
   meta?:

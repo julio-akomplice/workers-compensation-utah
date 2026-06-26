@@ -29,7 +29,7 @@ const TestimonialCard: React.FC<{
   className?: string
 }> = ({ testimonial, className }) => {
   return (
-    <div className={cn('rounded-[15px] overflow-hidden', className)}>
+    <div className={cn('flex h-full flex-col rounded-[15px] overflow-hidden', className)}>
       {/* Header */}
       <div className="flex items-center justify-between bg-navy-900 px-5 py-5">
         <div className="flex items-center gap-3">
@@ -51,7 +51,7 @@ const TestimonialCard: React.FC<{
       </div>
       {/* Body */}
       {testimonial.testimonial && 'root' in testimonial.testimonial && (
-        <div className="bg-navy-1000 px-5 py-5 text-[16px] leading-[24px] tracking-[-0.32px] text-navy-50 lg:text-[17px] lg:leading-[25px] lg:tracking-[-0.34px]">
+        <div className="grow bg-navy-1000 px-5 py-5 text-[16px] leading-[24px] tracking-[-0.32px] text-navy-50 lg:text-[17px] lg:leading-[25px] lg:tracking-[-0.34px]">
           <RichText data={testimonial.testimonial} enableGutter={false} enableProse={false} />
         </div>
       )}
