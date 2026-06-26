@@ -1,6 +1,7 @@
 import type { Block } from 'payload'
 
 import {
+  BoldFeature,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
@@ -28,6 +29,7 @@ export const LandingPageAboutAttorneySection: Block = {
       editor: lexicalEditor({
         features: [
           ParagraphFeature(),
+          BoldFeature(),
           SupportiveTextFeature(),
           HeadingFeature({ enabledHeadingSizes: ['h2'] }),
           FixedToolbarFeature(),
