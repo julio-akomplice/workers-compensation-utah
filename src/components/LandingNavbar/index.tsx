@@ -23,7 +23,7 @@ export const LandingNavbar: React.FC = () => {
   return (
     <header className="relative z-50 bg-dark-blue">
       <div className="container">
-        <div className="flex items-center justify-between py-5 desktop:py-5.5">
+        <div className="flex items-center justify-between py-5 desktop-sm:py-5.5">
           {/* Logo — icon only on small screens, full lockup from md up */}
           <Link
             href="/"
@@ -42,7 +42,7 @@ export const LandingNavbar: React.FC = () => {
 
           {/* Phone CTA */}
           <a href={PHONE.href} className="shrink-0">
-            <Button className="gap-2 rounded-lg px-3.5 text-[16px] font-medium tracking-[-0.32px] text-white desktop:gap-2.5 desktop:px-6 desktop:text-[20px] desktop:tracking-[-0.4px]">
+            <Button className="gap-2 rounded-lg px-3.5 text-[16px] font-medium tracking-[-0.32px] text-white desktop-sm:gap-2.5 desktop-sm:px-6 desktop-sm:text-[20px] desktop-sm:tracking-[-0.4px]">
               <PhoneIcon className="size-5 shrink-0" />
               <span>{PHONE.label}</span>
             </Button>

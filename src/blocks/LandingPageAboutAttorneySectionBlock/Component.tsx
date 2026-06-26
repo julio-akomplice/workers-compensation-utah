@@ -13,13 +13,13 @@ type Props = {
 export const LandingPageAboutAttorneySectionBlock: React.FC<Props> = ({ content, image }) => {
   return (
     <section className={cn('w-full bg-off-white tablet:bg-white')}>
-      <div className={cn('container mx-auto tablet:py-25 desktop:py-30')}>
-        <div className={cn('flex flex-col tablet:flex-row tablet:items-center tablet:gap-10 desktop:gap-50')}>
+      <div className={cn('container mx-auto tablet:py-25 desktop-sm:py-30')}>
+        <div className={cn('flex flex-col tablet:flex-row tablet:items-center tablet:gap-10 desktop-sm:gap-50')}>
           {/* Image */}
           <div className={cn('order-1 -mx-5 tablet:order-2 tablet:mx-0 tablet:shrink-0')}>
             <div
               className={cn(
-                'aspect-390/552 w-full overflow-hidden tablet:aspect-auto tablet:h-130 tablet:w-81.5 tablet:rounded-xl desktop:h-147.5 desktop:w-135.75',
+                'aspect-390/552 w-full overflow-hidden tablet:aspect-auto tablet:h-130 tablet:w-81.5 tablet:rounded-xl desktop-sm:h-147.5 desktop-sm:w-135.75',
               )}
             >
               <Media resource={image} imgClassName="w-full h-full object-cover" priority />

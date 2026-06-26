@@ -17,7 +17,7 @@ export const LandingPageCallToActionSectionBlock: React.FC<Props> = ({
   link,
 }) => {
   return (
-    <section className="w-full bg-off-white py-15 tablet:py-20 desktop:py-30">
+    <section className="w-full bg-off-white py-15 tablet:py-20 desktop-sm:py-30">
       <div className="container mx-auto flex flex-col items-center gap-[50px] px-5 text-center tablet:px-8">
         {sectionHeader && 'root' in sectionHeader && (
           <div className="section-header max-w-[806px] text-balance">

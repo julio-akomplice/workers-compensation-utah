@@ -16,11 +16,11 @@ export const LandingPageSettlementsSectionBlock: React.FC<Props> = ({
   disclaimer,
 }) => {
   return (
-    <section className="w-full bg-white py-[60px] tablet:py-[100px] desktop:py-[120px]">
+    <section className="w-full bg-white py-[60px] tablet:py-[100px] desktop-sm:py-[120px]">
       <div className="container mx-auto px-5 tablet:px-8">
-        <div className="flex flex-col gap-10 tablet:gap-[66px] desktop:grid desktop:grid-cols-[500fr_730fr] desktop:items-stretch">
+        <div className="flex flex-col gap-10 tablet:gap-[66px] desktop-sm:grid desktop-sm:grid-cols-[500fr_730fr] desktop-sm:items-stretch">
           {/* Image */}
-          <div className="relative order-2 h-[366px] w-full overflow-hidden rounded-xl tablet:order-1 tablet:h-[630px] desktop:h-auto">
+          <div className="relative order-2 h-[366px] w-full overflow-hidden rounded-xl tablet:order-1 tablet:h-[630px] desktop-sm:h-auto">
             <Media resource={image} fill imgClassName="object-cover" />
           </div>
 
@@ -43,7 +43,7 @@ export const LandingPageSettlementsSectionBlock: React.FC<Props> = ({
                     <p className="w-[162px] shrink-0 text-[24px] font-semibold leading-[28px] tracking-[-0.72px] text-dark-blue tablet:w-[200px]">
                       {settlement.amount}
                     </p>
-                    <p className="flex-1 text-[16px] leading-[24px] tracking-[-0.32px] tablet:text-[17px] tablet:leading-[25px] tablet:tracking-[-0.34px] desktop:text-[16px] desktop:leading-[24px] desktop:tracking-[-0.32px]">
+                    <p className="flex-1 text-[16px] leading-[24px] tracking-[-0.32px] tablet:text-[17px] tablet:leading-[25px] tablet:tracking-[-0.34px] desktop-sm:text-[16px] desktop-sm:leading-[24px] desktop-sm:tracking-[-0.32px]">
                       <span className="font-semibold text-dark-blue">{settlement.label}</span>
                       {settlement.description && (
                         <>
@@ -58,7 +58,7 @@ export const LandingPageSettlementsSectionBlock: React.FC<Props> = ({
             </div>
 
             {disclaimer && (
-              <p className="text-[14px] leading-[22px] tracking-[-0.28px] text-deep-blue-800 opacity-80 desktop:max-w-137">
+              <p className="text-[14px] leading-[22px] tracking-[-0.28px] text-deep-blue-800 opacity-80 desktop-sm:max-w-137">
                 {disclaimer}
               </p>
             )}

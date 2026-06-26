@@ -51,7 +51,7 @@ const TestimonialCard: React.FC<{
       </div>
       {/* Body */}
       {testimonial.testimonial && 'root' in testimonial.testimonial && (
-        <div className="grow bg-navy-1000 px-5 py-5 text-[16px] leading-[24px] tracking-[-0.32px] text-navy-50 desktop:text-[17px] desktop:leading-[25px] desktop:tracking-[-0.34px]">
+        <div className="grow bg-navy-1000 px-5 py-5 text-[16px] leading-[24px] tracking-[-0.32px] text-navy-50 desktop-sm:text-[17px] desktop-sm:leading-[25px] desktop-sm:tracking-[-0.34px]">
           <RichText data={testimonial.testimonial} enableGutter={false} enableProse={false} />
         </div>
       )}
@@ -70,7 +70,7 @@ export const LandingPageTestimonialsSectionBlock: React.FC<Props> = ({
 
   return (
     <section
-      className="w-full py-[60px] tablet:py-20 desktop:py-[120px]"
+      className="w-full py-[60px] tablet:py-20 desktop-sm:py-[120px]"
       style={{
         background: 'linear-gradient(180deg, #001F3E 0%, #00172D 100%)',
       }}
@@ -78,20 +78,20 @@ export const LandingPageTestimonialsSectionBlock: React.FC<Props> = ({
       <div className="container mx-auto px-5 tablet:px-8">
         {/* Section Header */}
         {sectionHeader && 'root' in sectionHeader && (
-          <div className="section-header section-header--dark text-center mb-10 tablet:mb-[50px] desktop:mb-[60px]">
+          <div className="section-header section-header--dark text-center mb-10 tablet:mb-[50px] desktop-sm:mb-[60px]">
             <RichText data={sectionHeader} enableGutter={false} enableProse={false} />
           </div>
         )}
 
         {/* Desktop: 3-column grid */}
-        <div className="hidden desktop:grid desktop:grid-cols-3 desktop:gap-5">
+        <div className="hidden desktop-sm:grid desktop-sm:grid-cols-3 desktop-sm:gap-5">
           {resolvedTestimonials.map((testimonial, index) => (
             <TestimonialCard key={index} testimonial={testimonial} />
           ))}
         </div>
 
         {/* Tablet: single centered column */}
-        <div className="hidden tablet:flex tablet:flex-col tablet:items-center tablet:gap-5 desktop:hidden">
+        <div className="hidden tablet:flex tablet:flex-col tablet:items-center tablet:gap-5 desktop-sm:hidden">
           {resolvedTestimonials.map((testimonial, index) => (
             <TestimonialCard key={index} testimonial={testimonial} className="w-full max-w-[520px]" />
           ))}
