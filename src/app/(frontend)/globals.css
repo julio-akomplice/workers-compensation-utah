@@ -20,6 +20,12 @@
     font-weight: unset;
     font-size: unset;
   }
+
+  /* Bold / <strong> renders as semibold by default (overridable by font-* utilities) */
+  strong,
+  b {
+    font-weight: 600;
+  }
 }
 
 @plugin "@tailwindcss/typography";
