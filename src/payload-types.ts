@@ -3141,10 +3141,6 @@ export interface LandingPageCallToActionSectionBlock {
     url?: string | null;
     label: string;
     showArrow?: boolean | null;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: 'outline' | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -4744,7 +4740,6 @@ export interface LandingPageCallToActionSectionBlockSelect<T extends boolean = t
         url?: T;
         label?: T;
         showArrow?: T;
-        appearance?: T;
       };
   id?: T;
   blockName?: T;

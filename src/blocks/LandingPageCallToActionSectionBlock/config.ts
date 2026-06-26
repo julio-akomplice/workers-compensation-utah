@@ -29,7 +29,10 @@ export const LandingPageCallToActionSection: Block = {
       },
     },
     link({
-      appearances: ['outline'],
+      // The component always renders this as an outline button, so no appearance
+      // selector is needed. Disabling it also avoids persisting an `appearance`
+      // enum value (previously the invalid default `gradient`) on save.
+      appearances: false,
       overrides: {
         label: 'Secondary CTA Link',
       },
