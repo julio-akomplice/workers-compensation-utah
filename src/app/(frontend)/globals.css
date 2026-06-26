@@ -38,7 +38,8 @@
 @source inline("bg-warning/30");
 
 @theme {
-  --breakpoint-tablet: 50rem;
+  --breakpoint-tablet: 48rem;
+  --breakpoint-desktop-sm: 64rem;
   --breakpoint-desktop: 90rem;
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;

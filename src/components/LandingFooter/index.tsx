@@ -88,9 +88,9 @@ export const LandingFooter: React.FC = () => {
 
   return (
     <footer className="w-full bg-dark-blue">
-      <div className="container mx-auto px-5 md:px-8 2xl:px-0 pt-15 pb-7.5 lg:py-15">
+      <div className="container mx-auto px-5 tablet:px-8 desktop:px-0 pt-15 pb-7.5 desktop:py-15">
         {/* ===== MOBILE layout (< 768px) ===== */}
-        <div className="flex flex-col gap-10 md:hidden">
+        <div className="flex flex-col gap-10 tablet:hidden">
           <div className="flex flex-col gap-15">
             <div className="flex flex-col gap-7.5">
               {callCol}
@@ -103,7 +103,7 @@ export const LandingFooter: React.FC = () => {
         </div>
 
         {/* ===== TABLET layout (768px–1023px) ===== */}
-        <div className="hidden md:flex md:flex-col md:items-center md:gap-10 lg:hidden">
+        <div className="hidden tablet:flex tablet:flex-col tablet:items-center tablet:gap-10 desktop:hidden">
           <div className="flex w-full flex-col items-center gap-15">
             <div className="flex w-full items-start gap-7.5">
               <div className="flex-1">{callCol}</div>
@@ -116,7 +116,7 @@ export const LandingFooter: React.FC = () => {
         </div>
 
         {/* ===== DESKTOP layout (1024px+) ===== */}
-        <div className="hidden lg:flex lg:flex-col lg:gap-12.5">
+        <div className="hidden desktop:flex desktop:flex-col desktop:gap-12.5">
           <div className="flex flex-col gap-12.5">
             <div className="flex items-start justify-between gap-8">
               {logoEl}
