@@ -12,7 +12,7 @@ type Props = {
 export const LandingPageResultsSectionBlock: React.FC<Props> = ({ sectionHeader, results }) => {
   return (
     <section className="w-full bg-off-white py-20 tablet:py-30">
-      <div className="container mx-auto px-5 tablet:px-8 desktop:px-4">
+      <div className="container mx-auto px-5 tablet:px-8 desktop-sm:px-4">
         {/* Section Header */}
         {sectionHeader && 'root' in sectionHeader && (
           <div className="section-header text-center mb-15 mx-auto text-balance">
@@ -22,7 +22,7 @@ export const LandingPageResultsSectionBlock: React.FC<Props> = ({ sectionHeader,
 
         {/* Results Grid */}
         {results && results.length > 0 && (
-          <div className="grid grid-cols-1 gap-4 tablet:grid-cols-2 tablet:gap-6 desktop:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 tablet:grid-cols-2 tablet:gap-6 desktop-sm:grid-cols-4">
             {results.map((result, index) => (
               <div
                 key={index}
