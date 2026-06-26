@@ -141,7 +141,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
       admin: {
         description: 'Choose how the link should be rendered.',
       },
-      defaultValue: 'gradient',
+      defaultValue: appearanceOptionsToUse[0]?.value ?? 'gradient',
       options: appearanceOptionsToUse,
     })
   }
