@@ -17,6 +17,7 @@ import { LandingPageAboutAttorneySection } from '../../blocks/LandingPageAboutAt
 import { LandingPageHero01 } from '../../blocks/LandingPageHero01/config'
 import { LandingPageTestimonialsSection } from '../../blocks/LandingPageTestimonialsSectionBlock/config'
 import { LandingPageCallToActionSection } from '../../blocks/LandingPageCallToActionSectionBlock/config'
+import { AwardsSectionBlock } from '../../blocks/AwardsSectionBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -97,6 +98,7 @@ export const LandingPages: CollectionConfig<'landing-pages'> = {
                 LandingPageAboutAttorneySection,
                 LandingPageTestimonialsSection,
                 LandingPageCallToActionSection,
+                AwardsSectionBlock,
               ],
               required: true,
               admin: {
