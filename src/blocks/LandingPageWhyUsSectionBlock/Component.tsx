@@ -33,7 +33,7 @@ export const LandingPageWhyUsSectionBlock: React.FC<Props> = ({
       <div className="container relative z-10 mx-auto px-5 tablet:px-8 desktop-sm:px-4">
         {/* Section Header */}
         {sectionHeader && 'root' in sectionHeader && (
-          <div className="section-header section-header--dark mb-10 text-center tablet:mb-15">
+          <div className="section-header section-header--dark mb-10 text-center tablet:mb-15 [&_h2]:font-medium!">
             <RichText data={sectionHeader} enableGutter={false} enableProse={false} />
           </div>
         )}
