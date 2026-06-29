@@ -258,27 +258,27 @@
 }
 
 @utility text-h2 {
-  @apply text-[45px] leading-[50px] tablet:text-[50px] tablet:leading-[55px];
+  @apply text-[45px] leading-[50px] -tracking-[0.02em] tablet:text-[50px] tablet:leading-[55px];
   font-family: var(--font-sans);
 }
 
 @utility text-h3 {
-  @apply text-[42px] leading-[46px];
+  @apply text-[42px] leading-[46px] -tracking-[0.01em];
   font-family: var(--font-sans);
 }
 
 @utility text-h4 {
-  @apply text-[32px] leading-[36px];
+  @apply text-[32px] leading-[36px] -tracking-[0.01em];
   font-family: var(--font-sans);
 }
 
 @utility text-h5 {
-  @apply text-[24px] leading-[28px] -tracking-[0.03em];
+  @apply text-[24px] leading-[28px] -tracking-[0.01em];
   font-family: var(--font-sans);
 }
 
 @utility text-h6 {
-  @apply text-[20px] leading-[24px];
+  @apply text-[20px] leading-[24px] -tracking-[0.01em];
   font-family: var(--font-sans);
 }
 
@@ -305,17 +305,17 @@
 
 /* CTA */
 @utility text-cta-primary {
-  @apply text-[16px] md:text-[18px] font-medium;
+  @apply text-[16px] md:text-[18px] font-medium -tracking-[0.01em];
   font-family: var(--font-sans);
 }
 
 @utility text-cta-secondary {
-  @apply text-[20px] font-medium;
+  @apply text-[20px] font-medium -tracking-[0.01em];
   font-family: var(--font-sans);
 }
 
 @utility text-cta-tertiary {
-  @apply text-[16px] font-medium;
+  @apply text-[16px] font-medium -tracking-[0.01em];
   font-family: var(--font-sans);
 }
 
@@ -326,7 +326,7 @@
     @apply text-dark-blue;
   }
   & h2 {
-    @apply mt-5 text-h2 font-semibold -tracking-[0.04em];
+    @apply mt-5 text-h2 font-medium -tracking-[0.02em];
   }
 
   & h3 {
