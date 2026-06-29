@@ -78,7 +78,7 @@ export const LandingPageTestimonialsSectionBlock: React.FC<Props> = ({
       <div className="container mx-auto px-5 tablet:px-8">
         {/* Section Header */}
         {sectionHeader && 'root' in sectionHeader && (
-          <div className="section-header section-header--dark text-center mb-10 tablet:mb-[50px] desktop-sm:mb-[60px]">
+          <div className="section-header section-header--dark text-center mb-10 tablet:mb-[50px] desktop-sm:mb-[60px] [&_h2]:font-medium!">
             <RichText data={sectionHeader} enableGutter={false} enableProse={false} />
           </div>
         )}
