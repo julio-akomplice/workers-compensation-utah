@@ -133,6 +133,9 @@ export const plugins: Plugin[] = [
     fields: {
       payment: false,
     },
+    // Email is handled by our custom /api/send-form-email route. Returning no
+    // emails here disables the plugin's built-in sender to avoid duplicates.
+    beforeEmail: () => [],
     formOverrides: {
       fields: ({ defaultFields }) => {
         const slugsWithPlaceholder = ['text', 'email', 'textarea', 'number', 'state', 'country']

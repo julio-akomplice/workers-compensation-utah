@@ -4,7 +4,7 @@ import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
-import { createGmailTransport } from './utilities/gmailTransport'
+import { createEmailTransport } from './utilities/emailTransport'
 
 import { CaseStudies } from './collections/CaseStudies'
 import { FAQ } from './collections/FAQ'
@@ -115,9 +115,9 @@ export default buildConfig({
     AwardsSectionGlobal,
   ],
   email: nodemailerAdapter({
-    defaultFromAddress: process.env.GMAIL_FROM_ADDRESS || '',
+    defaultFromAddress: process.env.EMAIL_FROM_ADDRESS || '',
     defaultFromName: 'Workers Compensation Utah',
-    transport: createGmailTransport(),
+    transport: createEmailTransport(),
   }),
   plugins,
   secret: process.env.PAYLOAD_SECRET,

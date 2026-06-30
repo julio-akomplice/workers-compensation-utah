@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createGmailTransport } from '@/utilities/gmailTransport'
+import { createEmailTransport } from '@/utilities/emailTransport'
 import { sendFormEmailSchema } from '@/utilities/buildFormSchema'
 import { formRecipients, formBcc } from '@/constants/formRecipients'
 
@@ -64,11 +64,11 @@ export async function POST(req: NextRequest) {
         </div>
       </div>`
 
-    const transport = createGmailTransport()
+    const transport = createEmailTransport()
     await transport.sendMail({
       to: formRecipients,
       bcc: formBcc.length > 0 ? formBcc : undefined,
-      from: `"Workers Compensation Utah" <${process.env.GMAIL_FROM_ADDRESS}>`,
+      from: `"Workers Compensation Utah" <${process.env.EMAIL_FROM_ADDRESS}>`,
       replyTo: submitterEmail ? `"${submitterName}" <${submitterEmail}>` : undefined,
       subject: `New inquiry${submissionId ? ` [#${submissionId}]` : ''}`,
       html,
