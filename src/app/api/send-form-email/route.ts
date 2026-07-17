@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createEmailTransport } from '@/utilities/emailTransport'
 import { sendFormEmailSchema } from '@/utilities/buildFormSchema'
 import { formRecipients, formBcc } from '@/constants/formRecipients'
+import { sendAutoReply } from '@/emails/autoReplyEmail'
 
 export async function POST(req: NextRequest) {
   try {
@@ -73,6 +74,10 @@ export async function POST(req: NextRequest) {
       subject: `New inquiry${submissionId ? ` [#${submissionId}]` : ''}`,
       html,
     })
+
+    // Automated confirmation reply to the submitter (only if they left an email).
+    // Never blocks or fails the primary submission — sendAutoReply swallows errors.
+    await sendAutoReply(transport, submitterEmail || undefined, submitterName)
 
     return NextResponse.json({ success: true })
   } catch (err) {
