@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createEmailTransport } from '@/utilities/emailTransport'
 import { caseQuestionnaireEmailSchema } from '@/utilities/caseQuestionnaireSchema'
 import { formRecipients, formBcc } from '@/constants/formRecipients'
+import { sendAutoReply } from '@/emails/autoReplyEmail'
 
 // Maps raw option values to human-readable display labels
 const valueDisplayMap: Record<string, Record<string, string>> = {
@@ -171,6 +172,10 @@ export async function POST(req: NextRequest) {
       subject: `Case Questionnaire${submissionId ? ` [#${submissionId}]` : ''}`,
       html,
     })
+
+    // Automated confirmation reply to the submitter (only if they left an email).
+    // Never blocks or fails the primary submission — sendAutoReply swallows errors.
+    await sendAutoReply(transport, submitterEmail || undefined, submitterName)
 
     return NextResponse.json({ success: true })
   } catch (err) {
