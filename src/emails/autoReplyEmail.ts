@@ -41,7 +41,7 @@ export function buildAutoReplyHtml(submitterName?: string): string {
   <div style="background:#f3f4f6;padding:24px 12px;">
     <div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
       <div style="background:#1e3a5f;padding:26px 32px;text-align:left;">
-        <span style="display:inline-block;color:#ffffff;font-size:22px;font-weight:700;line-height:1.2;">
+        <span style="display:inline-block;color:#ffffff;font-size:22px;font-weight:400;line-height:1.2;">
           Workers Compensation Utah
         </span>
       </div>
