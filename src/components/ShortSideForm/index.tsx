@@ -26,6 +26,7 @@ type Props = {
 export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
   const {
     id: formID,
+    title: formName,
     fields: formFields,
     submitButtonLabel,
     confirmationType,
@@ -85,7 +86,7 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
           }
 
           await fetch(`${getClientSideURL()}/api/send-form-email`, {
-            body: JSON.stringify({ submissionData: dataToSend, labelMap, submissionId: res.doc?.id != null ? String(res.doc.id) : undefined, sourceUrl }),
+            body: JSON.stringify({ submissionData: dataToSend, labelMap, submissionId: res.doc?.id != null ? String(res.doc.id) : undefined, sourceUrl, formName }),
             headers: { 'Content-Type': 'application/json' },
             method: 'POST',
           })
@@ -105,7 +106,7 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
 
       void submitForm()
     },
-    [formID, confirmationType, redirect, router, reset],
+    [formID, formName, confirmationType, redirect, router, reset],
   )
 
   return (

@@ -25,6 +25,7 @@ type Props = {
 export const ContactForm: React.FC<Props> = ({ form }) => {
   const {
     id: formID,
+    title: formName,
     fields: formFields,
     submitButtonLabel,
     confirmationType,
@@ -84,7 +85,7 @@ export const ContactForm: React.FC<Props> = ({ form }) => {
           }
 
           await fetch(`${getClientSideURL()}/api/send-form-email`, {
-            body: JSON.stringify({ submissionData: dataToSend, labelMap, submissionId: res.doc?.id != null ? String(res.doc.id) : undefined, sourceUrl }),
+            body: JSON.stringify({ submissionData: dataToSend, labelMap, submissionId: res.doc?.id != null ? String(res.doc.id) : undefined, sourceUrl, formName }),
             headers: { 'Content-Type': 'application/json' },
             method: 'POST',
           })
@@ -104,7 +105,7 @@ export const ContactForm: React.FC<Props> = ({ form }) => {
 
       void submitForm()
     },
-    [formID, confirmationType, redirect, router, reset],
+    [formID, formName, confirmationType, redirect, router, reset],
   )
 
   return (

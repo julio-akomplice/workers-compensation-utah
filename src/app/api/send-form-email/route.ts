@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const { submissionData, labelMap = {}, submissionId, sourceUrl } = parsed.data
+    const { submissionData, labelMap = {}, submissionId, sourceUrl, formName } = parsed.data
 
 
     const rows = submissionData
@@ -53,6 +53,7 @@ export async function POST(req: NextRequest) {
         <div style="padding:24px 32px;">
           <p style="margin:0;color:#374151;font-size:15px;">
             You have received a new submission from <strong>${submitterName}</strong>${submitterEmail ? ` (<a href="mailto:${submitterEmail}" style="color:#1e3a5f;">${submitterEmail}</a>)` : ''}.
+            ${formName ? `<br/><span style="color:#9ca3af;font-size:13px;">Form: ${formName}</span>` : ''}
             ${submissionId ? `<br/><span style="color:#9ca3af;font-size:13px;">Record ID: ${submissionId}</span>` : ''}
             ${sourceUrl ? `<br/><span style="color:#9ca3af;font-size:13px;">Submitted from: <a href="${sourceUrl}" style="color:#9ca3af;text-decoration:none;cursor:auto;">${sourceUrl}</a></span>` : ''}
           </p>
@@ -71,7 +72,7 @@ export async function POST(req: NextRequest) {
       bcc: formBcc.length > 0 ? formBcc : undefined,
       from: `"Workers Compensation Utah" <${process.env.EMAIL_FROM_ADDRESS}>`,
       replyTo: submitterEmail ? `"${submitterName}" <${submitterEmail}>` : undefined,
-      subject: `New inquiry${submissionId ? ` [#${submissionId}]` : ''}`,
+      subject: `New inquiry${formName ? ` — ${formName}` : ''}${submissionId ? ` [#${submissionId}]` : ''}`,
       html,
     })
 

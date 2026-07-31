@@ -28,6 +28,7 @@ type Props = {
 export const LandingHeroForm: React.FC<Props> = ({ form }) => {
   const {
     id: formID,
+    title: formName,
     fields: formFields,
     submitButtonLabel,
     confirmationType,
@@ -88,6 +89,7 @@ export const LandingHeroForm: React.FC<Props> = ({ form }) => {
               labelMap,
               submissionId: res.doc?.id != null ? String(res.doc.id) : undefined,
               sourceUrl,
+              formName,
             }),
             headers: { 'Content-Type': 'application/json' },
             method: 'POST',
@@ -108,7 +110,7 @@ export const LandingHeroForm: React.FC<Props> = ({ form }) => {
 
       void submitForm()
     },
-    [formID, formFields, confirmationType, redirect, router, reset],
+    [formID, formName, formFields, confirmationType, redirect, router, reset],
   )
 
   return (

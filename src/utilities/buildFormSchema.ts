@@ -56,6 +56,7 @@ export const sendFormEmailSchema = z.object({
     }),
   ).min(1, 'No submission data provided'),
   labelMap: z.record(z.string()).optional(),
+  formName: z.string().max(100).optional(),
   submissionId: z.coerce.string().optional(),
   sourceUrl: z.string().url().optional(),
 })
