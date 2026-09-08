@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import type { Form as FormType } from '@/payload-types'
 import { buildFormSchema } from '@/utilities/buildFormSchema'
 import { getClientSideURL } from '@/utilities/getURL'
+import { SpamGuardField, useSpamGuard } from '@/components/SpamGuard'
 import { cn } from '@/utilities/ui'
 import RichText from '@/components/RichText'
 import { Input } from '@/components/ui/input'
@@ -48,6 +49,7 @@ export const LandingHeroForm: React.FC<Props> = ({ form }) => {
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const [error, setError] = useState<string>()
   const router = useRouter()
+  const { honeypotRef, getSpamGuardEntries } = useSpamGuard()
 
   const onSubmit = useCallback(
     (data: Record<string, string>) => {
@@ -60,6 +62,7 @@ export const LandingHeroForm: React.FC<Props> = ({ form }) => {
         const dataToSend = [
           ...Object.entries(data).map(([field, value]) => ({ field, value })),
           { field: 'sourceUrl', value: sourceUrl },
+          ...getSpamGuardEntries(),
         ]
 
         const labelMap = Object.fromEntries(
@@ -110,11 +113,12 @@ export const LandingHeroForm: React.FC<Props> = ({ form }) => {
 
       void submitForm()
     },
-    [formID, formName, formFields, confirmationType, redirect, router, reset],
+    [formID, formName, formFields, confirmationType, redirect, router, reset, getSpamGuardEntries],
   )
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+      <SpamGuardField inputRef={honeypotRef} />
       {formFields?.map((field, index) => {
         if (field.blockType === 'message') {
           return field.message ? (

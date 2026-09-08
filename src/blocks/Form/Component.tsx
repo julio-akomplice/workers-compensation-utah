@@ -10,6 +10,7 @@ import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 import { fields } from './fields'
 import { getClientSideURL } from '@/utilities/getURL'
+import { SpamGuardField, useSpamGuard } from '@/components/SpamGuard'
 
 export type FormBlockType = {
   blockName?: string
@@ -45,6 +46,7 @@ export const FormBlock: React.FC<
   const [hasSubmitted, setHasSubmitted] = useState<boolean>()
   const [error, setError] = useState<{ message: string; status?: string } | undefined>()
   const router = useRouter()
+  const { honeypotRef, getSpamGuardEntries } = useSpamGuard()
 
   const onSubmit = useCallback(
     (data: FormFieldBlock[]) => {
@@ -52,10 +54,13 @@ export const FormBlock: React.FC<
       const submitForm = async () => {
         setError(undefined)
 
-        const dataToSend = Object.entries(data).map(([name, value]) => ({
-          field: name,
-          value,
-        }))
+        const dataToSend = [
+          ...Object.entries(data).map(([name, value]) => ({
+            field: name,
+            value,
+          })),
+          ...getSpamGuardEntries(),
+        ]
 
         // delay loading indicator by 1s
         loadingTimerID = setTimeout(() => {
@@ -110,7 +115,7 @@ export const FormBlock: React.FC<
 
       void submitForm()
     },
-    [router, formID, redirect, confirmationType],
+    [router, formID, redirect, confirmationType, getSpamGuardEntries],
   )
 
   return (
@@ -127,6 +132,7 @@ export const FormBlock: React.FC<
           {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
           {!hasSubmitted && (
             <form id={formID} onSubmit={handleSubmit(onSubmit)}>
+              <SpamGuardField inputRef={honeypotRef} />
               <div className="mb-4 last:mb-0">
                 {formFromProps &&
                   formFromProps.fields &&

@@ -11,6 +11,7 @@ import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
+import { formSubmissionOverrides } from '@/collections/FormSubmissions/overrides'
 
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -136,6 +137,9 @@ export const plugins: Plugin[] = [
     // Email is handled by our custom /api/send-form-email route. Returning no
     // emails here disables the plugin's built-in sender to avoid duplicates.
     beforeEmail: () => [],
+    // Adds the isSpam/spamReason fields and classifies every new submission
+    // server-side. See src/spam/rules.ts to tune what counts as spam.
+    formSubmissionOverrides,
     formOverrides: {
       fields: ({ defaultFields }) => {
         const slugsWithPlaceholder = ['text', 'email', 'textarea', 'number', 'state', 'country']

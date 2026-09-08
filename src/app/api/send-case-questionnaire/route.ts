@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createEmailTransport } from '@/utilities/emailTransport'
 import { caseQuestionnaireEmailSchema } from '@/utilities/caseQuestionnaireSchema'
-import { formRecipients, formBcc } from '@/constants/formRecipients'
+import { formRecipients, formBcc, internalTestRecipients } from '@/constants/formRecipients'
 import { sendAutoReply } from '@/emails/autoReplyEmail'
+import { recordNotificationOutcome, shouldSuppressNotification } from '@/spam/notificationGuard'
 
 // Maps raw option values to human-readable display labels
 const valueDisplayMap: Record<string, Record<string, string>> = {
@@ -119,6 +120,17 @@ export async function POST(req: NextRequest) {
 
     const submissionId = parsed.data.submissionId
 
+    // The stored submission decides whether this email goes out. See
+    // src/spam/notificationGuard.ts — this also stops the route being used as
+    // an unauthenticated relay by callers that never created a record.
+    const { suppress, internalOnly, reason } = await shouldSuppressNotification(submissionId)
+
+    if (suppress) {
+      console.info(`[send-case-questionnaire] notification suppressed (${reason})`)
+      await recordNotificationOutcome(submissionId, { status: 'suppressed' })
+      return NextResponse.json({ success: true })
+    }
+
     const rows = Object.keys(labelMap)
       .map((field) => {
         const val = (data as Record<string, unknown>)[field]
@@ -163,19 +175,47 @@ export async function POST(req: NextRequest) {
         </div>
       </div>`
 
-    const transport = createEmailTransport()
-    await transport.sendMail({
-      to: formRecipients,
-      bcc: formBcc.length > 0 ? formBcc : undefined,
-      from: `"Workers Compensation Utah" <${process.env.EMAIL_FROM_ADDRESS}>`,
-      replyTo: submitterEmail ? `"${submitterName}" <${submitterEmail}>` : undefined,
-      subject: `Case Questionnaire${submissionId ? ` [#${submissionId}]` : ''}`,
-      html,
-    })
+    if (internalOnly) {
+      console.info('[send-case-questionnaire] internal test — routing to developer only')
+    }
 
-    // Automated confirmation reply to the submitter (only if they left an email).
-    // Never blocks or fails the primary submission — sendAutoReply swallows errors.
-    await sendAutoReply(transport, submitterEmail || undefined, submitterName)
+    const recipients = internalOnly ? internalTestRecipients : formRecipients
+    const bccList = internalOnly ? [] : formBcc
+
+    const transport = createEmailTransport()
+
+    try {
+      await transport.sendMail({
+        to: recipients,
+        bcc: bccList.length > 0 ? bccList : undefined,
+        from: `"Workers Compensation Utah" <${process.env.EMAIL_FROM_ADDRESS}>`,
+        replyTo: submitterEmail ? `"${submitterName}" <${submitterEmail}>` : undefined,
+        subject: `${internalOnly ? '[INTERNAL TEST] ' : ''}Case Questionnaire${submissionId ? ` [#${submissionId}]` : ''}`,
+        html,
+      })
+
+      // Automated confirmation reply to the submitter (only if they left an email).
+      // Never blocks or fails the primary submission — sendAutoReply swallows errors.
+      // On an internal test the confirmation is redirected to us, never to the
+      // address in the form — that address may belong to someone unrelated.
+      const autoReplySent = await sendAutoReply(
+        transport,
+        submitterEmail || undefined,
+        submitterName,
+        internalOnly ? internalTestRecipients[0] : undefined,
+      )
+
+      await recordNotificationOutcome(submissionId, { status: 'sent', autoReplySent })
+    } catch (mailErr) {
+      // The questionnaire is already saved; record the failure on it so a silent
+      // mail outage is visible in the admin, not just in the server logs.
+      console.error('[send-case-questionnaire] send failed:', mailErr)
+      await recordNotificationOutcome(submissionId, {
+        status: 'failed',
+        error: mailErr instanceof Error ? mailErr.message : String(mailErr),
+      })
+      return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+    }
 
     return NextResponse.json({ success: true })
   } catch (err) {

@@ -3514,6 +3514,34 @@ export interface FormSubmission {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Automatically flagged by the spam filter. Flagged submissions are still stored but do not trigger a notification email. Untick this if a real enquiry was caught by mistake.
+   */
+  isSpam?: boolean | null;
+  /**
+   * Which rules matched. Editable — clear it when un-flagging a submission.
+   */
+  spamReason?: string | null;
+  /**
+   * One of our own QA submissions. Filter these out when reporting on real enquiries. Notifications for these go only to the developer, never to the attorney.
+   */
+  isInternalTest?: boolean | null;
+  /**
+   * Higher means more spam signals matched. 10 or above is flagged.
+   */
+  spamScore?: number | null;
+  /**
+   * Ticked once the notification email is actually accepted by the mail server.
+   */
+  emailSent?: boolean | null;
+  /**
+   * Pending = the email was never attempted. Failed = the mail server rejected it; see the error below.
+   */
+  emailStatus?: ('pending' | 'sent' | 'failed' | 'suppressed') | null;
+  emailError?: string | null;
+  emailSentAt?: string | null;
+  autoReplySent?: boolean | null;
+  ipHash?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -5575,6 +5603,16 @@ export interface FormSubmissionsSelect<T extends boolean = true> {
         value?: T;
         id?: T;
       };
+  isSpam?: T;
+  spamReason?: T;
+  isInternalTest?: T;
+  spamScore?: T;
+  emailSent?: T;
+  emailStatus?: T;
+  emailError?: T;
+  emailSentAt?: T;
+  autoReplySent?: T;
+  ipHash?: T;
   updatedAt?: T;
   createdAt?: T;
 }

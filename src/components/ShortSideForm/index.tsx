@@ -11,6 +11,7 @@ import type { Form as FormType, ShortSideForm as ShortSideFormType } from '@/pay
 import { buildFormSchema } from '@/utilities/buildFormSchema'
 import RichText from '@/components/RichText'
 import { getClientSideURL } from '@/utilities/getURL'
+import { SpamGuardField, useSpamGuard } from '@/components/SpamGuard'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { FormLabel } from '@/components/ui/FormLabel'
@@ -47,6 +48,7 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const [error, setError] = useState<string>()
   const router = useRouter()
+  const { honeypotRef, getSpamGuardEntries } = useSpamGuard()
 
   const onSubmit = useCallback(
     (data: Record<string, string>) => {
@@ -59,6 +61,7 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
         const dataToSend = [
           ...Object.entries(data).map(([field, value]) => ({ field, value })),
           { field: 'sourceUrl', value: sourceUrl },
+          ...getSpamGuardEntries(),
         ]
 
         const labelMap = Object.fromEntries(
@@ -106,7 +109,7 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
 
       void submitForm()
     },
-    [formID, formName, confirmationType, redirect, router, reset],
+    [formID, formName, confirmationType, redirect, router, reset, getSpamGuardEntries],
   )
 
   return (
@@ -118,6 +121,7 @@ export const ShortSideForm: React.FC<Props> = ({ form, header }) => {
       )}
 
       <form onSubmit={handleSubmit(onSubmit)}>
+      <SpamGuardField inputRef={honeypotRef} />
         <div className="flex flex-col gap-5">
           {formFields?.map((field, index) => {
             if (field.blockType === 'message') {

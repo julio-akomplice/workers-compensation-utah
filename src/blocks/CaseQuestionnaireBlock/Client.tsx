@@ -8,6 +8,7 @@ import { CheckboxGroup } from './fields/CheckboxGroup'
 import { PhoneField } from './fields/PhoneField'
 import { SingleCheckbox } from './fields/SingleCheckbox'
 import { getClientSideURL } from '@/utilities/getURL'
+import { SpamGuardField, useSpamGuard } from '@/components/SpamGuard'
 import { caseQuestionnaireSchema, type CaseQuestionnaireData } from '@/utilities/caseQuestionnaireSchema'
 import { CheckCircleIcon } from '@/components/ui/icons/CheckCircleIcon'
 import { CancelIcon } from '@/components/ui/icons/CancelIcon'
@@ -155,6 +156,7 @@ export const CaseQuestionnaireForm: React.FC<{ formID: string }> = ({ formID }) 
   const [isLoading, setIsLoading] = useState(false)
   const [hasSubmitted, setHasSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const { honeypotRef, getSpamGuardEntries } = useSpamGuard()
   const formRef = useRef<HTMLFormElement>(null)
 
   const validate = (data: CaseQuestionnaireData): FieldErrors => {
@@ -247,7 +249,10 @@ export const CaseQuestionnaireForm: React.FC<{ formID: string }> = ({ formID }) 
       const submissionRes = await fetch(`${getClientSideURL()}/api/form-submissions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ form: formID, submissionData }),
+        body: JSON.stringify({
+          form: formID,
+          submissionData: [...submissionData, ...getSpamGuardEntries()],
+        }),
       })
 
       const submissionJson = await submissionRes.json()
@@ -287,6 +292,7 @@ export const CaseQuestionnaireForm: React.FC<{ formID: string }> = ({ formID }) 
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-15 md:gap-[60px]">
+      <SpamGuardField inputRef={honeypotRef} />
       {/* Basic Information */}
       <div className="flex flex-col items-center gap-[35px]">
         <h2 className="text-h3 font-semibold tracking-[-0.04em] text-dark-blue text-center">

@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createEmailTransport } from '@/utilities/emailTransport'
 import { sendFormEmailSchema } from '@/utilities/buildFormSchema'
-import { formRecipients, formBcc } from '@/constants/formRecipients'
+import { formRecipients, formBcc, internalTestRecipients } from '@/constants/formRecipients'
 import { sendAutoReply } from '@/emails/autoReplyEmail'
+import { escapeHtml, recordNotificationOutcome, shouldSuppressNotification } from '@/spam/notificationGuard'
+import { stripSpamMetaFields } from '@/spam/fields'
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,15 +20,26 @@ export async function POST(req: NextRequest) {
 
     const { submissionData, labelMap = {}, submissionId, sourceUrl, formName } = parsed.data
 
+    // Authority on whether to send is the stored submission, never the request
+    // body. Suppressed submissions are already saved and reviewable in the
+    // admin — nothing is dropped, only the notification is withheld.
+    const { suppress, internalOnly, reason } = await shouldSuppressNotification(submissionId)
 
-    const rows = submissionData
+    if (suppress) {
+      console.info(`[send-form-email] notification suppressed (${reason})`)
+      await recordNotificationOutcome(submissionId, { status: 'suppressed' })
+      // Deliberately indistinguishable from success so a bot learns nothing.
+      return NextResponse.json({ success: true })
+    }
+
+    const rows = stripSpamMetaFields(submissionData)
       .filter(({ field }) => field !== 'sourceUrl')
       .map(({ field, value }) => {
-        const label = labelMap[field] ?? field
+        const label = escapeHtml(labelMap[field] ?? field)
         return `
           <tr>
             <td style="padding:10px 16px;font-weight:600;color:#374151;background:#f9fafb;width:140px;border-bottom:1px solid #e5e7eb;">${label}</td>
-            <td style="padding:10px 16px;color:#111827;border-bottom:1px solid #e5e7eb;">${value}</td>
+            <td style="padding:10px 16px;color:#111827;border-bottom:1px solid #e5e7eb;">${escapeHtml(value)}</td>
           </tr>`
       })
       .join('')
@@ -52,10 +65,10 @@ export async function POST(req: NextRequest) {
         </div>
         <div style="padding:24px 32px;">
           <p style="margin:0;color:#374151;font-size:15px;">
-            You have received a new submission from <strong>${submitterName}</strong>${submitterEmail ? ` (<a href="mailto:${submitterEmail}" style="color:#1e3a5f;">${submitterEmail}</a>)` : ''}.
-            ${formName ? `<br/><span style="color:#9ca3af;font-size:13px;">Form: ${formName}</span>` : ''}
-            ${submissionId ? `<br/><span style="color:#9ca3af;font-size:13px;">Record ID: ${submissionId}</span>` : ''}
-            ${sourceUrl ? `<br/><span style="color:#9ca3af;font-size:13px;">Submitted from: <a href="${sourceUrl}" style="color:#9ca3af;text-decoration:none;cursor:auto;">${sourceUrl}</a></span>` : ''}
+            You have received a new submission from <strong>${escapeHtml(submitterName)}</strong>${submitterEmail ? ` (<a href="mailto:${escapeHtml(submitterEmail)}" style="color:#1e3a5f;">${escapeHtml(submitterEmail)}</a>)` : ''}.
+            ${formName ? `<br/><span style="color:#9ca3af;font-size:13px;">Form: ${escapeHtml(formName)}</span>` : ''}
+            ${submissionId ? `<br/><span style="color:#9ca3af;font-size:13px;">Record ID: ${escapeHtml(submissionId)}</span>` : ''}
+            ${sourceUrl ? `<br/><span style="color:#9ca3af;font-size:13px;">Submitted from: <a href="${escapeHtml(sourceUrl)}" style="color:#9ca3af;text-decoration:none;cursor:auto;">${escapeHtml(sourceUrl)}</a></span>` : ''}
           </p>
         </div>
         <table style="width:100%;border-collapse:collapse;border-top:1px solid #e5e7eb;">
@@ -66,19 +79,47 @@ export async function POST(req: NextRequest) {
         </div>
       </div>`
 
-    const transport = createEmailTransport()
-    await transport.sendMail({
-      to: formRecipients,
-      bcc: formBcc.length > 0 ? formBcc : undefined,
-      from: `"Workers Compensation Utah" <${process.env.EMAIL_FROM_ADDRESS}>`,
-      replyTo: submitterEmail ? `"${submitterName}" <${submitterEmail}>` : undefined,
-      subject: `New inquiry${formName ? ` — ${formName}` : ''}${submissionId ? ` [#${submissionId}]` : ''}`,
-      html,
-    })
+    if (internalOnly) {
+      console.info('[send-form-email] internal test — routing to developer only')
+    }
 
-    // Automated confirmation reply to the submitter (only if they left an email).
-    // Never blocks or fails the primary submission — sendAutoReply swallows errors.
-    await sendAutoReply(transport, submitterEmail || undefined, submitterName)
+    const recipients = internalOnly ? internalTestRecipients : formRecipients
+    const bcc = internalOnly ? [] : formBcc
+
+    const transport = createEmailTransport()
+
+    try {
+      await transport.sendMail({
+        to: recipients,
+        bcc: bcc.length > 0 ? bcc : undefined,
+        from: `"Workers Compensation Utah" <${process.env.EMAIL_FROM_ADDRESS}>`,
+        replyTo: submitterEmail ? `"${submitterName}" <${submitterEmail}>` : undefined,
+        subject: `${internalOnly ? '[INTERNAL TEST] ' : ''}New inquiry${formName ? ` — ${formName}` : ''}${submissionId ? ` [#${submissionId}]` : ''}`,
+        html,
+      })
+
+      // Automated confirmation reply to the submitter (only if they left an email).
+      // Never blocks or fails the primary submission — sendAutoReply swallows errors.
+      // On an internal test the confirmation is redirected to us, never to the
+      // address in the form — that address may belong to someone unrelated.
+      const autoReplySent = await sendAutoReply(
+        transport,
+        submitterEmail || undefined,
+        submitterName,
+        internalOnly ? internalTestRecipients[0] : undefined,
+      )
+
+      await recordNotificationOutcome(submissionId, { status: 'sent', autoReplySent })
+    } catch (mailErr) {
+      // The submission is already saved; record the failure on it so a silent
+      // mail outage shows up in the admin rather than only in the server logs.
+      console.error('[send-form-email] send failed:', mailErr)
+      await recordNotificationOutcome(submissionId, {
+        status: 'failed',
+        error: mailErr instanceof Error ? mailErr.message : String(mailErr),
+      })
+      return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+    }
 
     return NextResponse.json({ success: true })
   } catch (err) {

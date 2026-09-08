@@ -112,11 +112,19 @@ export async function sendAutoReply(
   transport: Transporter,
   submitterEmail: string | undefined,
   submitterName?: string,
+  /**
+   * Forces the confirmation to this address instead of the submitter's. Used
+   * for internal QA submissions: those can be recognised by phone number or
+   * name alone, so the email field may hold an unrelated third party who must
+   * never receive a confirmation for a test we ran.
+   */
+  overrideRecipient?: string,
 ): Promise<boolean> {
   if (!submitterEmail) return false
 
   const recipient =
-    process.env.NODE_ENV === 'production' ? submitterEmail : DEV_REPLY_RECIPIENT
+    overrideRecipient ??
+    (process.env.NODE_ENV === 'production' ? submitterEmail : DEV_REPLY_RECIPIENT)
 
   try {
     await transport.sendMail({
