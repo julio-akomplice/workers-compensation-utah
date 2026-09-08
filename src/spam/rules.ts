@@ -108,6 +108,26 @@ export const STRONG_PHRASES: string[] = [
   'scrape king',
   'toplawfirms',
   'top law firms',
+  // Found by auditing real traffic: the URL form has no space in it.
+  'guestposts',
+  'editorial blogs',
+  'contextual articles',
+
+  // Vendors selling software or services to the firm.
+  'ediscovery',
+  'e-discovery',
+  'litigation firms',
+  'assist litigation',
+  'legal marketing',
+  'outsourcing firm',
+  'we generate cases',
+  'generate cases for',
+
+  // People offering the firm their own services.
+  'freelance writer',
+  'content writer',
+  'thought leadership',
+  'press releases',
 ]
 
 /**
@@ -196,8 +216,6 @@ export const WEAK_PHRASES: string[] = [
   'i need a lawyer for a business',
 
   // Misc B2B vendors.
-  'freelance writer',
-  'content writer',
   'medical evaluation services',
   'request for proposal',
 ]
