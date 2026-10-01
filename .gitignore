@@ -28,3 +28,6 @@ storybook-static
 # Claude Code configuration and MCP credentials
 .claude/
 .mcp.json
+
+# Claude Code personal settings
+.claude/settings.local.json
