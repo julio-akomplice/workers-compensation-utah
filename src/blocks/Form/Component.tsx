@@ -10,6 +10,7 @@ import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 import { fields } from './fields'
 import { getClientSideURL } from '@/utilities/getURL'
+import { pushLeadSubmit } from '@/utilities/dataLayer'
 import { SpamGuardField, useSpamGuard } from '@/components/SpamGuard'
 
 export type FormBlockType = {
@@ -93,6 +94,11 @@ export const FormBlock: React.FC<
 
             return
           }
+
+          pushLeadSubmit({
+            formName: formFromProps.title,
+            fields: Object.fromEntries(dataToSend.map(({ field, value }) => [field, value])),
+          })
 
           setIsLoading(false)
           setHasSubmitted(true)

@@ -11,6 +11,7 @@ import type { Form as FormType } from '@/payload-types'
 import { buildFormSchema } from '@/utilities/buildFormSchema'
 import RichText from '@/components/RichText'
 import { getClientSideURL } from '@/utilities/getURL'
+import { pushLeadSubmit } from '@/utilities/dataLayer'
 import { SpamGuardField, useSpamGuard } from '@/components/SpamGuard'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -86,6 +87,8 @@ export const ContactForm: React.FC<Props> = ({ form }) => {
             setError(res.errors?.[0]?.message || 'Something went wrong.')
             return
           }
+
+          pushLeadSubmit({ formName, fields: data })
 
           await fetch(`${getClientSideURL()}/api/send-form-email`, {
             body: JSON.stringify({ submissionData: dataToSend, labelMap, submissionId: res.doc?.id != null ? String(res.doc.id) : undefined, sourceUrl, formName }),
