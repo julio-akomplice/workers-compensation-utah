@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import type { Form as FormType } from '@/payload-types'
 import { buildFormSchema } from '@/utilities/buildFormSchema'
 import { getClientSideURL } from '@/utilities/getURL'
+import { pushLeadSubmit } from '@/utilities/dataLayer'
 import { SpamGuardField, useSpamGuard } from '@/components/SpamGuard'
 import { cn } from '@/utilities/ui'
 import RichText from '@/components/RichText'
@@ -85,6 +86,8 @@ export const LandingHeroForm: React.FC<Props> = ({ form }) => {
             setError(res.errors?.[0]?.message || 'Something went wrong.')
             return
           }
+
+          pushLeadSubmit({ formName, fields: data })
 
           await fetch(`${getClientSideURL()}/api/send-form-email`, {
             body: JSON.stringify({

@@ -8,6 +8,7 @@ import { CheckboxGroup } from './fields/CheckboxGroup'
 import { PhoneField } from './fields/PhoneField'
 import { SingleCheckbox } from './fields/SingleCheckbox'
 import { getClientSideURL } from '@/utilities/getURL'
+import { pushQuestionnaireComplete } from '@/utilities/dataLayer'
 import { SpamGuardField, useSpamGuard } from '@/components/SpamGuard'
 import { caseQuestionnaireSchema, type CaseQuestionnaireData } from '@/utilities/caseQuestionnaireSchema'
 import { CheckCircleIcon } from '@/components/ui/icons/CheckCircleIcon'
@@ -262,6 +263,8 @@ export const CaseQuestionnaireForm: React.FC<{ formID: string }> = ({ formID }) 
         setSubmitError(submissionJson.errors?.[0]?.message || 'Something went wrong. Please try again.')
         return
       }
+
+      pushQuestionnaireComplete({ formName: 'case_questionnaire', fields: formData })
 
       const submissionId: string | undefined =
         submissionJson.doc?.id != null ? String(submissionJson.doc.id) : undefined
