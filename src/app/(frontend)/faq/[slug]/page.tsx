@@ -54,7 +54,7 @@ export default async function IndividualFAQPage({ params: paramsPromise }: Args)
   const template = await queryTemplate({ templateType: 'faq' })
 
   const { question, answer } = faq
-  const breadcrumbs = [{ label: 'FAQS', href: '/faq' }, { label: question }]
+  const breadcrumbs = [{ label: 'FAQS', href: '/faqs' }, { label: question }]
 
   return (
     <PageLayout>

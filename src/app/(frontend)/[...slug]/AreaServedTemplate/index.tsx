@@ -48,7 +48,7 @@ export const AreaServedTemplate: React.FC<Props> = ({ areaServed, url, draft, fo
     .filter((p): p is NonNullable<typeof p> => p !== null)
 
   const breadcrumbs = [
-    { label: 'Areas Served', href: '/areas-served' },
+    { label: 'Areas Served', href: '/areas-we-serve' },
     { label: areaServed.title },
   ]
   // Nested docs: the first breadcrumb is the city page, the last is this page
