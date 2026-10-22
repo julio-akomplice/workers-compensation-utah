@@ -49,5 +49,5 @@ export async function resolveLandingPageComponent(
 export async function resolveLandingPageMetadata(flatSlug: string): Promise<Metadata | null> {
   const page = await queryLandingPageBySlug({ slug: flatSlug })
   if (!page) return null
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page, url: `/${flatSlug}` })
 }

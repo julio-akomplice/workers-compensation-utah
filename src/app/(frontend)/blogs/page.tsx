@@ -49,7 +49,7 @@ export default async function Page() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await queryPageBySlug({ slug: postSlug })
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page, url: '/blogs' })
 }
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
