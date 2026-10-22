@@ -113,9 +113,7 @@ const businessDetails = (business: BusinessInfo): SchemaNode => {
     hasMap: business.mapUrl,
     logo,
     image: logo,
-    priceSpecification: business.priceDescription
-      ? { '@type': 'UnitPriceSpecification', description: business.priceDescription }
-      : undefined,
+    priceRange: business.priceDescription,
     founder: founder?.name
       ? compact({
           '@type': 'Person',
@@ -270,16 +268,18 @@ export const buildPageSchema = ({
 
   return nodes.map((node) => {
     const { '@context': _context, ...rest } = node
-    const enriched =
-      business?.name && isBusinessNode(rest)
-        ? {
-            ...rest,
-            name: businessNodeName(rest.name, business),
-            areaServed: rest.areaServed ?? defaultAreaServed(business),
-            ...businessDetails(business),
-          }
-        : rest
+    if (!business?.name || !isBusinessNode(rest)) return { '@context': 'https://schema.org', ...rest }
 
-    return { '@context': 'https://schema.org', ...enriched }
+    // Older stored blocks carry `priceSpecification`, which isn't valid on a
+    // business type; the fee now renders as `priceRange` from Business Info.
+    const { priceSpecification: _priceSpecification, ...businessNode } = rest
+
+    return {
+      '@context': 'https://schema.org',
+      ...businessNode,
+      name: businessNodeName(businessNode.name, business),
+      areaServed: businessNode.areaServed ?? defaultAreaServed(business),
+      ...businessDetails(business),
+    }
   })
 }

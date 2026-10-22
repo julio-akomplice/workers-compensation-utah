@@ -25,6 +25,7 @@ const business: BusinessInfo = {
 const staleBusinessFields = {
   telephone: '801-424-9675',
   address: { '@type': 'PostalAddress', streetAddress: '2046 E. Murray Holladay Rd' },
+  priceSpecification: { '@type': 'UnitPriceSpecification', description: 'Contingency fee' },
 }
 
 beforeAll(() => {
@@ -126,7 +127,10 @@ describe('buildPageSchema', () => {
       address: { streetAddress: '2046 E Murray Holladay Rd #108', postalCode: '84117' },
       areaServed: { '@type': 'City', name: 'Layton', containedInPlace: { '@type': 'State', name: 'Utah' } },
       founder: { name: 'Richard Burke' },
+      priceRange: 'Contingency fee — no win, no fee',
     })
+    // not a valid property on business types
+    expect(node).not.toHaveProperty('priceSpecification')
   })
 
   it('generates the FAQPage from the question and answer fields', () => {
