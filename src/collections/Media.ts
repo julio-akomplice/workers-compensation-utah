@@ -5,6 +5,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { revalidatePath } from 'next/cache'
 import path from 'path'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
@@ -67,6 +68,22 @@ export const Media: CollectionConfig = {
           } catch {
             // Failed to fetch SVG — don't block rendering
           }
+        }
+        return doc
+      },
+    ],
+    afterChange: [
+      ({ doc, previousDoc, operation, req: { payload, context } }) => {
+        // Replacing or renaming a file changes its URL, and cached pages still
+        // point at the old one (which then 404s), so refresh every page.
+        if (
+          operation === 'update' &&
+          !context.disableRevalidate &&
+          previousDoc?.filename &&
+          previousDoc.filename !== doc.filename
+        ) {
+          payload.logger.info(`Revalidating all pages after media file change: ${doc.filename}`)
+          revalidatePath('/', 'layout')
         }
         return doc
       },
