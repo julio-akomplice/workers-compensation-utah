@@ -65,6 +65,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   ])
 
   const { categories, title, heroImage, publishedAt } = post
+  const breadcrumbs = [{ label: 'Legal Insights & Case Updates', href: '/blogs' }, { label: title }]
 
   const categoryList =
     categories && Array.isArray(categories)
@@ -76,7 +77,19 @@ export default async function Post({ params: paramsPromise }: Args) {
   return (
     <PageLayout>
     <article className="desktop:pt-header">
-      <SchemaMarkup schema={post.meta?.schema} />
+      <SchemaMarkup
+        schema={post.meta?.schema}
+        breadcrumbs={breadcrumbs}
+        page={{
+          type: 'BlogPosting',
+          url,
+          headline: title,
+          description: post.meta?.description,
+          image: heroImage || post.meta?.image,
+          datePublished: publishedAt,
+          dateModified: post.updatedAt,
+        }}
+      />
       <PageClient docId={post.id} collectionSlug="posts" />
 
       {/* Allows redirects for valid pages too */}
@@ -88,9 +101,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       {/* <PostHero post={post} /> */}
 
       {/* Breadcrumbs */}
-      <Breadcrumbs
-        items={[{ label: 'Legal Insights & Case Updates', href: '/blogs' }, { label: title }]}
-      />
+      <Breadcrumbs items={breadcrumbs} />
 
       {/* Content Section */}
       <section className="w-full bg-white">
