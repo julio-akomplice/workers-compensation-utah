@@ -54,23 +54,23 @@ export default async function IndividualFAQPage({ params: paramsPromise }: Args)
   const template = await queryTemplate({ templateType: 'faq' })
 
   const { question, answer } = faq
+  const breadcrumbs = [{ label: 'FAQS', href: '/faq' }, { label: question }]
 
   return (
     <PageLayout>
     <article>
-      <SchemaMarkup schema={faq.meta?.schema} />
+      <SchemaMarkup
+        schema={faq.meta?.schema}
+        breadcrumbs={breadcrumbs}
+        page={{ type: 'FAQPage', url, questions: [{ question, answer }] }}
+      />
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
 
       {template?.hero && <RenderHero {...template.hero} />}
 
-      <Breadcrumbs
-        items={[
-          { label: 'FAQS', href: '/faq' },
-          { label: question },
-        ]}
-      />
+      <Breadcrumbs items={breadcrumbs} />
 
       {answer && (
         <section className="w-full bg-white">

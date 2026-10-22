@@ -47,20 +47,32 @@ export const AreaServedTemplate: React.FC<Props> = ({ areaServed, url, draft, fo
     })
     .filter((p): p is NonNullable<typeof p> => p !== null)
 
+  const breadcrumbs = [
+    { label: 'Areas Served', href: '/areas-served' },
+    { label: areaServed.title },
+  ]
+  // Nested docs: the first breadcrumb is the city page, the last is this page
+  const ownBreadcrumbs = areaServed.breadcrumbs ?? []
+
   return (
     <PageLayout>
       <article>
-      <SchemaMarkup schema={meta?.schema} />
+      <SchemaMarkup
+        schema={meta?.schema}
+        breadcrumbs={breadcrumbs}
+        page={{
+          type: 'LegalService',
+          url: ownBreadcrumbs[ownBreadcrumbs.length - 1]?.url ?? url,
+          name: areaServed.title,
+          description: meta?.description,
+          city: ownBreadcrumbs[0]?.label,
+        }}
+      />
       <PageClient docId={areaServed.id} collectionSlug="areas-served" />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
       <RenderHero {...hero} />
-      <Breadcrumbs
-        items={[
-          { label: 'Areas Served', href: '/areas-served' },
-          { label: areaServed.title },
-        ]}
-      />
+      <Breadcrumbs items={breadcrumbs} />
       {contentSection?.content && (
         <section className="w-full bg-white">
           <div className="container mx-auto px-5 md:px-8 2xl:px-0">

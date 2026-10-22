@@ -36,20 +36,29 @@ export const PracticeAreaTemplate: React.FC<Props> = ({ practiceArea, url, draft
       href: `/${p.slug}`,
     }))
 
+  const breadcrumbs = [
+    { label: 'Practice Areas', href: '/practice-areas' },
+    { label: practiceArea.title },
+  ]
+
   return (
     <PageLayout>
       <article>
-      <SchemaMarkup schema={meta?.schema} />
+      <SchemaMarkup
+        schema={meta?.schema}
+        breadcrumbs={breadcrumbs}
+        page={{
+          type: 'LegalService',
+          url: `/${practiceArea.slug}`,
+          name: practiceArea.title,
+          description: meta?.description,
+        }}
+      />
       <PageClient docId={practiceArea.id} collectionSlug="practice-areas" />
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
       <RenderHero {...hero} />
-      <Breadcrumbs
-        items={[
-          { label: 'Practice Areas', href: '/practice-areas' },
-          { label: practiceArea.title },
-        ]}
-      />
+      <Breadcrumbs items={breadcrumbs} />
       {contentSection?.content && (
         <section className="w-full bg-white">
           <div className="container mx-auto px-5 md:px-8 2xl:px-0">

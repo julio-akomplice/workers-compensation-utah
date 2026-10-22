@@ -26,6 +26,7 @@ import { FAQSectionGlobal } from './globals/FAQSection/config'
 import { ArticlesSectionGlobal } from './globals/ArticlesSection/config'
 import { ShortSideFormGlobal } from './globals/ShortSideForm/config'
 import { AwardsSectionGlobal } from './globals/AwardsSection/config'
+import { BusinessInfo } from './globals/BusinessInfo/config'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -113,6 +114,7 @@ export default buildConfig({
     ArticlesSectionGlobal,
     ShortSideFormGlobal,
     AwardsSectionGlobal,
+    BusinessInfo,
   ],
   email: nodemailerAdapter({
     defaultFromAddress: process.env.EMAIL_FROM_ADDRESS || '',

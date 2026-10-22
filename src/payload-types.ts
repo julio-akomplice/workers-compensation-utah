@@ -139,6 +139,7 @@ export interface Config {
     'articles-section': ArticlesSection;
     'short-side-form': ShortSideForm;
     'awards-section': AwardsSection;
+    'business-info': BusinessInfo;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -149,6 +150,7 @@ export interface Config {
     'articles-section': ArticlesSectionSelect<false> | ArticlesSectionSelect<true>;
     'short-side-form': ShortSideFormSelect<false> | ShortSideFormSelect<true>;
     'awards-section': AwardsSectionSelect<false> | AwardsSectionSelect<true>;
+    'business-info': BusinessInfoSelect<false> | BusinessInfoSelect<true>;
   };
   locale: null;
   widgets: {
@@ -312,7 +314,7 @@ export interface Page {
     image?: (string | null) | Media;
     description?: string | null;
     /**
-     * Add JSON-LD schema markup objects for this page.
+     * Page-specific JSON-LD only. Business details (name, phone, address, logo), URLs, dates and breadcrumbs are generated automatically from Business Info and this page’s fields. A block with the same @type as the generated one (e.g. LegalService) is merged into it: use it for name, description, areaServed, knowsAbout or serviceType. Other blocks (e.g. FAQPage on a blog post) are added as-is.
      */
     schema?:
       | {
@@ -504,7 +506,7 @@ export interface Post {
     image?: (string | null) | Media;
     description?: string | null;
     /**
-     * Add JSON-LD schema markup objects for this page.
+     * Page-specific JSON-LD only. Business details (name, phone, address, logo), URLs, dates and breadcrumbs are generated automatically from Business Info and this page’s fields. A block with the same @type as the generated one (e.g. LegalService) is merged into it: use it for name, description, areaServed, knowsAbout or serviceType. Other blocks (e.g. FAQPage on a blog post) are added as-is.
      */
     schema?:
       | {
@@ -704,7 +706,7 @@ export interface PracticeArea {
     image?: (string | null) | Media;
     description?: string | null;
     /**
-     * Add JSON-LD schema markup objects for this page.
+     * Page-specific JSON-LD only. Business details (name, phone, address, logo), URLs, dates and breadcrumbs are generated automatically from Business Info and this page’s fields. A block with the same @type as the generated one (e.g. LegalService) is merged into it: use it for name, description, areaServed, knowsAbout or serviceType. Other blocks (e.g. FAQPage on a blog post) are added as-is.
      */
     schema?:
       | {
@@ -862,7 +864,7 @@ export interface AreasServed {
     image?: (string | null) | Media;
     description?: string | null;
     /**
-     * Add JSON-LD schema markup objects for this page.
+     * Page-specific JSON-LD only. Business details (name, phone, address, logo), URLs, dates and breadcrumbs are generated automatically from Business Info and this page’s fields. A block with the same @type as the generated one (e.g. LegalService) is merged into it: use it for name, description, areaServed, knowsAbout or serviceType. Other blocks (e.g. FAQPage on a blog post) are added as-is.
      */
     schema?:
       | {
@@ -1653,7 +1655,7 @@ export interface Faq {
     image?: (string | null) | Media;
     description?: string | null;
     /**
-     * Add JSON-LD schema markup objects for this page.
+     * Page-specific JSON-LD only. Business details (name, phone, address, logo), URLs, dates and breadcrumbs are generated automatically from Business Info and this page’s fields. A block with the same @type as the generated one (e.g. LegalService) is merged into it: use it for name, description, areaServed, knowsAbout or serviceType. Other blocks (e.g. FAQPage on a blog post) are added as-is.
      */
     schema?:
       | {
@@ -2847,7 +2849,7 @@ export interface LandingPage {
     image?: (string | null) | Media;
     description?: string | null;
     /**
-     * Add JSON-LD schema markup objects for this page.
+     * Page-specific JSON-LD only. Business details (name, phone, address, logo), URLs, dates and breadcrumbs are generated automatically from Business Info and this page’s fields. A block with the same @type as the generated one (e.g. LegalService) is merged into it: use it for name, description, areaServed, knowsAbout or serviceType. Other blocks (e.g. FAQPage on a blog post) are added as-is.
      */
     schema?:
       | {
@@ -6064,6 +6066,62 @@ export interface AwardsSection {
   createdAt?: string | null;
 }
 /**
+ * Business details used to generate structured data (JSON-LD) on every page. Changes apply site-wide.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "business-info".
+ */
+export interface BusinessInfo {
+  id: string;
+  name: string;
+  description?: string | null;
+  logo?: (string | null) | Media;
+  /**
+   * International format, e.g. +1-801-424-9675
+   */
+  telephone: string;
+  /**
+   * International format, e.g. +1-801-683-7575
+   */
+  faxNumber?: string | null;
+  email?: string | null;
+  address: {
+    streetAddress: string;
+    addressLocality: string;
+    addressRegion: string;
+    postalCode: string;
+    addressCountry?: string | null;
+  };
+  mapUrl?: string | null;
+  /**
+   * Used when a page does not define its own area served.
+   */
+  areaServed?: string | null;
+  /**
+   * e.g. Contingency fee — no win, no fee
+   */
+  priceDescription?: string | null;
+  founder?: {
+    name?: string | null;
+    jobTitle?: string | null;
+    /**
+     * Professional organization, e.g. College of Workers’ Compensation Lawyers
+     */
+    memberOf?: string | null;
+  };
+  /**
+   * Official profiles such as Google Business, Facebook, LinkedIn, Avvo.
+   */
+  sameAs?:
+    | {
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
@@ -6240,6 +6298,46 @@ export interface AwardsSectionSelect<T extends boolean = true> {
     | T
     | {
         image?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "business-info_select".
+ */
+export interface BusinessInfoSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  logo?: T;
+  telephone?: T;
+  faxNumber?: T;
+  email?: T;
+  address?:
+    | T
+    | {
+        streetAddress?: T;
+        addressLocality?: T;
+        addressRegion?: T;
+        postalCode?: T;
+        addressCountry?: T;
+      };
+  mapUrl?: T;
+  areaServed?: T;
+  priceDescription?: T;
+  founder?:
+    | T
+    | {
+        name?: T;
+        jobTitle?: T;
+        memberOf?: T;
+      };
+  sameAs?:
+    | T
+    | {
+        url?: T;
         id?: T;
       };
   updatedAt?: T;
