@@ -124,5 +124,8 @@ export async function resolveAreaServedComponent(
 export async function resolveAreaServedMetadata(slugPath: string[]): Promise<Metadata | null> {
   const areaServed = await queryAreaServedBySlug({ slugPath })
   if (!areaServed) return null
-  return generateMeta({ doc: areaServed as never })
+  return generateMeta({
+    doc: areaServed as never,
+    url: areaServed.breadcrumbs?.at(-1)?.url ?? `/${slugPath.join('/')}`,
+  })
 }

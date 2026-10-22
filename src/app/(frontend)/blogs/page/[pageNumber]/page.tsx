@@ -56,7 +56,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { pageNumber } = await paramsPromise
   const page = await queryPageBySlug({ slug: postsSlug })
-  const meta = await generateMeta({ doc: page })
+  const meta = await generateMeta({ doc: page, url: `/blogs/page/${pageNumber}` })
   return {
     ...meta,
     title: meta.title ? `${meta.title} - Page ${pageNumber}` : `Posts Page ${pageNumber}`,

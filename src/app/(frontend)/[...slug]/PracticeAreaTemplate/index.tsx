@@ -110,5 +110,5 @@ export async function resolvePracticeAreaComponent(
 export async function resolvePracticeAreaMetadata(flatSlug: string): Promise<Metadata | null> {
   const practiceArea = await queryPracticeAreaBySlug({ slug: flatSlug })
   if (!practiceArea) return null
-  return generateMeta({ doc: practiceArea })
+  return generateMeta({ doc: practiceArea, url: `/${flatSlug}` })
 }

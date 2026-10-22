@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import type { Media, Page, Post, PracticeArea, Config } from '../payload-types'
+import type { Faq, Media, Page, Post, PracticeArea, Config } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
@@ -20,18 +20,29 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   return url
 }
 
+/** Falls back to "{page title} | {site}" so pages without an SEO title don't all share one. */
+const getTitle = (doc: Partial<Page> | Partial<Post> | Partial<PracticeArea> | Partial<Faq> | null) => {
+  if (doc?.meta?.title) return doc.meta.title
+
+  const pageTitle = doc && ('title' in doc ? doc.title : 'question' in doc ? doc.question : null)
+  if (!pageTitle || doc?.slug === 'home') return SITE_NAME
+
+  return `${pageTitle} | ${SITE_NAME}`
+}
+
 export const generateMeta = async (args: {
-  doc: Partial<Page> | Partial<Post> | Partial<PracticeArea> | null
+  doc: Partial<Page> | Partial<Post> | Partial<PracticeArea> | Partial<Faq> | null
+  /** The page's path, e.g. `/blogs/my-post`; used for the canonical and og:url. */
+  url?: string
 }): Promise<Metadata> => {
-  const { doc } = args
+  const { doc, url } = args
 
   const ogImage = getImageURL(doc?.meta?.image)
 
-  const title = doc?.meta?.title
-    ? doc?.meta?.title
-    : SITE_NAME
+  const title = getTitle(doc)
 
   return {
+    ...(url && { alternates: { canonical: url } }),
     description: doc?.meta?.description || SITE_DESCRIPTION,
     openGraph: mergeOpenGraph({
       description: doc?.meta?.description || SITE_DESCRIPTION,
@@ -43,7 +54,7 @@ export const generateMeta = async (args: {
           ]
         : undefined,
       title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+      url: url ?? '/',
     }),
     title,
   }

@@ -58,5 +58,5 @@ export async function resolvePageComponent(
 export async function resolvePageMetadata(flatSlug: string): Promise<Metadata | null> {
   const page = await queryPageBySlug({ slug: flatSlug })
   if (!page || page.excludeFromSlugRoute) return null
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page, url: flatSlug === 'home' ? '/' : `/${flatSlug}` })
 }
