@@ -141,6 +141,12 @@ export default buildConfig({
         return authHeader === `Bearer ${secret}`
       },
     },
+    // The app runs as a long-lived server on Railway (no Vercel Cron), so the
+    // server itself must pick up queued jobs — scheduled publish/unpublish
+    // won't fire otherwise. Checks the queue every minute.
+    autoRun: [{ cron: '* * * * *', queue: 'default', limit: 10 }],
+    // Only process jobs on the deployed server, never from local dev.
+    shouldAutoRun: () => process.env.NODE_ENV === 'production',
     tasks: [],
   },
 })
