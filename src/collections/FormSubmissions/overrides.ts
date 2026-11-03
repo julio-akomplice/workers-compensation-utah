@@ -6,6 +6,7 @@ type FormSubmissionOverrides = {
 } & Partial<Omit<CollectionConfig, 'fields'>>
 
 import { forwardToAkomplice } from '@/integrations/akompliceLeadWebhook'
+import { notifyOnCreate } from '@/notifications/submissionNotification'
 import { classifySubmission, type Classification } from '@/spam/classify'
 import { entriesToFieldMap, extractSpamMeta, stripSpamMetaFields } from '@/spam/fields'
 
@@ -122,9 +123,10 @@ const spamFields: Field[] = [
     label: 'Notification status',
     index: true,
     options: [
-      // A submission stuck on "pending" never reached the email route at all —
-      // the visitor closed the tab mid-request, or the network dropped. Filter
-      // on this to find enquiries nobody was told about.
+      // Since 2026-11-03 the server sends the email right after saving, so
+      // "pending" lasting more than a minute means the send never finished
+      // (e.g. the server restarted mid-send). Filter on it to find enquiries
+      // nobody was told about.
       { label: 'Pending', value: 'pending' },
       { label: 'Sent', value: 'sent' },
       { label: 'Failed', value: 'failed' },
@@ -249,8 +251,8 @@ const classifyOnCreate: CollectionBeforeChangeHook = async ({ data, operation, r
     spamReason: result.spamReason,
     spamScore: result.score,
     // Real spam is never emailed, so record that outcome now. Everything else
-    // starts as pending and is updated by the email route once it has actually
-    // tried to send — anything still pending afterwards means nobody was told.
+    // starts as pending and is updated by notifyOnCreate (afterChange) once it
+    // has actually tried to send.
     emailStatus: result.isSpam && !result.isInternalTest ? 'suppressed' : 'pending',
     emailSent: false,
     ipHash,
@@ -293,7 +295,8 @@ export const formSubmissionOverrides: FormSubmissionOverrides = {
   ],
   hooks: {
     beforeChange: [classifyOnCreate],
-    // Sends each new, non-spam submission to the Akomplice dashboard as a lead.
-    afterChange: [forwardToAkomplice],
+    // 1. Emails the attorney about each new, non-spam submission (server-side,
+    //    so it cannot be skipped). 2. Sends it to the Akomplice dashboard.
+    afterChange: [notifyOnCreate, forwardToAkomplice],
   },
 }

@@ -134,8 +134,9 @@ export const plugins: Plugin[] = [
     fields: {
       payment: false,
     },
-    // Email is handled by our custom /api/send-form-email route. Returning no
-    // emails here disables the plugin's built-in sender to avoid duplicates.
+    // Email is sent by notifyOnCreate (src/notifications/submissionNotification.ts)
+    // on the form-submissions collection. Returning no emails here disables the
+    // plugin's built-in sender to avoid duplicates.
     beforeEmail: () => [],
     // Adds the isSpam/spamReason fields and classifies every new submission
     // server-side. See src/spam/rules.ts to tune what counts as spam.
