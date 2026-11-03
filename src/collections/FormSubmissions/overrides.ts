@@ -5,6 +5,7 @@ type FormSubmissionOverrides = {
   fields?: (args: { defaultFields: Field[] }) => Field[]
 } & Partial<Omit<CollectionConfig, 'fields'>>
 
+import { forwardToAkomplice } from '@/integrations/akompliceLeadWebhook'
 import { classifySubmission, type Classification } from '@/spam/classify'
 import { entriesToFieldMap, extractSpamMeta, stripSpamMetaFields } from '@/spam/fields'
 
@@ -292,5 +293,7 @@ export const formSubmissionOverrides: FormSubmissionOverrides = {
   ],
   hooks: {
     beforeChange: [classifyOnCreate],
+    // Sends each new, non-spam submission to the Akomplice dashboard as a lead.
+    afterChange: [forwardToAkomplice],
   },
 }

@@ -10,6 +10,8 @@ declare global {
       S3_SECRET_ACCESS_KEY: string
       S3_ENDPOINT: string
       S3_REGION: string
+      /** Optional. Akomplice lead webhook URL with its secret token; unset = no forwarding. */
+      AKOMPLICE_FORMS_WEBHOOK_URL?: string
     }
   }
 }
