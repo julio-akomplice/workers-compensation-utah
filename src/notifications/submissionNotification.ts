@@ -3,6 +3,7 @@ import type { Transporter } from 'nodemailer'
 
 import { formBcc, formRecipients, internalTestRecipients } from '@/constants/formRecipients'
 import { sendAutoReply } from '@/emails/autoReplyEmail'
+import { withClassification } from '@/spam/classificationContext'
 import { stripSpamMetaFields } from '@/spam/fields'
 import type { NotificationOutcome } from '@/spam/notificationGuard'
 import { escapeHtml } from '@/utilities/escapeHtml'
@@ -282,7 +283,7 @@ export async function sendSubmissionNotification(
 export const notifyOnCreate: CollectionAfterChangeHook = ({ doc, operation, req }) => {
   try {
     if (operation !== 'create') return doc
-    const submission = { ...doc, id: String(doc.id) } as SubmissionForEmail
+    const submission = withClassification({ ...doc, id: String(doc.id) } as SubmissionForEmail, req.context)
     if (submission.isSpam && !submission.isInternalTest) return doc
     // Not awaited on purpose: see the header comment.
     void sendSubmissionNotification(submission, req.payload, req.payload.logger)

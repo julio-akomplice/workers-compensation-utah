@@ -8,6 +8,7 @@ type FormSubmissionOverrides = {
 import { forwardToAkomplice } from '@/integrations/akompliceLeadWebhook'
 import { notifyOnCreate } from '@/notifications/submissionNotification'
 import { classifySubmission, type Classification } from '@/spam/classify'
+import { CLASSIFICATION_CONTEXT_KEY, type SubmissionClassification } from '@/spam/classificationContext'
 import { entriesToFieldMap, extractSpamMeta, stripSpamMetaFields } from '@/spam/fields'
 
 /**
@@ -240,6 +241,15 @@ const classifyOnCreate: CollectionBeforeChangeHook = async ({ data, operation, r
       '[spam] submission flagged',
     )
   }
+
+  // The spam fields are staff-only (see staffOnly), so for an anonymous visitor
+  // Payload strips them from the `doc` that afterChange hooks receive. Hand the
+  // verdict to those hooks through the request context instead; without this
+  // they see every submission as clean and email/forward spam and tests.
+  req.context[CLASSIFICATION_CONTEXT_KEY] = {
+    isSpam: result.isSpam,
+    isInternalTest: result.isInternalTest,
+  } satisfies SubmissionClassification
 
   return {
     ...data,
