@@ -2,6 +2,7 @@ import {
   GENUINE_PHRASES,
   INTERNAL_TEST_DOMAINS,
   INTERNAL_TEST_EMAILS,
+  INTERNAL_TEST_MARKERS,
   INTERNAL_TEST_NAMES,
   INTERNAL_TEST_PHONES,
   MIN_SUBMIT_MS,
@@ -58,6 +59,21 @@ const findField = (fields: Record<string, string>, hints: string[]): string => {
 }
 
 /**
+ * True when the message or the name starts with a test marker such as
+ * "[THIS IS A TEST]" (see INTERNAL_TEST_MARKERS). Used by the classifier and by
+ * the Akomplice forwarder, which sends marked tests on so intake can be checked.
+ */
+export function hasTestMarker(fields: Record<string, string>): boolean {
+  const markers = INTERNAL_TEST_MARKERS.map(normalize).filter(Boolean)
+  if (markers.length === 0) return false
+  const candidates = [
+    findField(fields, ['message', 'howinjury', 'comment']),
+    findField(fields, ['name']),
+  ].map(normalize)
+  return candidates.some((value) => markers.some((marker) => value.startsWith(marker)))
+}
+
+/**
  * Classify a form submission. Pure — no database, no network, no clock. Every
  * decision is derived from the arguments, so this can be unit tested directly
  * and reused by both the collection hook and the notification email routes.
@@ -90,14 +106,17 @@ export function classifySubmission(input: ClassifierInput): Classification {
     (emailDomain.length > 0 && INTERNAL_TEST_DOMAINS.includes(emailDomain)) ||
     (phone.length > 0 && INTERNAL_TEST_PHONES.includes(phone)) ||
     INTERNAL_TEST_NAMES.some((test) => name === test)
+  const isMarkedTest = hasTestMarker(fields)
 
-  if (isInternal) {
+  if (isInternal || isMarkedTest) {
     return {
       isSpam: true,
       isInternalTest: true,
       score: STRONG_SCORE,
-      reasons: ['internal-test'],
-      spamReason: 'Internal test submission (not real spam).',
+      reasons: isMarkedTest ? ['internal-test', 'test-marker'] : ['internal-test'],
+      spamReason: isMarkedTest
+        ? 'Internal test submission marked [THIS IS A TEST] (not real spam).'
+        : 'Internal test submission (not real spam).',
     }
   }
 

@@ -1,5 +1,7 @@
 import type { CollectionAfterChangeHook } from 'payload'
 
+import { hasTestMarker } from '@/spam/classify'
+
 /**
  * Forward each new form submission to the Akomplice dashboard as a lead.
  *
@@ -13,11 +15,13 @@ import type { CollectionAfterChangeHook } from 'payload'
  * - Never hold up or fail the visitor's submission. Payload waits for
  *   afterChange hooks before it answers the browser, so the POST is started and
  *   NOT awaited, and every error is caught and logged.
- * - Create only. The email routes update the same record afterwards
+ * - Create only. The notification email updates the same record afterwards
  *   (notificationGuard), and staff edit it in the admin; without this guard one
  *   lead would be sent two or three times.
  * - Spam and internal QA submissions stay on the site. `isSpam` is already set
- *   by classifyOnCreate (beforeChange) and also covers internal tests.
+ *   by classifyOnCreate (beforeChange) and also covers internal tests. One
+ *   exception: a test marked "[THIS IS A TEST]" (INTERNAL_TEST_MARKERS) IS sent,
+ *   with "[TEST]" in front of the name, so intake can be checked in production.
  * - Safe to retry: the submission id goes along as `submission_id`, and
  *   Akomplice ignores a second POST with the same id.
  */
@@ -66,6 +70,10 @@ const toFieldMap = (entries: Entry[] | null | undefined): Record<string, string>
   }
   return map
 }
+
+/** An internal test carrying the "[THIS IS A TEST]" marker; see the header comment. */
+export const isMarkedTest = (doc: SubmissionDoc): boolean =>
+  Boolean(doc.isInternalTest) && hasTestMarker(toFieldMap(doc.submissionData))
 
 /** Case- and separator-insensitive lookup: "First Name", "firstName", "first_name". */
 const pick = (fields: Record<string, string>, ...names: string[]): string | undefined => {
@@ -186,10 +194,14 @@ export const forwardToAkomplice: CollectionAfterChangeHook = ({ doc, operation, 
     const url = process.env[WEBHOOK_URL_ENV]?.trim()
     if (!url) return doc
     const submission = doc as SubmissionDoc
-    if (submission.isSpam) return doc
+    const markedTest = isMarkedTest(submission)
+    if (submission.isSpam && !markedTest) return doc
+
+    const payload = buildLeadPayload(submission)
+    if (markedTest) payload.name = `[TEST] ${payload.name ?? 'Akomplice intake test'}`
 
     // Not awaited on purpose: see the header comment.
-    void sendLead(url, buildLeadPayload(submission), req.payload.logger)
+    void sendLead(url, payload, req.payload.logger)
   } catch (err) {
     req.payload.logger.error({ err }, '[akomplice] could not queue lead')
   }

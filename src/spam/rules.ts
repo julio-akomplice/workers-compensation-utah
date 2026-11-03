@@ -292,3 +292,13 @@ export const INTERNAL_TEST_DOMAINS: string[] = [
 export const INTERNAL_TEST_PHONES: string[] = ['9999999999', '1234567890', '0000000000']
 
 export const INTERNAL_TEST_NAMES: string[] = ['test test', 'asdf', 'qwerty']
+
+/**
+ * Start the message (or the name) with one of these to run a production test.
+ * The submission is treated as an internal test: the attorney is NOT emailed
+ * (the notification goes to the developer only), and it is still sent on to
+ * the Akomplice dashboard, labelled [TEST], so the whole intake path can be
+ * checked without bothering the client. Matching ignores case and leading
+ * spaces. Delete the test lead in Akomplice afterwards.
+ */
+export const INTERNAL_TEST_MARKERS: string[] = ['[THIS IS A TEST]']

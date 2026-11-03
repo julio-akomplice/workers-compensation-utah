@@ -66,11 +66,6 @@ export const LandingHeroForm: React.FC<Props> = ({ form }) => {
           ...getSpamGuardEntries(),
         ]
 
-        const labelMap = Object.fromEntries(
-          (formFields ?? [])
-            .filter((f): f is Extract<typeof f, { name: string }> => 'name' in f && 'label' in f)
-            .map((f) => [f.name, (f as { name: string; label?: string }).label ?? f.name]),
-        )
 
         try {
           const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
@@ -89,17 +84,7 @@ export const LandingHeroForm: React.FC<Props> = ({ form }) => {
 
           pushLeadSubmit({ formName, fields: data })
 
-          await fetch(`${getClientSideURL()}/api/send-form-email`, {
-            body: JSON.stringify({
-              submissionData: dataToSend,
-              labelMap,
-              submissionId: res.doc?.id != null ? String(res.doc.id) : undefined,
-              sourceUrl,
-              formName,
-            }),
-            headers: { 'Content-Type': 'application/json' },
-            method: 'POST',
-          })
+          // The attorney email is sent by the server when the submission is saved.
 
           setIsLoading(false)
           setHasSubmitted(true)
@@ -116,7 +101,7 @@ export const LandingHeroForm: React.FC<Props> = ({ form }) => {
 
       void submitForm()
     },
-    [formID, formName, formFields, confirmationType, redirect, router, reset, getSpamGuardEntries],
+    [formID, formName, confirmationType, redirect, router, reset, getSpamGuardEntries],
   )
 
   return (

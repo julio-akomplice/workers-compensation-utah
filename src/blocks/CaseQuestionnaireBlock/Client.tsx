@@ -241,7 +241,7 @@ export const CaseQuestionnaireForm: React.FC<{ formID: string }> = ({ formID }) 
     setIsLoading(true)
 
     try {
-      // 1. Save to Payload form-submissions to get a record ID
+      // Save to Payload form-submissions. The server emails the attorney.
       const submissionData = Object.entries(formData).map(([field, value]) => ({
         field,
         value: Array.isArray(value) ? value.join(', ') : String(value ?? ''),
@@ -266,23 +266,7 @@ export const CaseQuestionnaireForm: React.FC<{ formID: string }> = ({ formID }) 
 
       pushQuestionnaireComplete({ formName: 'case_questionnaire', fields: formData })
 
-      const submissionId: string | undefined =
-        submissionJson.doc?.id != null ? String(submissionJson.doc.id) : undefined
-
-      // 2. Send the email with the real submission ID
-      const emailRes = await fetch(`${getClientSideURL()}/api/send-case-questionnaire`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, submissionId }),
-      })
-
-      const emailJson = await emailRes.json()
-
-      if (!emailRes.ok) {
-        setIsLoading(false)
-        setSubmitError(emailJson.error || 'Something went wrong. Please try again.')
-        return
-      }
+      // The attorney email is sent by the server when the submission is saved.
 
       setIsLoading(false)
       setHasSubmitted(true)
