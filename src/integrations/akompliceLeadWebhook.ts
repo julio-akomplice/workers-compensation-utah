@@ -1,5 +1,6 @@
 import type { CollectionAfterChangeHook } from 'payload'
 
+import { withClassification } from '@/spam/classificationContext'
 import { hasTestMarker } from '@/spam/classify'
 
 /**
@@ -193,7 +194,7 @@ export const forwardToAkomplice: CollectionAfterChangeHook = ({ doc, operation, 
     if (operation !== 'create') return doc
     const url = process.env[WEBHOOK_URL_ENV]?.trim()
     if (!url) return doc
-    const submission = doc as SubmissionDoc
+    const submission = withClassification(doc as SubmissionDoc, req.context)
     const markedTest = isMarkedTest(submission)
     if (submission.isSpam && !markedTest) return doc
 

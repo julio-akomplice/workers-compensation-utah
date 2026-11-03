@@ -232,3 +232,75 @@ describe('[THIS IS A TEST] marker', () => {
     }
   })
 })
+
+describe('anonymous visitors: the spam verdict arrives through req.context', () => {
+  // For an anonymous create, Payload strips the staff-only spam fields from the
+  // doc that afterChange hooks get. This is what went wrong on the first live
+  // test (2026-11-03): the hooks saw a test as a clean enquiry.
+  const docWithoutSpamFields: {
+    id: string
+    form: string
+    submissionData: Array<{ field: string; value: string }>
+    isSpam?: boolean
+    isInternalTest?: boolean
+  } = {
+    id: 'anon1',
+    form: 'f',
+    submissionData: entries({ name: 'Julio', email: 'a@gmail.com', message: '[THIS IS A TEST] hi' }),
+  }
+
+  const anonReq = (verdict: { isSpam: boolean; isInternalTest: boolean }) => {
+    const p = fakePayload()
+    return {
+      p,
+      req: { context: { submissionClassification: verdict }, payload: { ...p, logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn() } } },
+    }
+  }
+
+  it('does not email or forward real spam even though the doc looks clean', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response('{}', { status: 200 }))
+    vi.stubGlobal('fetch', fetchMock)
+    process.env[WEBHOOK_URL_ENV] = 'https://app-api.example.test/api/v2/webhooks/forms/TOKEN'
+    try {
+      const { p, req } = anonReq({ isSpam: true, isInternalTest: false })
+      const spamDoc = { ...docWithoutSpamFields, submissionData: entries({ name: 'Bot', message: 'buy now' }) }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;(notifyOnCreate as any)({ doc: spamDoc, operation: 'create', req })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;(forwardToAkomplice as any)({ doc: spamDoc, operation: 'create', req })
+      await new Promise((r) => setTimeout(r, 0))
+      expect(p.findByID).not.toHaveBeenCalled()
+      expect(fetchMock).not.toHaveBeenCalled()
+    } finally {
+      vi.unstubAllGlobals()
+      delete process.env[WEBHOOK_URL_ENV]
+    }
+  })
+
+  it('treats a marked test as internal: forwarded as [TEST]', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(new Response('{}', { status: 200 }))
+    vi.stubGlobal('fetch', fetchMock)
+    process.env[WEBHOOK_URL_ENV] = 'https://app-api.example.test/api/v2/webhooks/forms/TOKEN'
+    try {
+      const { req } = anonReq({ isSpam: true, isInternalTest: true })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;(forwardToAkomplice as any)({ doc: docWithoutSpamFields, operation: 'create', req })
+      expect(fetchMock).toHaveBeenCalledTimes(1)
+      expect(JSON.parse(fetchMock.mock.calls[0][1].body).name).toBe('[TEST] Julio')
+    } finally {
+      vi.unstubAllGlobals()
+      delete process.env[WEBHOOK_URL_ENV]
+    }
+  })
+
+  it('routes the email for a marked test to the developer only', async () => {
+    const { withClassification } = await import('@/spam/classificationContext')
+    const submission = withClassification(docWithoutSpamFields, {
+      submissionClassification: { isSpam: true, isInternalTest: true },
+    })
+    const payload = fakePayload()
+    const { deps, sendMail } = fakeDeps()
+    await sendSubmissionNotification(submission, payload as never, logger(), deps)
+    expect(sendMail.mock.calls[0][0].to).toEqual(internalTestRecipients)
+  })
+})
